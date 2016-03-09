@@ -1,0 +1,1037 @@
+<html >
+<head>
+	<!--<meta name="viewport" content="target-densitydpi=device-dpi", user-scalable=yes>-->
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, target-densitydpi=medium-dpi" />
+	<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script>
+	<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/phonegap-1.0.0.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/encryption.js"></script>
+
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+
+<script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   <script src="js/lmmenu.js"></script>
+	<link rel="stylesheet" media="all and (orientation:portrait)" href="css/account_offline.css">
+	 <link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" media="all and (orientation:landscape)" href="css/account_offline_hor.css">
+
+	<style>
+		.button {
+		/*adjust the roundness*/
+		border-radius: 4px;
+		moz-border-radius: 4px;
+		webkit-border-radius: 4px;
+		/*adjust height and width*/
+		height: 120%;
+		width: 80%;
+		/*change border colour*/
+		border: 1px #2B4E78 solid;
+		background-color: 86B1EB;
+		color: white;
+		font-weight: bold;
+		margin-top: 6%;
+		}
+
+
+		#button {  /* Box in the button */
+		display: block;
+		width: 50px;
+		}
+
+		#button a {
+		text-decoration: none;  /* Remove the underline from the links. */
+		}
+
+		#button ul {
+		list-style-type: none;  /* Remove the bullets from the list */
+		}
+
+		#button .top {
+		background-color: #DDD;  /* The button background */
+		}
+
+		#button ul li.item {
+		display: none;  /* By default, do not display the items (which contains the links) */
+		}
+
+		#button ul:hover .item {  /* When the user hovers over the button (or any of the links) */
+		display: block;
+		border: 1px solid black;
+		background-color: #EDC;
+		}
+
+
+
+			#menu1 { display : none }
+			#menu2 { display : none }
+			#menu3 { display : none }
+
+			a:link {color:black; text-decoration:none}
+			a:hover {color:blue; text-decoration:underline}
+	</style>
+
+	<script>
+		function javChkID(val)
+		{
+			//alert(val);
+			//val = tr + "val"
+			//var chkVal = val.replace("tr","")
+			// alert("chkVal"+chkVal);
+			var ele = document.getElementById(val)
+			var elediv = document.getElementById("tr" + val)
+			//the div {background:white;}
+			var chk = ele.checked
+			 if(chk == true)
+			 {
+			  ele.checked = false;
+			  elediv.style.backgroundColor='white';
+			 } else
+			 {
+			  ele.checked = true;
+			  elediv.style.backgroundColor='#d3d3d3';
+			 }
+		}
+
+	</script>
+
+
+</head>
+
+<body style="background-color: white;height: 100%;">
+    <div data-role="header" class="titlePart"  style="background-color: #006DD9;width: 100%;margin-left: -8px;position: fixed;top:0px;">
+
+	<table width="100%" cellspacing="0" style="center;vertical-align: middle;">
+        <tr>
+
+			<td align="left" width="80%" >
+				<div style="text-align: center;vertical-align: bottom;font-weight: bolder;color: white" class="title" id="heading">
+					Accounts
+				</div>
+			</td>
+            <td width="20%" align="right" style="">
+                <div style="background-color: #006DD9;height: 60px;margin-top:10px;" >
+
+                    <div id='cssmenu'>
+                        <ul style="position:absolute;margin-left:-20px">
+                            <div class="arrow-up"></div>
+                            <li><a href='#'><img src="images/Assign.png" onclick='javAssign()'></a></li>
+                            <li><a href='#'><img src="images/Deletee.png" onclick='javDelete()'></a></li>
+                        </ul>
+                    </div></div>
+            </td>
+            </tr>
+		</div>
+
+
+		        </tr>
+                    <tr>
+                        <td style="background-color: white;" colspan="2"></td>
+                    </tr>
+                    <tr width="100%">
+                        <td width="92%" height="50px" style="z-index: 0;" >
+                            <input  type="text" placeholder="Search by Company name" id="keywords" style="border-radius: 1em; text-align: center;padding: 1em 0;color: grey;border:3px;border-color: #105FC9;" onKeyDown="if (event.keyCode == 13) getEvents(null,null,true);"/>
+                        </td>
+                        <td width="8%" style="padding-top: 4px;padding-bottom: 4px;">
+                            <input type="image"  src="images/search3.png" style="border:none;"  onclick="getEvents(null,null,true)"/>
+                        </td>
+                    </tr>
+                </table>
+
+</div>
+<div data-role="content" style="padding-top: 100px;bottom: 51px" >
+
+	<ul id="rList" class="ui-listview" onactivate="getEvents()" data-role="listview" style="background-color: white;list-style: none;margin-left: -20px;margin-bottom: -20px;margin-right: -10px;height: 63%;margin-bottom: 10.2%" >
+
+		<div style="margin-top: 15%;text-align: center;margin-left: -10px;vertical-align: middle" id="message1">
+
+			<!-- <h3 id="msgbydef" style="color: grey; text-align: center;text-shadow: 2px;vertical-align: middle">Enter any keyword to search</h3> -->
+
+		</div>
+	</ul>
+</div>
+
+<div  style="bottom: 0px;position: fixed;  background-color: #006dd9; height: 50px;min-width: 100%;margin-left: -8px">
+	<table style="text-align: center;width:100%;vertical-align: middle">
+
+		<tr  style="text-align: center;width: 100%;">
+			<td  align= "left" style="text-align:left;width:35%;margin-right: -8px">
+				<button class="button" id="join" onClick="getPrev()">
+					Previous
+				</button></td>
+			<td  align="center" style="width:30%;text-align:center;" ><h5 id="recordss" style="color: white;vertical-align: middle;text-align: center;height: 0px;font-size: 14px;margin-top: 10px"></h5></td>
+			<td  align="right" style="width:35%;text-align:right;margin-left: -8px">
+				<button class="button" id="join1" onClick="getNext()">
+					Next
+				</button></td>
+
+		</tr>
+	</table>
+
+</div>
+
+<script>
+			var username, password, company_id, recdNo = 0, company, companyName, url_main, address, address2, address3, city, state, zip, country, dateEntered, address1, wsURL;
+			var encrptVal, url_main, acctMgr, logonID, deleteRecordNo,inAppBrowserbRef, appkeyword, pagetype;
+
+			function getEvents(first, last, boolPregress) {
+
+				var heading = window.localStorage.getItem("Banner - Accounts");
+				appkeyword= document.getElementById("keywords").value;
+			 	pagetype= 'account'
+				//alert(appkeyword);
+				if (heading != null && heading != "") {
+					document.getElementById("heading").innerHTML = heading;
+				}
+				var companylabel = window.localStorage.getItem("Company");
+
+				if (companylabel != null && companylabel != "") {
+					// document.getElementsByName('keywords')[0].placeholder='Search by '+eventNamelabel;
+					$('#keywords').attr('placeholder', 'Search by ' + companylabel);
+				}
+
+				if (boolPregress) {
+
+			//		navigator.notification.activityStart("Please wait....", "loading");
+
+				}
+
+				if (first == null && last == null) {
+
+					getCount();
+
+					var count = window.localStorage.getItem("count");
+				//	alert(count);
+					if (count >= 15) {
+						first = 1;
+						last = 15;
+					} else {
+						first = 1;
+						last = count;
+					}
+
+					url_main = window.localStorage.getItem("changed_url");
+
+					if (url_main == null || url_main == "") {
+						url_main = "http://app.leadmastercrm.com";
+
+
+					}
+
+				}
+
+				var count = window.localStorage.getItem("count");
+
+				if (count > 0) {
+					document.getElementById("recordss").innerHTML = first + " to " + last + " of " + count;
+				} else {
+					document.getElementById("recordss").innerHTML = "0" + " to " + "0" + " of " + count;
+					var new_div = document.createElement('div');
+					new_div.className = "cls1";
+
+					new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>Sorry...No data found</h3>";
+					document.getElementById("rList").appendChild(new_div);
+					navigator.notification.activityStop();
+				}
+
+				window.localStorage.setItem("first", first);
+				window.localStorage.setItem("last", last);
+				username = window.localStorage.getItem("username");
+				password = window.localStorage.getItem("password");
+				companyId = window.localStorage.getItem("company_id");
+
+				document.getElementById("rList").innerHTML = "";
+				companyName = document.getElementById("keywords").value;
+
+				var SearchAccountDataServiceUrl = wsURL + 'SearchAccountData';
+				var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SearchAccountData xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><startindex>' + first + '</startindex><endindex>' + last + '</endindex><company>' + companyName + '</company></SearchAccountData></soap:Body></soap:Envelope>';
+
+				$.ajax({
+					url : SearchAccountDataServiceUrl,
+
+					type : "POST",
+					dataType : "xml",
+					timeout : 9000,
+					data : soapMessage,
+					complete : getResponseSearchAccountData,
+
+					error : function(xhr, status, error) {
+						if (status == 'timeout') {
+							alert("Server is not responding");
+							window.location = "dash2.html";
+							// navigator.notification.activityStop();
+							return false;
+						} else if (status != 'success' && status != 'timeout') {
+
+							alert('An error has occurred. Try again or check your Internet connection.');
+							window.location = "dash2.html";
+							// navigator.notification.activityStop();
+							return false;
+						}
+					},
+					contentType : "text/xml; charset=\"utf-8\""
+				});
+
+
+				function getResponseSearchAccountData(xmlHttpRequest, status) {
+					// if (!(status == 'success')) {
+					// alert('An error has occurred. Try again or check your Internet connection.');
+					// window.location = "dash.html";
+					// navigator.notification.activityStop();
+					// return false;
+					// }
+					var length = xmlHttpRequest.responseXML.getElementsByTagName("TypeLeadData").length;
+					var cont = 1;
+					if (length > 0) {
+						$(xmlHttpRequest.responseXML).find('TypeLeadData').each(function() {
+							var completeAdd = "";
+							recdNo = $(this).find('RecordID').text();
+							company = $(this).find('Company').text();
+							firstName = $(this).find('FirstName').text();
+							lastName = $(this).find('LastName').text();
+							address = $(this).find('Address').text();
+							address2 = $(this).find('Address2').text();
+							address3 = $(this).find('Address3').text();
+							city = $(this).find('City').text();
+							state = $(this).find('State').text();
+							zip = $(this).find('Zip').text();
+							country = $(this).find('Country').text();
+							phone = $(this).find('Phone').text();
+							campaign = $(this).find('Mkt_Program_ID').text();
+							lead_Status = $(this).find('Lead_Status').text();
+							dateEntered = $(this).find('Entered').text();
+							acctMgr = $(this).find('AcctMgr').text();
+
+							cont++;
+
+							if (address != "" && !address != null) {
+								completeAdd += address + " ";
+							}
+							if (address2 != "" && address2 != null) {
+								completeAdd += address2 + " ";
+							}
+							if (address3 != "" && address3 != null) {
+								completeAdd += address3 + " ";
+							}
+							if (city != "" && city != null) {
+								completeAdd += city + " ";
+							}
+							if (state != "" && state != null) {
+								completeAdd += state + " ";
+							}
+							if (zip != "" && zip != null) {
+								completeAdd += zip + " ";
+							}
+							if (country != "" && country != null) {
+								completeAdd += country;
+							}
+
+							var lastChar = completeAdd.substr(completeAdd.length - 1);
+
+							if (lastChar == "+") {
+
+								completeAdd = completeAdd.substr(0, completeAdd.length - 1);
+
+							}
+						//	console.log("completeAdd: " + completeAdd);
+
+							if (recdNo > 0) {
+
+								// document.getElementById("footer1").style.display = "none";
+								var textnode = "";
+
+								textnode += "<div id= 'tr"+ recdNo +"' class='ui-btn-inner ui-li' align='left' onclick='javChkID("+ recdNo +")'>";
+								textnode += "<div class='ui-btn-text'>";
+								textnode += "<p class='ui-li-aside ui-li-desc'>";
+
+								var entered = window.localStorage.getItem("Entered");
+								textnode += "" + "<font color='#767676' size='3px'>" + entered + ":</font>" + dateEntered;
+								textnode += "<br />";
+
+								var companylabel = window.localStorage.getItem("Company");
+								var companyAccess = window.localStorage.getItem("companyPriv");
+
+
+								if(companylabel != null && companylabel != "")
+								{
+								if (companyAccess == "true") {
+									if (company != null && company != "")
+									 {
+										textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font><a href='#' onclick='direct_To_frmSalesProgress(" + recdNo + ")'>" + company + "</a>";
+									}
+									else
+									{
+										textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font><a href='#' onclick='direct_To_frmSalesProgress(" + recdNo + ")'>(None)</a>";
+									}
+								}
+								else
+								{
+
+									if (company != null && company != "")
+									 {
+										textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font>" + company;
+									 }
+									else
+									{
+										textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font>(None)";
+
+									}
+
+								}
+
+								}
+
+								textnode += "</p>";
+
+								textnode += "<p class='ui-li-desc'  style='margin-top: -12px;'>";
+								textnode += "<div>";
+
+								var contactlabel = window.localStorage.getItem("Contact");
+								if (companyAccess == "true")
+								{
+
+									if ((lastName != null && lastName != "") || (firstName != null && firstName != ""))
+									{
+										textnode += "<font color='#767676' size='3px'>" + contactlabel + ": </font><a href='#' onclick='direct_To_frmSalesProgress(" + recdNo + ")'>" + lastName + "," + firstName + "</a>";
+									}
+									else
+									 {
+										textnode += "<font color='#767676' size='3px'>" + contactlabel + ": </font><a href='#' onclick='direct_To_frmSalesProgress(" + recdNo + ")'>(None)</a>";
+									}
+								}
+								else
+								{
+
+									if ((lastName != null && lastName != "") || (firstName != null && firstName != "")) {
+										textnode += "<font color='#767676' size='3px'>" + contactlabel + ": </font>" + lastName + "," + firstName;
+									}
+									 else
+									  {
+
+										textnode += "<font color='#767676' size='3px'>" + contactlabel + ": </font>(None)";
+									  }
+
+								}
+								textnode += "<br />";
+								textnode += "<table width='100%'>";
+								textnode += "<tr  width='100%'>";
+								textnode += "<td width='70%'>";
+								var lead_statuslabel = window.localStorage.getItem("Lead_Status");
+								textnode += "<font color='#767676' size='3px' style='margin-top:2px'>" + lead_statuslabel + ": </font>" + lead_Status + "";
+								textnode += "<br />";
+
+								var campaignlabel = window.localStorage.getItem("Mkt_Program_ID");
+								textnode += "<font color='#767676' size='3px' style='margin-top:2px'>" + campaignlabel + ":</font> " + campaign + "";
+								textnode += "<br />";
+
+								var acctMngrLabel = window.localStorage.getItem("EE_REP");
+								if ((acctMngrLabel != "" && acctMngrLabel != null) || (acctMgr != "" && acctMgr != null)){
+									textnode += "<font color='#767676' size='3px' style='margin-top:2px'>" + acctMngrLabel + ":</font> " + acctMgr + "";
+									textnode += "<br />";
+								}
+
+								textnode += "<br />";
+								if (!(phone == '') && !(phone == null)) {
+									textnode += phone;
+								}
+								textnode += "<br/>";
+								textnode += "</td>";
+								textnode += "<td width='30%'>";
+								var contactPriv = window.localStorage.getItem("contactPriv");
+								if (contactPriv == "true") {
+
+									textnode += "<input  type='button'  id=green'" + recdNo + "' value='Select' style='background-color:#2DB200;font-size: 10px;color: white;border: none;font-weight: bold;padding-left: 1em ;padding-right: 1em;padding-top:1em; padding-bottom: 1em; -webkit-border-radius: 4px;border-radius: 3px 3px 3px 3px;'  onclick='callBackGreen(" + recdNo + ")'/>";
+
+								}
+
+								textnode += "</td>";
+								textnode += "</tr>";
+
+								textnode += "</table>";
+
+								textnode += "<table width='100%'>";
+								textnode += "<tr  width='100%'>";
+
+		    					// textnode += "<td width='10%' style='bottom: 0px;text-align: bottom'>";
+								//
+								// // if (!(phone == '') && !(phone == null)) {
+								// // textnode += phone;
+								// // }
+								//
+								// //	textnode += " <input type='submit' style='background-color:#FF0506;color: white;border: none;font-weight: bold;margin-right: 3px; -webkit-border-radius: 4px;border-radius: 3px 3px 3px 3px;' class='button_font delete' value='Delete' onclick='addTask()'>";
+								// textnode += "</td>";
+								textnode += "<td  width='100%' style='font-size: 5px;bottom: 0px;' align='right'>";
+
+								// textnode += "<input type='submit' value='Email' style='background-color:#888888;font-size: 10px; color: white;border: none;font-weight: bold'/>";
+								textnode += "<input id= '"+ recdNo +"' style= 'visibility:hidden; padding: left=2px; width: 25px; height: 25px;';  type='checkbox' name='lstRECDNO' onclick='javChkID("+ recdNo +")' class='messageCheckbox' value='"+ recdNo +"'>";
+
+								textnode += "<img id='assign" + recdNo + "' src='images/assign_icon.png'    onclick=\"assignRecord('" + recdNo + "')\">";
+
+								textnode += "<img id='delete" + recdNo + "' src='images/delete.png' style='margin-left:7px;' onclick=\"confirmForDeletion('" + recdNo + "')\">";
+								if (contactPriv == "true") {
+
+									//textnode += "<input type='button' onclick='direct_To_frmSalesProgress(" + recdNo + ")'  id='" + recdNo + "' value='Edit' style='background-color:#2DB200;font-size: 10px;color: white;border: none;font-weight: bold;padding-left: 1em ;padding-right: 1em;padding-top:1em; padding-bottom: 1em' />";
+									if (!(phone == '') && !(phone == null)) {
+
+										textnode += "<a href='tel:" + phone + "'><img style='margin-left:7px;' id=img'" + recdNo + "' src='images/phone.png'  alt='call'></a>";
+									} else {
+										textnode += "<img style='margin-left:7px;' id=img'" + recdNo + "' src='images/phone_light.png'  alt='call'>";
+									}
+
+									if (!(company == '') && !(company == null)) {
+										textnode += "<img id='imgSearchforCompany" + recdNo + "' src='images/latest earth.png' style='margin-left:7px;'   onclick=\"googleSearchForCompany('" + company + "')\">";
+									} else {
+										textnode += "<img id='imgSearchforCompany" + recdNo + "' src='images/latest earth_light.png' style='margin-left:7px;'>";
+
+									}
+
+								var mapPriv= window.localStorage.getItem("MapPriv");
+									//alert(mapPriv);
+									if(mapPriv == "true"){
+									if (completeAdd != null && completeAdd != "") {
+
+										textnode += "<img  style='margin-left:7px;' id='img" + recdNo + "' src='images/gmap1.png' onclick=\"myMap('" + completeAdd + "')\">";
+									} else {
+
+										textnode += "<img  style='margin-left:7px;' id='img" + recdNo + "' src='images/gmap_light.png' >";
+									}
+									}
+
+								} else {
+									textnode += "<img id=img'" + recdNo + "' src='images/phone_light.png'  alt='call'><img id='imgSearchforCompany" + recdNo + "' src='images/latest earth_light.png' style='margin-left:7px;'><img  style='margin-left:5px;' id='img" + recdNo + "' src='images/gmap_light.png'>";
+
+								}
+
+								textnode += "</td>";
+								textnode += "</tr>";
+								textnode += "</table>";
+
+								textnode += "</div>";
+								textnode += "</p>";
+								textnode += "</div></div>";
+
+								if ((length + 1) == cont) {
+
+									textnode += "<hr style='color: #CCCCCC; background: #CCCCCC; width: 100%%; height: 0.5px; margin-left: -10px;margin-bottom:51px;margin-top:-5px'>";
+
+									textnode += "<br/>";
+									textnode += "<br/>";
+
+								} else {
+
+									textnode += "<hr style='color: #CCCCCC; background: #CCCCCC; width: 100%%; height: 0.5px; margin-left: -10px;margin-top:-5px'>";
+								}
+
+								var node = document.createElement("li");
+								var rID = "R" + recdNo;
+								node.id = rID;
+
+								var textnode1 = document.createTextNode("");
+
+								node.appendChild(textnode1);
+								document.getElementById("rList").appendChild(node);
+
+								document.getElementById(rID).innerHTML = textnode;
+
+								// navigator.notification.activityStop();
+
+							}
+							else
+							{
+								var new_div = document.createElement('div');
+								new_div.className = "cls1";
+
+								new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>Sorry...No data found</h3>";
+								document.getElementById("rList").appendChild(new_div);
+
+							}
+							navigator.notification.activityStop();
+
+						});
+
+					} else {
+						// document.getElementById('footer1').style.display = 'block';
+
+						var new_div = document.createElement('div');
+						new_div.className = "cls1";
+
+						new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>Sorry...No data found</h3>";
+						document.getElementById("rList").appendChild(new_div);
+						navigator.notification.activityStop();
+
+					}
+
+				}
+
+			}
+
+			function inAppBrowserbLoadStart(event)
+			{
+				//	 navigator.notification.activityStart("Please Wait", "loading....");
+
+			}
+
+			function inAppBrowserbLoadStop(event)
+			 {
+				 navigator.notification.activityStop();
+  		//		 alert(event.type + ' 2- ' + event.url);
+  		             timeout : 1000
+
+			}
+
+			function inAppBrowserbLoadError(event)
+			 {
+				 navigator.notification.activityStop();
+		//		 alert(event.type + ' 3- ' + event.message);
+			}
+
+			function inAppBrowserbClose(event)
+			{
+			navigator.notification.activityStart("Please wait", "Refreshing list....");
+			getEvents(null, null, false);
+			//	 navigator.notification.activityStop();
+			//	 alert(event.type);
+				 inAppBrowserbRef.removeEventListener('loadstart', iabLoadStart);
+				 inAppBrowserbRef.removeEventListener('loadstop', iabLoadStop);
+				 inAppBrowserbRef.removeEventListener('loaderror', iabLoadError);
+				 inAppBrowserbRef.removeEventListener('exit', iabClose);
+			}
+
+
+			function direct_To_frmSalesProgress(recdNo)
+			{
+				var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_frmSalesProgress.asp?RECDNO=" + recdNo + "&appkeyword=" + appkeyword + "&pagetype=" + pagetype;
+			//	console.log("URL=" + url);
+		//		alert(url);
+			     inAppBrowserbRef = window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+			  	 inAppBrowserbRef.addEventListener('loadstart', inAppBrowserbLoadStart);
+				 inAppBrowserbRef.addEventListener('loadstop', inAppBrowserbLoadStop);
+				 inAppBrowserbRef.addEventListener('loaderror', inAppBrowserbLoadError);
+				 inAppBrowserbRef.addEventListener('exit', inAppBrowserbClose);
+		//		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+			}
+
+
+			function assignRecord(recdNo) {
+
+				var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_dlgAssign.asp&frompage=mobile_RFullEdit.asp&cid=" + companyId + "&RECDNO=" + recdNo + "&appkeyword=" + appkeyword + "&pagetype=" + pagetype;
+			//	console.log("URL=" + url);
+				window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+			}
+
+
+			document.addEventListener("deviceready", onDeviceReady, false);
+
+			function onDeviceReady()
+
+			 {
+		//	 alert("HI");
+				wsURL = window.localStorage.getItem("wsURL");
+
+				encrptVal = getEncrption();
+				url_main = window.localStorage.getItem("changed_url");
+				companyId = window.localStorage.getItem("company_id");
+				logonID = window.localStorage.getItem("logonID");
+
+				getEvents(null, null, false);
+
+				document.addEventListener("backbutton", onBackKeyDown, false);
+				//Listen to the User clicking on the back button
+				var initialScreenSize = window.innerHeight;
+				window.addEventListener("resize", function() {
+					if (window.innerHeight < initialScreenSize) {
+						$("[data-role=footer]").hide();
+					} else {
+						$("[data-role=footer]").show();
+					}
+				});
+
+				//  for map loading
+				$(window).unbind();
+				$(window).bind('pageshow resize orientationchange', function(e) {
+					max_height();
+				});
+				max_height();
+				google.load("maps", "3.8", {
+					"callback" : map,
+					other_params : "sensor=true&language=en"
+				});
+			}
+
+			function onBackKeyDown(e) {
+
+				e.preventDefault();
+
+				navigator.app.backHistory();
+				localStorage.removeItem("first");
+				localStorage.removeItem("last");
+				localStorage.removeItem("count");
+				localStorage.removeItem("diff");
+
+				// navigator.app.exitApp();
+
+			}
+
+			function editCallBack(recdNo, callBackId) {
+				var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_cbEditEvent.asp&frompage=mobile_RFullEdit.asp&RECDNO=" + recdNo + "&CompanyID=7639" + companyId + "&CallBackId=" + callBackId + "&appkeyword=" + appkeyword + "&pagetype=" + pagetype;
+				window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+			}
+
+
+			function getNext() {
+
+				var count = window.localStorage.getItem("count");
+
+				// document.getElementById("prev").style.color = "white";
+				var first = window.localStorage.getItem("first");
+				var last = window.localStorage.getItem("last");
+
+				if (!(last == count)) {
+				//	navigator.notification.activityStart("Please wait....", "loading");
+
+					var getDiff = count - last;
+					window.localStorage.setItem("diff", getDiff);
+
+					if (getDiff >= 15) {
+						first = parseInt(first) + 15;
+						last = parseInt(last) + 15;
+
+						getEvents(first, last, false);
+
+					} else {
+
+						var spec = parseInt(last) + parseInt(1);
+
+						window.localStorage.setItem("last", count);
+						// document.getElementById("next").style.color = "gray";
+						getEvents(spec, count, false);
+						// document.getElementById("next").style.display = "none";
+
+					}
+
+					//document.getElementById("recordss").innerHTML = first+"to"+ last+" out of "+count +"records";
+				} else {
+
+					// alert("No more data available Next");
+					// navigator.notification.activityStop();
+					// document.getElementById("next").style.color = "gray";
+				}
+
+			}
+
+			function getPrev() {
+
+				var diff = window.localStorage.getItem("diff");
+
+				var first = window.localStorage.getItem("first");
+				var last = window.localStorage.getItem("last");
+
+				if (!(first < 15)) {
+				//	navigator.notification.activityStart("Please wait", "loading...");
+					// document.getElementById("next").style.color = "white";
+					if (diff >= 15) {
+
+						first = first - 15;
+						last = last - 15;
+
+						if (first == 1) {
+							// document.getElementById("prev").style.color = "gray";
+
+						}
+						getEvents(first, last, false);
+					} else {
+						first = first - 15;
+						last = last - diff;
+						getEvents(first, last, false);
+						window.localStorage.setItem("diff", last);
+
+					}
+
+					//document.getElementById("recordss").innerHTML = first+"to"+ last+" out of "+count +"records";
+
+				} else {
+
+				}
+
+			}
+
+			function getMap(address) {
+
+				// navigator.notification.activityStart("Please wait", "loading...");
+				window.location = "MapView.html?add=" + address;
+			}
+
+			function getCount() {
+
+				jQuery.ajaxSetup({
+					async : false
+				});
+
+				var username = window.localStorage.getItem("username");
+				var password = window.localStorage.getItem("password");
+				var companyId = window.localStorage.getItem("company_id");
+				var companyName = document.getElementById("keywords").value;
+
+				var SearchAccountCountServiceUrl = wsURL + 'SearchAccountCount';
+				// Preferably write this out from server side
+				var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SearchAccountCount xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><company>' + companyName + '</company></SearchAccountCount></soap:Body></soap:Envelope>';
+
+				$.ajax({
+					url : SearchAccountCountServiceUrl,
+					type : "POST",
+					dataType : "xml",
+					timeout : 9000,
+					data : soapMessage,
+					complete : getResponseSearchAccountCount,
+					error : function(xhr, status, error) {
+						if (status == 'timeout') {
+							alert("Server is not responding");
+							window.location = "dash2.html";
+							// navigator.notification.activityStop();
+							return false;
+						} else if (status != 'success' && status != 'timeout') {
+
+							alert('An error has occurred. Try again or check your Internet connection.');
+							window.location = "dash2.html";
+							// navigator.notification.activityStop();
+							return false;
+						}
+					},
+					contentType : "text/xml; charset=\"utf-8\""
+				});
+
+				jQuery.ajaxSetup({
+					async : true
+				});
+
+			}
+
+			function getResponseSearchAccountCount(xmlHttpRequest, status) {
+            	// alert(xmlHttpRequest.responseXML);
+				// if (!(status == 'success')) {
+				//
+				// alert('An error has occurred.  Try again or check your Internet connection.');
+				// navigator.notification.activityStop();
+				// return false;
+				// }
+				$(xmlHttpRequest.responseXML).find('SearchAccountCountResponse').each(function() {
+					var count = $(this).find('SearchAccountCountResult').text();
+							//		alert("Count"+count);
+
+					window.localStorage.setItem("count", count);
+
+				});
+
+			}
+
+			function googleSearchForCompany(company) {
+
+				// console.log("Company:  "+company);
+				var url = "https://www.google.com/search?q=" + company;
+				window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+			}
+
+			function callBackGreen(recdNo) {
+
+				var companyId = window.localStorage.getItem("company_id");
+
+				var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_RFullEdit.asp&RECDNO=" + recdNo + "&CompanyID=" + companyId + "&appkeyword=" + appkeyword + "&pagetype=" + pagetype;
+			//	console.log("URLLL:" + url);
+				window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+			}
+
+			function confirmForDeletion(recdNo) {
+
+				deleteRecordNo = recdNo;
+//alert(deleteRecordNo);
+				navigator.notification.confirm("Are you sure you want delete record?", onConfirm, "Confirmation", "Yes,No");
+			}
+
+			function deleteRecord() {
+//alert("deleteRecord");
+				var productServiceUrl = wsURL + 'DeleteRecords';
+						//		console.log("URL=" + productServiceUrl);
+
+				// Preferably write this out from server side
+				var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><DeleteRecords xmlns="LMServiceNamespace"><RecordIDs>' + deleteRecordNo + '</RecordIDs><LogonID>' + logonID + '</LogonID><CompanyID>' + companyId + '</CompanyID></DeleteRecords></soap:Body></soap:Envelope>';
+			//	console.log(soapMessage);
+				//alert(soapMessage);
+				$.ajax({
+					url : productServiceUrl,
+					type : "POST",
+					dataType : "xml",
+					timeout : 15000,
+					data : soapMessage,
+
+					success : function(data) {
+						navigator.notification.activityStop();
+						alert('Record has been deleted');
+						navigator.notification.activityStart("Please wait", "Refreshing list....");
+						getEvents(null, null, false);
+
+					},
+					error : function(xhr, status, error) {
+					//alert(status);
+						if (status == 'timeout') {
+							navigator.notification.activityStop();
+							alert("Server is not responding");
+
+							return;
+						} else if (status != 'success' && status != 'timeout') {
+							navigator.notification.activityStop();
+							alert('An error has occurred. Try again or check your Internet connection.');
+							// navigator.notification.activityStop();
+							return;
+						}
+					},
+					contentType : "text/xml; charset=\"utf-8\""
+				});
+
+			}
+
+			function onConfirm(button) {
+			//alert("HI");
+				if (button == 2) {//If User selected No, then we just do nothing
+					return;
+				} else {
+					navigator.notification.activityStart("Please wait", "deleting....");
+					deleteRecord();
+				}
+			}
+
+
+			$('input[data-type=search]').live("focus", function() {
+				$("[data-role=header]").css('position', 'fixed');
+				$("[data-role=footer]").css('position', 'fixed');
+			});
+
+			function myMap(address) {
+				address1 = address;
+		//	 alert("address"+address);
+				google.load("maps", "3.8", {
+					"callback" : map,
+					other_params : "sensor=true&language=en"
+				});
+			}
+
+			function map() {
+
+			//	navigator.notification.activityStart("Please wait", "loading...");
+
+				navigator.geolocation.getCurrentPosition(geo_success, geo_error, {
+					maximumAge : 5000,
+					timeout : 10000,
+					enableHighAccuracy : true
+				});
+			}
+
+
+			function geo_success(position) {
+
+				// alert(position.coords.latitude);
+
+				var geocoder = new google.maps.Geocoder();
+
+				// alert(geocoder.geocode);
+				geocoder.geocode({
+					'address' : address1
+				}, function(results, status) {
+					if (status == google.maps.GeocoderStatus.OK) {
+						locationadd = results[0].geometry.location;
+					//	alert(locationadd);
+						window.open("https://maps.google.com/maps?saddr=" + position.coords.latitude + "," + position.coords.longitude + "&daddr=" + locationadd.lat() + "," + locationadd.lng(), '_blank', 'location=no,closebuttoncaption=Main');
+					//	alert("https://maps.google.com/maps?saddr=" + position.coords.latitude + "," + position.coords.longitude + "&daddr=" + locationadd.lat() + "," + locationadd.lng());
+						navigator.notification.activityStop();
+
+					} else {
+					//	alert("Geocode was not successful for the following reason: " + status);
+					alert("Google cannot find requested Address. Please enter correct Address.");
+					}
+				});
+
+			}
+
+			function geo_error() {
+				//comment
+				alert("Please enable GPS");
+				//alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+				navigator.notification.activityStop();
+			}
+
+			function javAssign(){
+			var lstRECDNO = document.querySelectorAll('input[name="' + lstRECDNO + '"]:checked'), values = [0];
+
+
+	 		lstRECDNO = "";
+			var lstRECDNOname = document.getElementsByName('lstRECDNO');
+			for(i = 0; i < lstRECDNOname.length; i++) {
+				if (lstRECDNOname[i].checked == true) {
+					if (lstRECDNO.length == 0) {
+						lstRECDNO = lstRECDNOname[i].value;
+					}
+					else {
+						lstRECDNO = lstRECDNO + "," + lstRECDNOname[i].value;
+					}
+				}
+			}
+			if (lstRECDNO.length == 0) {
+			alert("Please select atleast one record");
+			}else{
+			var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_dlgAssign.asp&frompage=mobile_RFullEdit.asp&cid=" + companyId + "&RECDNO=" + lstRECDNO;
+			//	console.log("URL=" + url);
+			//	window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+      		     inAppBrowserbRef = window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+				 inAppBrowserbRef.addEventListener('exit', inAppBrowserbClose);
+			}
+			}
+
+
+
+		function javDelete()
+		{
+			var lstRECDNO = document.querySelectorAll('input[name="' + lstRECDNO + '"]:checked'), values = [0];
+				lstRECDNO = "";
+			var lstRECDNOname = document.getElementsByName('lstRECDNO');
+			for(i = 0; i < lstRECDNOname.length; i++)
+			 {
+				if (lstRECDNOname[i].checked == true)
+				 {
+					if (lstRECDNO.length == 0)
+					{
+						lstRECDNO = lstRECDNOname[i].value;
+					}
+					else
+					{
+						lstRECDNO = lstRECDNO + "," + lstRECDNOname[i].value;
+
+					}
+				}
+			}
+		//	alert(lstRECDNO);
+		if (lstRECDNO.length == 0){
+			alert("Please select atleast one record");
+		} else {
+			confirmForDeletion(lstRECDNO);
+		}
+
+		//	alert(url);
+		//	console.log("URL=" + url);
+			window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+		}
+
+
+		</script>
+		</script>
+<style>
+	.titlePart {
+	position: fixed;
+	-webkit-backface-visibility: hidden;
+	}
+
+</style>
+

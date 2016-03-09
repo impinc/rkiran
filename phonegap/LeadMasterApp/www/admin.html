@@ -1,0 +1,189 @@
+<html>
+	<head>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- <link rel="stylesheet" href="css/dashbo.css" type="text/css" media="all" /> -->
+		<link rel="stylesheet" href="css/styleleft.css" type="text/css" media="all" />
+		<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		 <script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script> 
+		<script type="text/javascript" charset="utf-8" src="js/encryption.js"></script>
+
+		<link rel="stylesheet" media="all and (orientation:portrait)" href="css/addNew_ver.css">
+		<link rel="stylesheet" media="all and (orientation:landscape)" href="css/addNew_hor.css">
+
+	</head>
+
+	<body onload="getUrl()">
+
+		<div class="headerdash">
+
+			<header>
+				
+				<div id="headerImage"> </div>
+
+			</header>
+	</div> 
+	
+			<div  class="upper"   style="overflow:auto;  height: 100%;margin-top: 25%;">
+
+				<form>
+					<div id="buttonform">
+						<p>
+							<div>
+								<input type="submit" class="button" id="changePassword" onclick="directToChangePass()" value="Change Password" style="width: 90%;background-color:#003366"/>
+								<input type="submit" id="chngUrl" class="button" value="Change URL" style="width: 90%;background-color:#003366"  onclick="changeURL()"/>
+								<input type="submit" class="button" id="button5" onclick="back()" value="Cancel" style="width: 90%;background-color:#003366;"/>
+							</div>
+
+						</p>
+
+						<div data-role="footer" id="footer1" style="color: white;"></div>
+					</div>
+
+				</form>
+
+			</div>
+
+		<!-- </div> -->
+<!--	<iframe src="footer.html" frameborder="0" height="500"> </iframe> -->
+	</body>
+</html>
+
+<script type="text/javascript">
+	// var url_main;
+
+	function getUrl() {
+
+		var footerContent = window.localStorage.getItem("footerContent");
+		document.getElementById("footer1").innerHTML = footerContent;
+		
+		url_main = window.localStorage.getItem("changed_url");
+
+		if (url_main == null || url_main == "") {
+			url_main = "http://app.leadmastercrm.com";
+			    window.localStorage.setItem("changed_url", url_main);
+
+
+		}
+
+	}
+
+	function directToChangePass() {
+	//	navigator.notification.activityStart("Please wait....", "loading");
+		window.location = "changePassword.html";
+	}
+
+
+function changeURL() {
+
+					var saved_url = "";
+					saved_url = window.localStorage.getItem("changed_url");
+
+					var changed_url = prompt("Enter URL to change", saved_url);
+
+					if (changed_url == null)
+					{
+
+						return;
+					} else
+					{
+						if (changed_url !== "")
+						{
+
+							window.localStorage.setItem("changed_url", changed_url);
+							window.localStorage.setItem("dashboard", "logged in");
+						   // window.location = "index.html";
+
+						} else
+						{
+
+							alert("No URL entered");
+							return;
+						}
+
+					}
+
+				}
+
+	function quickSearch()
+	{
+	//	navigator.notification.activityStart("Please wait....", "loading");
+		window.location = "quickSearch.html";
+	}
+
+	function checkForMatch()
+	{
+	//	navigator.notification.activityStart("Please wait....", "loading");
+		window.location = "CheckForMatch.html";
+	}
+
+	function directtoMap()
+	{
+		window.location = "map.html";
+		
+	}
+	
+	function back()
+	{
+	//	navigator.notification.activityStart("Please wait....", "loading");
+		window.location = "dash2.html";
+	}
+	 
+	function advanceSearch()
+	{
+		var encrptVal = getEncrption();
+		var url_main = window.localStorage.getItem("changed_url");
+
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_SearchForm.asp";
+		// http://qa2.leadmaster.com/
+
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+
+	}
+
+	
+
+	document.addEventListener("deviceready", function()
+	{
+		//mycode\
+		navigator.notification.activityStop();
+
+	});
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		//Listen to the User clicking on the back button
+
+		var initialScreenSize = window.innerHeight;
+		window.addEventListener("resize", function()
+		{
+			if (window.innerHeight < initialScreenSize)
+			{
+				$("[data-role=footer]").hide();
+			} else {
+				$("[data-role=footer]").show();
+			}
+		});
+	}
+
+	function onBackKeyDown(e)
+	{
+		e.preventDefault();
+		navigator.app.backHistory();
+
+	}
+
+	
+
+
+	document.addEventListener("deviceready", function() {
+		navigator.notification.activityStop();
+
+	});
+
+</script>
+

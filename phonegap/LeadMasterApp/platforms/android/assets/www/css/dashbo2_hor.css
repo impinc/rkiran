@@ -1,0 +1,884 @@
+
+html{
+	
+	 box-shadow: inset 0 0 15px black;
+}
+body {
+
+	background-color: #006dd9;
+	height: 100%;
+	position: fixed;
+}
+
+
+@media screen and (min-width: 280px) and (max-width: 320px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+	}
+	#headerImage {
+
+		width: 280px;
+		height: 48px;
+		background-size: 280px 48px;
+		background: url('../images/header_hdpi.png') no-repeat center bottom;
+	}
+
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		margin-top: 20%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		position: absolute;
+		background-size: contain;
+		vertical-align: middle;
+	}
+	td {
+
+		padding: 5px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+
+	#buttonform {
+
+		margin-top: -5%;
+	}
+
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 30px;
+		margin-top: 7px;
+	}
+	#new_lead {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/shortcut_mdpi.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/accounts_mdpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/callback_mdpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/my_searches_mdpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/recent_items_mdpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/dashboard_mdpi.png') no-repeat center bottom;
+	}
+	.footer1 {
+		 box-shadow: inset 0 0 8px black;
+		 height: 40px;
+		position: fixed;
+	}
+
+}
+
+@media screen and (min-width: 330px) and (max-width: 440px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 17%;
+		margin-top: -3%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+	td {
+
+		padding: 2px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		margin-top: 18%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 280px;
+		height: 48px;
+		background-size: 280px 48px;
+		background: url('../images/header_mdpi.png') no-repeat center bottom;
+	}
+
+	#buttonform {
+
+		margin-top: 2%;
+		position: fixed;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 27px;
+		margin-top: 5px;
+	}
+	#new_lead {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/shortcut_mdpi.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/accounts_mdpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/callback_mdpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/my_searches_mdpi.png') no-repeat center bottom;
+		/*background-size: 64px 64px;*/
+	}
+	#recent_items {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/recent_items_mdpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/dashboard_mdpi.png') no-repeat center bottom;
+	}
+	.footer1 {
+		
+		position: fixed;
+		 box-shadow: inset 0 0 8px black;
+	}
+
+}
+
+
+@media screen and (min-width: 450px) and (max-width: 600px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 27%;
+		position: fixed;
+		text-align: center;
+		background-size: contain;
+		
+		vertical-align: middle;
+		
+	}
+	td {
+
+		padding: 4px;
+		transform:scale(1.0,1.0) translate(0px,-1px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		margin-top: 20%;
+		left: 10%;
+		right: 10%;
+			
+		text-align: center;
+		background-size: contain;
+	position: absolute;
+		vertical-align: middle;
+	}
+
+	#headerImage {
+
+		width: 280px;
+		height: 48px;
+		background-size: 280px 48px;
+		background: url('../images/header_mdpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+
+		left: 22%;
+		right: 22%;
+		margin-top: 9%;
+		position: fixed;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 12pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		margin-top: 3px;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 28px;
+	}
+	#new_lead1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/06(32).png') no-repeat center bottom;
+	}
+	#accounts1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/02(32).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/01(32).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/05(32).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/03(32).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/04(32).png') no-repeat center bottom;
+	}
+	.footer1 {
+		height: 40px;
+		position: fixed;
+		 box-shadow: inset 0 0 8px black;
+	}
+}
+
+@media screen and (min-width: 605px) and (max-width: 640px) {
+
+	.headerdash {
+		width: 80%;
+		height: 100%;
+		left: 28%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+
+	td {
+
+		 padding: 8px;
+		 transform:scale(1.0,1.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	 }
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 20%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 280px;
+		height: 48px;
+		background-size: 280px 48px;
+		background: url('../images/header_mdpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+		margin-top: 1%;
+		left: 18%;
+		position: fixed;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		margin-top: 7px;
+		height: 28px;
+	}
+	#new_lead1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/06(32).png') no-repeat center bottom;
+	}
+	#accounts1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/02(32).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/01(32).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/05(32).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/03(32).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/04(32).png') no-repeat center bottom;
+	}
+	.footer1 {
+		height: 40px;
+		position: fixed;
+		box-shadow: inset 0 0 8px black;
+	}
+
+}
+
+@media screen and (min-width: 650px) and (max-width: 720px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+		vertical-align: middle;
+	}
+	td {
+
+		padding: 0px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		margin-left: 12%;
+		background-size: 560px 96px;
+		background: url('../images/header_xdpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+		margin-top: 5%;
+		left: 10%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		margin-top: 7px;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 35px;
+	}
+
+	#new_lead1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/06(32).png') no-repeat center bottom;
+	}
+	#accounts1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/02(32).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/01(32).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/05(32).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/03(32).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 32px;
+		height: 32px;
+		background-size: 32px 32px;
+		background: url('../images/04(32).png') no-repeat center bottom;
+	}
+	.footer1 {
+		height: 40px;
+		position: fixed;
+		box-shadow: inset 0 0 8px black;
+	}
+}
+
+@media screen and (min-width: 721px) and (max-width: 800px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 8%;
+		margin-top: -3%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	td {
+
+		padding: 3px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		margin-top: 25%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		margin-left: 10%;
+		background-size: 560px 96px;
+		background: url('../images/header_xdpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+		margin-top: 0%;
+		left: 25%;
+		position: fixed;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 5px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		margin-top: 7px;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 30px;
+	}
+	#new_lead1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/06(48).png') no-repeat center bottom;
+		
+	}
+	#accounts1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/02(48).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/01(48).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/05(48).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/03(48).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/04(48).png') no-repeat center bottom;
+	}
+	.footer1 {
+		height: 65px;
+		position: fixed;
+		 box-shadow: inset 0 0 8px black;
+	}
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1024px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		margin-left: 11%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+
+	td {
+
+		padding: 5px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 25%;
+		left: 12%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		margin-left: 16%;
+		background-size: 560px 96px;
+		background: url('../images/header_xdpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+
+		left: 31%;
+		top: 25%;
+		position: fixed;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		margin-top: 7px;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 40px;
+	}
+	#new_lead1 {
+		width: 64px;
+		height: 64px;
+		background-size: 64px 64px;
+		background: url('../images/06(64).png') no-repeat center bottom;
+	}
+	#accounts1 {
+		width: 64px;
+		height: 64px;
+		background-size: 64px 64px;
+		background: url('../images/02(64).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 64px;
+		height: 64px;
+		background-size: 64px 64px;
+		background: url('../images/01(64).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 64px;
+		height: 64px;
+		background-size: 64px 64px;
+		background: url('../images/05(64).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 64px;
+		height: 64px;
+		background-size: 64px 64px;
+		background: url('../images/03(64).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 64px;
+		height: 64px;
+		background-size: 64px 64px;
+		background: url('../images/04(48).png') no-repeat center bottom;
+	}
+	
+	
+	.footer1{
+	height: 65px;
+	box-shadow: inset 0 0 10px black;
+	position: fixed;
+	}
+
+}
+
+@media screen and (min-width: 1030px) and (max-width: 1280px) {
+
+	.headerdash {
+
+		width: 100%;
+		height: 100%;
+		/*left: 9%;*/
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+	}
+
+	td {
+
+		padding: 12px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		margin-top: 30%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+		vertical-align: middle;
+		
+	}
+	#upperId{
+		
+		display: none;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		margin-left: 22%;
+		background-size: 560px 96px;
+		background: url('../images/header_xdpi.png') no-repeat center bottom;
+		padding-left: 400px;
+	}
+	#buttonform {
+
+		left: 15%;
+		top: -5%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 20pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		margin-top: 7px;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 50px;
+		margin-top: 7px;
+	}
+	#new_lead1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/06(48).png') no-repeat center bottom;
+		
+	}
+	#accounts1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/02(48).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/01(48).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/05(48).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/03(48).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/04(48).png') no-repeat center bottom;
+	}
+	.footer1 {
+		height: 65px;
+		position: fixed;
+		 box-shadow: inset 0 0 10px black;
+	}
+	
+
+}
+

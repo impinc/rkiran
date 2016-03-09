@@ -1,0 +1,251 @@
+.content {
+
+	width: 80%;
+	/*height: 100%;*/
+	top: 35%;
+	left: 10%;
+	right: 10%;
+	text-align: center;
+	background-size: contain;
+	position: fixed;
+	vertical-align: middle;
+}
+
+
+
+@media only screen and (max-width: 240px) {
+
+	.headernew {
+
+		width: 80%;
+		/*height: 100%;*/
+
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	select {
+
+		width: 90%;
+	}
+
+	#footer1 {
+		background: scroll 0 0 rgba(0, 0, 0, 0);
+		position: fixed;
+		height: 50px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		margin-bottom: 0px;
+	}
+}
+
+@media screen and (max-width: 320px) {
+
+	.headernew {
+
+		width: 80%;
+		left: 10%;
+		
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	select {
+
+		width: 90%;
+	}
+
+	#footer1 {
+		/*background: scroll 0 0 rgba(0, 0, 0, 0);*/
+		position: fixed;
+		height: 50px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		margin-bottom: 0px;
+		/*margin-bottom:0px;*/
+
+		/*margin-top: 40%;
+		 position: fixed;
+		 bottom:0px;
+		 margin-bottom:-20px;
+		 left:0px;
+		 right:0px;*/
+	}
+
+}
+
+@media screen and (max-width: 480px) {
+
+	.headernew {
+
+		width: 80%;
+		left: 20%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	#footer1 {
+		/*background: scroll 0 0 rgba(0, 0, 0, 0);*/
+		position: fixed;
+		height: 50px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		margin-bottom: 0px;
+	}
+
+}
+@media screen and (max-width: 600px) {
+
+	.headernew {
+
+		width: 80%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	#footer1 {
+		/*background: scroll 0 0 rgba(0, 0, 0, 0);*/
+		position: fixed;
+		height: 50px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		margin-bottom: 0px;
+	}
+}
+
+
+@media screen and (max-width: 640px) {
+
+	.headernew {
+
+		width: 80%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	#footer1 {
+		/*background: scroll 0 0 rgba(0, 0, 0, 0);*/
+		position: fixed;
+		height: 50px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		margin-bottom: 0px;
+	}
+}
+
+
+@media screen and (max-width: 720px) {
+
+	.headernew {
+
+		width: 80%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	#footer1 {
+		/*background: scroll 0 0 rgba(0, 0, 0, 0);*/
+		position: fixed;
+		height: 50px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		margin-bottom: 0px;
+	}
+
+}
+@media screen and (max-width: 800px) {
+
+.headernew {
+
+		width: 80%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	#footer1 {
+		/*background: scroll 0 0 rgba(0, 0, 0, 0);*/
+		position: fixed;
+		height: 50px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		margin-bottom: 0px;
+	}
+
+}
+
+
+@media screen and (max-width: 1024px) {
+
+.headernew {
+
+		width: 80%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	#footer1 {
+		/*background: scroll 0 0 rgba(0, 0, 0, 0);*/
+		position: fixed;
+		height: 50px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		margin-bottom: 0px;
+	}
+
+}
+
+@media screen and (max-width: 1280px) {
+
+.headernew {
+
+		width: 80%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	#footer1 {
+		/*background: scroll 0 0 rgba(0, 0, 0, 0);*/
+		position: fixed;
+		height: 50px;
+		bottom: 0px;
+		left: 0px;
+		right: 0px;
+		margin-bottom: 0px;
+	}
+
+}
+
+
+

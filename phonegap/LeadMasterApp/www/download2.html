@@ -1,0 +1,868 @@
+<html >
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, target-densitydpi=medium-dpi" />
+
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		 <script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script> 
+		<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/phonegap-1.0.0.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/encryption.js"></script>
+	
+		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+		<!-- <script type = "text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script> -->
+		<!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false&libraries=geometry"></script> -->
+		<link rel="stylesheet" media="all and (orientation:portrait)" href="css/account_offline.css">
+		<link rel="stylesheet" media="all and (orientation:landscape)" href="css/account_offline_hor.css">
+		<!-- <link rel="stylesheet" href="css/jquery.mobile-1.0.1.css" /> -->
+
+		<style>
+			.button {
+				/*adjust the roundness*/
+				border-radius: 4px;
+				moz-border-radius: 4px;
+				webkit-border-radius: 4px;
+				/*adjust height and width*/
+				height: 120%;
+				width: 80%;
+				/*change border colour*/
+				border: 1px #2B4E78 solid;
+				background-color: 86B1EB;
+				color: white;
+				font-weight: bold;
+				margin-top: 6%;
+			}
+		</style>
+	</head>
+
+	<body style="background-color: white;height: 100%;">
+
+		<div data-role="header" class="titlePart"  style="background-color: #006DD9;width: 100%;margin-left: -8px;position: fixed">
+
+			<table width="100%" cellspacing="0" style="center;vertical-align: middle;">
+				<tr width="100%" style="background-color: #006DD9;height: 60px;" >
+					<td width="100%" ><div style="text-align: center;vertical-align: bottom;font-weight: bolder;color: white" class="title" id="heading">
+
+					</div></td>
+				</tr>
+				<tr>
+					<td style="background-color: white;" colspan="2"></td>
+				</tr>
+				<tr width="100%" >
+					<!-- 960018 -->
+					<td width="92%" height="50px" >
+					<input  type="text" placeholder="Search by Company name" id="keywords" style="border-radius: 1em; text-align: center;padding: 1em 0;color: grey;border:3px;border-color: #105FC9;" onkeydown="if (event.keyCode == 13) getEvents(null,null,true);"/>
+					</td>
+					<td width="8%" style="padding-top: 4px;padding-bottom: 4px;">
+					<input type="image"  src="images/search3.png" style="border:none;"  onclick="getEvents(null,null,true)"/>
+					</td>
+				</tr>
+			</table>
+
+		</div>
+
+		<div data-role="content" style="padding-top: 100px;bottom: 51px" >
+
+			<ul id="rList" class="ui-listview" onactivate="getEvents()" data-role="listview" style="background-color: white;list-style: none;margin-left: -20px;margin-bottom: -20px;margin-right: -10px;height: 63%;margin-bottom: 10.2%" >
+
+				<div style="margin-top: 15%;text-align: center;margin-left: -10px;vertical-align: middle" id="message1">
+
+					<!-- <h3 id="msgbydef" style="color: grey; text-align: center;text-shadow: 2px;vertical-align: middle">Enter any keyword to search</h3> -->
+
+				</div>
+			</ul>
+		</div>
+
+		<div  style="bottom: 0px;position: fixed;  background-color: #006dd9; height: 50px;min-width: 100%;margin-left: -8px">
+			<table style="text-align: center;width:100%;vertical-align: middle">
+				<tr style="text-align: center;width: 100%;">
+					<td  align= "left" style="text-align:left;width:35%;margin-right: -8px">
+					<button class="button" id="join" onclick="getPrev()">
+						Previous
+					</button></td>
+					<td  align="center" style="width:30%;text-align:center;" ><h5 id="recordss" style="color: white;vertical-align: middle;text-align: center;height: 0px;font-size: 14px;margin-top: 10px"> </h5></td>
+					<td  align="right" style="width:35%;text-align:right;margin-left: -8px">
+					<button class="button" id="join1" onclick="getNext()">
+						Next
+					</button></td>
+
+				</tr>
+			</table>
+
+		</div>
+
+		<script>
+			var username, password, company_id, recdNo = 0, company, companyName, url_main, address, address2, address3, city, state, zip, country, dateEntered, address1,wsURL;
+
+			function getEvents(first, last, boolPregress) {
+
+				var heading = window.localStorage.getItem("Banner - Accounts");
+
+				// alert(heading);
+				document.getElementById("heading").innerHTML = heading;
+				
+				var companylabel = window.localStorage.getItem("Company");
+				
+				
+				if(companylabel!=null && companylabel!=""){
+				// document.getElementsByName('keywords')[0].placeholder='Search by '+eventNamelabel;
+				$('#keywords').attr('placeholder','Search by '+companylabel);
+				}
+
+				if (boolPregress) {
+
+			//		navigator.notification.activityStart("Please wait....", "loading");
+
+				}
+
+				if (first == null && last == null){
+
+					getCount();
+
+					var count = window.localStorage.getItem("count");
+
+					if (count >= 15) {
+						first = 1;
+						last = 15;
+					} else {
+						first = 1;
+						last = count;
+					}
+
+					url_main = window.localStorage.getItem("changed_url");
+
+					if (url_main == null || url_main == "") {
+						url_main = "http://app.leadmastercrm.com";
+
+					}
+
+				}
+
+				var count = window.localStorage.getItem("count");
+
+				if (count > 0) {
+
+					document.getElementById("recordss").innerHTML = first + " to " + last + " of " + count;
+				} else {
+					document.getElementById("recordss").innerHTML = "0" + " to " + "0" + " of " + count;
+					var new_div = document.createElement('div');
+							new_div.className = "cls1";
+
+							new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>Sorry...No data found</h3>";
+							document.getElementById("rList").appendChild(new_div);
+					navigator.notification.activityStop();
+				}
+
+				window.localStorage.setItem("first", first);
+				window.localStorage.setItem("last", last);
+
+				// document.getElementById("message1").style.display = "none";
+				username = window.localStorage.getItem("username");
+				password = window.localStorage.getItem("password");
+				companyId = window.localStorage.getItem("company_id");
+				document.getElementById("rList").innerHTML = "";
+				companyName = document.getElementById("keywords").value;
+				
+				
+				
+				var productServiceUrl = wsURL+'SearchAccountData';
+
+				var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SearchAccountData xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><startindex>' + first + '</startindex><endindex>' + last + '</endindex><company>' + companyName + '</company></SearchAccountData></soap:Body></soap:Envelope>';
+
+				$.ajax({
+					url : productServiceUrl,
+					type : "POST",
+					dataType : "xml",
+					timeout : 9000,
+					data : soapMessage,
+					complete : endSaveProduct,
+					error : function(xhr,status, error) {
+				 if (status == 'timeout') {
+				alert("Server is not responding");
+				window.location = "dash2.html";
+				// navigator.notification.activityStop();
+				return false;
+				}
+				else if(status!='success' && status != 'timeout'){
+					
+					alert('An error has occurred. Try again or check your Internet connection.');
+				window.location = "dash2.html";
+				// navigator.notification.activityStop();
+				return false;
+				}
+			},
+					contentType : "text/xml; charset=\"utf-8\""
+				});
+
+				function endSaveProduct(xmlHttpRequest, status) {
+
+					// if (!(status == 'success')) {
+// 
+						// alert('An error has occurred. Try again or check your Internet connection.');
+						// window.location = "dash.html";
+						// navigator.notification.activityStop();
+// 
+						// return false;
+// 
+					// }
+					var length = xmlHttpRequest.responseXML.getElementsByTagName("TypeLeadData").length;
+					
+					var cont = 1;
+					if(length>0){
+					$(xmlHttpRequest.responseXML).find('TypeLeadData').each(function() {
+
+						var completeAdd = "";
+
+						recdNo = $(this).find('RecordID').text();
+						company = $(this).find('Company').text();
+						firstName = $(this).find('FirstName').text();
+						lastName = $(this).find('LastName').text();
+						address = $(this).find('Address').text();
+						address2 = $(this).find('Address2').text();
+						address3 = $(this).find('Address3').text();
+						city = $(this).find('City').text();
+						state = $(this).find('State').text();
+						zip = $(this).find('Zip').text();
+						country = $(this).find('Country').text();
+
+						phone = $(this).find('Phone').text();
+						campaign = $(this).find('Mkt_Program_ID').text();
+						lead_Status = $(this).find('Lead_Status').text();
+						dateEntered = $(this).find('Entered').text();
+
+						cont++;
+
+						if (address != "" && !address != null) 
+						{
+							completeAdd += address + " ";
+						} 
+						 if (address2 != "" && address2 != null)
+						 {
+							completeAdd += address2 + " ";
+						}
+						  if (address3 != "" && address3 != null) 
+						 {
+							completeAdd += address3 + " ";
+						} 
+						 if (city != "" && city != null) 
+						{
+							completeAdd += city + " ";
+						} 
+						 if (state != "" && state != null) 
+						{
+							completeAdd += state + " ";
+						} 
+						 if (zip != "" && zip != null) 
+						{
+							completeAdd += zip + " ";
+						} 
+						 if (country != "" && country != null) 
+						{
+							completeAdd += country;
+						}
+
+						var lastChar = completeAdd.substr(completeAdd.length - 1);
+
+						if (lastChar == "+") {
+
+							completeAdd = completeAdd.substr(0, completeAdd.length - 1);
+
+						}
+						console.log("completeAdd: " + completeAdd);
+
+						if (recdNo > 0) {
+
+							// document.getElementById("footer1").style.display = "none";
+							var textnode = "";
+
+							textnode += "<div class='ui-btn-inner ui-li' align='left'>";
+							textnode += "<div class='ui-btn-text'>";
+
+							var entered = window.localStorage.getItem("Entered");
+							textnode += "" + "<div id='img'></div>";
+
+							var companylabel = window.localStorage.getItem("Company");
+							var companyAccess=window.localStorage.getItem("companyPriv");
+							
+							if(companyAccess=="true"){
+							if (company != null && company != "") {
+								textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font><a href='#' onclick='callContact(" + recdNo + ")'>" + company + "</a>";
+							} else {
+								textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font><a href='#' onclick='callContact(" + recdNo + ")'>(None)</a>";
+							}
+							}
+							else{
+								
+								if (company != null && company != "") {
+								textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font>" + company ;								
+								}
+								else{
+									textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font>(None)";
+									
+								}
+							
+							}
+							textnode += "</p>";
+
+							textnode += "<p class='ui-li-desc'  style='margin-top: -12px;'>";
+							textnode += "<div>";
+
+							var contactlabel = window.localStorage.getItem("Contact");
+							if(companyAccess=="true"){
+
+							if ((lastName != null && lastName != "") || (firstName != null && firstName != "")) {
+								textnode += "<font color='#767676' size='3px'>" + contactlabel + ": </font><a href='#' onclick='callContact(" + recdNo + ")'>" + lastName + "," + firstName + "</a>";
+							} else {
+								textnode += "<font color='#767676' size='3px'>" + contactlabel + ": </font><a href='#' onclick='callContact(" + recdNo + ")'>(None)</a>";
+							}
+							}
+							else{
+								
+								if ((lastName != null && lastName != "") || (firstName != null && firstName != "")) {
+								textnode += "<font color='#767676' size='3px'>" + contactlabel + ": </font>" + lastName + "," + firstName ;
+							} else {
+
+								textnode += "<font color='#767676' size='3px'>" + contactlabel + ": </font>(None)";
+							}
+							
+							}
+							textnode += "<br />";
+
+							textnode += "<table width='100%'>";
+
+							textnode += "<tr width='100%'>";
+							//
+							textnode += "<td width='70%'>";
+							var lead_statuslabel = window.localStorage.getItem("Lead_Status");
+							textnode += "<font color='#767676' size='3px' style='margin-top:2px'>" + lead_statuslabel + ": </font>" + lead_Status + "";
+							textnode += "<br />";
+							var campaignlabel = window.localStorage.getItem("Mkt_Program_ID");
+							textnode += "<font color='#767676' size='3px' style='margin-top:2px'>" + campaignlabel + ":</font> " + campaign + "";
+							textnode += "<br />";
+							textnode += "<br/>";
+							textnode += "</td>";
+							textnode += "<td width='30%'>";
+							var contactPriv = window.localStorage.getItem("contactPriv");
+							if (contactPriv=="true") {
+
+								textnode += "<input  type='button'  id=green'" + recdNo + "' value='Select' style='background-color:#2DB200;font-size: 10px;color: white;border: none;font-weight: bold;padding-left: 1em ;padding-right: 1em;padding-top:1em; padding-bottom: 1em'  onclick='callBackGreen(" + recdNo + ")'/>";
+
+							}
+
+							textnode += "</td>";
+							textnode += "</tr>";
+
+							textnode += "</table>";
+
+							textnode += "<table width='100%'>";
+							textnode += "<tr width='100%'>";
+
+							textnode += "<td width='50%' style='bottom: 0px;text-align: bottom'>";
+
+							if (!(phone == '') && !(phone == null)) {
+								textnode += phone;
+							}
+
+							textnode += "</td>";
+							textnode += "<td width='50%' style='font-size: 5px;bottom: 0px;'>";
+
+							// textnode += "<input type='submit' value='Email' style='background-color:#888888;font-size: 10px; color: white;border: none;font-weight: bold'/>";
+							
+							if (contactPriv=="true") {
+
+								//textnode += "<input type='button' onclick='callContact(" + recdNo + ")'  id='" + recdNo + "' value='Edit' style='background-color:#2DB200;font-size: 10px;color: white;border: none;font-weight: bold;padding-left: 1em ;padding-right: 1em;padding-top:1em; padding-bottom: 1em' />";
+								if (!(phone == '') && !(phone == null)) {
+
+									textnode += "<a href='tel:" + phone + "'><img id=img'" + recdNo + "' src='images/phone.png'  alt='call'></a>";
+								} else {
+									textnode += "<img id=img'" + recdNo + "' src='images/phone_light.png'  alt='call'>";
+								}
+
+								if (!(company == '') && !(company == null)) {
+									textnode += "<img id='imgSearchforCompany" + recdNo + "' src='images/latest earth.png' style='margin-left:5px;'   onclick=\"googleSearchForCompany('" + company + "')\">";
+								} else {
+									textnode += "<img id='imgSearchforCompany" + recdNo + "' src='images/latest earth_light.png' style='margin-left:5px;'>";
+
+								}
+
+								if (completeAdd != null && completeAdd != "") {
+
+									textnode += "<img  style='margin-left:5px;' id='img" + recdNo + "' src='images/gmap1.png' onclick=\"myMap('" + completeAdd + "')\">";
+								} else {
+
+									textnode += "<img  style='margin-left:5px;' id='img" + recdNo + "' src='images/gmap_light.png' >";
+								}
+
+							}
+							else{
+								textnode += "<img id=img'" + recdNo + "' src='images/phone_light.png'  alt='call'><img id='imgSearchforCompany" + recdNo + "' src='images/latest earth_light.png' style='margin-left:5px;'><img  style='margin-left:5px;' id='img" + recdNo + "' src='images/gmap_light.png'>";
+								
+							}
+
+							textnode += "</td>";
+							textnode += "</tr>";
+							textnode += "</table>";
+
+							textnode += "</div>";
+							textnode += "</p>";
+							textnode += "</div></div>";
+
+							if ((length + 1) == cont) {
+
+								textnode += "<hr style='color: #CCCCCC; background: #CCCCCC; min-width: 100%%; height: 0.5px; margin-left: -10px;margin-bottom:51px;margin-top:-5px'>";
+
+								textnode += "<br/>";
+								textnode += "<br/>";
+
+							} else {
+
+								textnode += "<hr style='color: #CCCCCC; background: #CCCCCC; min-width: 100%%; height: 0.5px; margin-left: -10px;margin-top:-5px'>";
+							}
+
+							var node = document.createElement("li");
+							var rID = "R" + recdNo;
+							node.id = rID;
+
+							var textnode1 = document.createTextNode("");
+
+							node.appendChild(textnode1);
+							document.getElementById("rList").appendChild(node);
+
+							document.getElementById(rID).innerHTML = textnode;
+
+							// navigator.notification.activityStop();
+
+						} else {
+							// document.getElementById('footer1').style.display = 'block';
+
+							var new_div = document.createElement('div');
+							new_div.className = "cls1";
+
+							new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>Sorry...No data found</h3>";
+							document.getElementById("rList").appendChild(new_div);
+
+						}
+						navigator.notification.activityStop();
+
+					});
+					
+					}
+					 else {
+							// document.getElementById('footer1').style.display = 'block';
+
+							var new_div = document.createElement('div');
+							new_div.className = "cls1";
+
+							new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>Sorry...No data found</h3>";
+							document.getElementById("rList").appendChild(new_div);
+								navigator.notification.activityStop();
+
+						}
+					
+
+				}
+
+			}
+
+			function callContact(recdNo) {
+				
+					var encrptVal = getEncrption();
+					var url_main = window.localStorage.getItem("changed_url");
+
+					var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_frmSalesProgress.asp?RECDNO=" + recdNo;
+					console.log("URL=" + url);
+					window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+				
+			}
+
+			// function getEncrption() {
+// 
+				// var username = window.localStorage.getItem("username");
+				// var password = window.localStorage.getItem("password");
+				// var databaseId = window.localStorage.getItem("database_id");
+				// var companyId = window.localStorage.getItem("company_id");
+				// var encrptVauleuser = encode64Base(username);
+				// var encrptVaulepass = encode64Base(password);
+				// var encrptVauleDatabaseId = encode64Base(databaseId);
+				// var encrptVaulewgid = encode64Base(companyId);
+// 
+				// encrptVauleuser = encrptVauleuser.replace("==", "@");
+				// encrptVaulepass = encrptVaulepass.replace("==", "@");
+				// encrptVaulewgid = encrptVaulewgid.replace("==", "@");
+				// encrptVauleDatabaseId = encrptVauleDatabaseId.replace("==", "@");
+// 
+				// var encrptVaule = encrptVauleuser.replace("=", "$") + "^" + encrptVaulepass.replace("=", "$") + "^" + encrptVaulewgid.replace("=", "$") + "^" + encrptVauleDatabaseId.replace("=", "$");
+// 
+				// return encrptVaule;
+			// }
+// 
+			// function encode64Base(input) {
+// 
+				// var _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+				// var output = "";
+				// var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+				// var i = 0;
+// 
+				// input = utf8_encode(input);
+// 
+				// while (i < input.length) {
+// 
+					// chr1 = input.charCodeAt(i++);
+					// chr2 = input.charCodeAt(i++);
+					// chr3 = input.charCodeAt(i++);
+// 
+					// enc1 = chr1 >> 2;
+					// enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+					// enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+					// enc4 = chr3 & 63;
+// 
+					// if (isNaN(chr2)) {
+						// enc3 = enc4 = 64;
+					// } else if (isNaN(chr3)) {
+						// enc4 = 64;
+					// }
+// 
+					// output = output + _keyStr.charAt(enc1) + _keyStr.charAt(enc2) + _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
+// 
+				// }
+// 
+				// return output;
+			// }
+// 
+			// function utf8_encode(string) {
+				// string = string.replace(/\r\n/g, "\n");
+				// var utftext = "";
+// 
+				// for (var n = 0; n < string.length; n++) {
+// 
+					// var c = string.charCodeAt(n);
+// 
+					// if (c < 128) {
+						// utftext += String.fromCharCode(c);
+					// } else if ((c > 127) && (c < 2048)) {
+						// utftext += String.fromCharCode((c >> 6) | 192);
+						// utftext += String.fromCharCode((c & 63) | 128);
+					// } else {
+						// utftext += String.fromCharCode((c >> 12) | 224);
+						// utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+						// utftext += String.fromCharCode((c & 63) | 128);
+					// }
+// 
+				// }
+// 
+				// return utftext;
+			// }
+
+
+			document.addEventListener("deviceready", onDeviceReady, false);
+
+			function onDeviceReady() {	
+				
+				 wsURL=window.localStorage.getItem("wsURL");
+				getEvents(null, null, false);
+
+				document.addEventListener("backbutton", onBackKeyDown, false);
+				//Listen to the User clicking on the back button
+				var initialScreenSize = window.innerHeight;
+				window.addEventListener("resize", function() {
+					if (window.innerHeight < initialScreenSize) {
+						$("[data-role=footer]").hide();
+					} else {
+						$("[data-role=footer]").show();
+					}
+				});
+
+				//  for map loading
+				$(window).unbind();
+				$(window).bind('pageshow resize orientationchange', function(e) {
+					max_height();
+				});
+				max_height();
+				google.load("maps", "3.8", {
+					"callback" : map,
+					other_params : "sensor=true&language=en"
+				});
+			}
+
+			function onBackKeyDown(e) {
+				e.preventDefault();
+
+				navigator.app.backHistory();
+				localStorage.removeItem("first");
+				localStorage.removeItem("last");
+				localStorage.removeItem("count");
+				localStorage.removeItem("diff");
+
+				// navigator.app.exitApp();
+
+			}
+
+			function editCallBack(recdNo, callBackId) {
+				var companyId = window.localStorage.getItem("company_id");
+				var encrptVal = getEncrption();
+				var url_main = window.localStorage.getItem("changed_url");
+				var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_cbEditEvent.asp&frompage=mobile_RFullEdit.asp&RECDNO=" + recdNo + "&CompanyID=7639" + companyId + "&CallBackId=" + callBackId;
+				window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+			}
+
+			//  ----------------  Filter-------------------
+
+			// $(function() {
+			//
+			// $('#keywords').keyup(function() {
+			//
+			// var searchText = $(this).val();
+			//
+			// $('ul > li').each(function() {
+			//
+			// var currentLiText = $(this).text(), showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+			//
+			// $(this).toggle(showCurrentLi);
+			//
+			// });
+			// });
+			//
+			// });
+
+			function getNext() {
+
+				var count = window.localStorage.getItem("count");
+
+				// document.getElementById("prev").style.color = "white";
+				var first = window.localStorage.getItem("first");
+				var last = window.localStorage.getItem("last");
+
+				if (!(last == count)) {
+			//		navigator.notification.activityStart("Please wait....", "loading");
+
+					var getDiff = count - last;
+					window.localStorage.setItem("diff", getDiff);
+
+					if (getDiff >= 15) {
+						first = parseInt(first) + 15;
+						last = parseInt(last) + 15;
+
+						getEvents(first, last, false);
+
+					} else {
+
+						var spec = parseInt(last) + parseInt(1);
+
+						window.localStorage.setItem("last", count);
+						// document.getElementById("next").style.color = "gray";
+						getEvents(spec, count, false);
+						// document.getElementById("next").style.display = "none";
+
+					}
+
+					//document.getElementById("recordss").innerHTML = first+"to"+ last+" out of "+count +"records";
+				} else {
+
+					// alert("No more data available Next");
+					// navigator.notification.activityStop();
+					// document.getElementById("next").style.color = "gray";
+				}
+
+			}
+
+			function getPrev() {
+
+				var diff = window.localStorage.getItem("diff");
+
+				var first = window.localStorage.getItem("first");
+				var last = window.localStorage.getItem("last");
+
+				if (!(first < 15)) {
+			//		navigator.notification.activityStart("Please wait", "loading...");
+					// document.getElementById("next").style.color = "white";
+					if (diff >= 15) {
+
+						first = first - 15;
+						last = last - 15;
+
+						if (first == 1) {
+							// document.getElementById("prev").style.color = "gray";
+
+						}
+						getEvents(first, last, false);
+					} else {
+						first = first - 15;
+						last = last - diff;
+						getEvents(first, last, false);
+						window.localStorage.setItem("diff", last);
+
+					}
+
+					//document.getElementById("recordss").innerHTML = first+"to"+ last+" out of "+count +"records";
+
+				} else {
+
+				}
+
+			}
+
+			function getMap(address) {
+
+				// navigator.notification.activityStart("Please wait", "loading...");
+				window.location = "MapView.html?add=" + address;
+			}
+
+			function getCount() {
+
+				jQuery.ajaxSetup({
+					async : false
+				});
+
+				var username = window.localStorage.getItem("username");
+				var password = window.localStorage.getItem("password");
+				var companyId = window.localStorage.getItem("company_id");
+				var companyName = document.getElementById("keywords").value;
+
+				var productServiceUrl = wsURL+'SearchAccountCount';
+				// Preferably write this out from server side
+				var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SearchAccountCount xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><company>' + companyName + '</company></SearchAccountCount></soap:Body></soap:Envelope>';
+
+				$.ajax({
+					url : productServiceUrl,
+					type : "POST",
+					dataType : "xml",
+					timeout : 9000,
+					data : soapMessage,
+					complete : gettingCount,
+					error : function(xhr,status, error) {
+				 if (status == 'timeout') {
+				alert("Server is not responding");
+				window.location = "dash2.html";
+				// navigator.notification.activityStop();
+				return false;
+				}
+				else if(status!='success' && status != 'timeout'){
+					
+					alert('An error has occurred. Try again or check your Internet connection.');
+				window.location = "dash2.html";
+				// navigator.notification.activityStop();
+				return false;
+				}
+			},
+					contentType : "text/xml; charset=\"utf-8\""
+				});
+
+				jQuery.ajaxSetup({
+					async : true
+				});
+
+			}
+
+			function gettingCount(xmlHttpRequest, status) {
+				// alert(status);
+				// alert(xmlHttpRequest.responseXML);
+				// if (!(status == 'success')) {
+// 
+					// alert('An error has occurred.  Try again or check your Internet connection.');
+					// navigator.notification.activityStop();
+					// return false;
+				// }
+				$(xmlHttpRequest.responseXML).find('SearchAccountCountResponse').each(function() {
+					var count = $(this).find('SearchAccountCountResult').text();
+
+					window.localStorage.setItem("count", count);
+
+				});
+
+			}
+
+			function googleSearchForCompany(company) {
+
+				// console.log("Company:  "+company);
+				var url = "https://www.google.com/search?q=" + company;
+				window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+			}
+
+			function callBackGreen(recdNo) {
+
+				var encrptVal = getEncrption();
+				var url_main = window.localStorage.getItem("changed_url");
+				var companyId = window.localStorage.getItem("company_id");
+
+				var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_RFullEdit.asp?RECDNO=" + recdNo + "&CompanyID=" + companyId;
+				console.log("URLLL:" + url);
+				window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+			}
+
+
+			$('input[data-type=search]').live("focus", function() {
+				$("[data-role=header]").css('position', 'fixed');
+				$("[data-role=footer]").css('position', 'fixed');
+			});
+
+			function myMap(address) {
+				address1 = address;
+				// alert(address1);
+				google.load("maps", "3.8", {
+					"callback" : map,
+					other_params : "sensor=true&language=en"
+				});
+			}
+
+			function map() {
+
+			//	navigator.notification.activityStart("Please wait", "loading...");
+				
+				navigator.geolocation.getCurrentPosition(geo_success, geo_error, {
+					maximumAge : 5000,
+					timeout : 10000,
+					enableHighAccuracy : true
+				});
+			}
+
+
+
+			function geo_success(position) 
+			{
+
+				
+				// alert(position.coords.latitude);
+
+				
+
+				var geocoder = new google.maps.Geocoder();
+
+				// alert(geocoder.geocode);
+				geocoder.geocode({ 'address' : address1}, function(results, status) {
+
+					// alert(results);
+					if (status == google.maps.GeocoderStatus.OK) {
+						locationadd = results[0].geometry.location;
+						
+						// alert(locationadd.lat());
+
+						window.open("https://maps.google.com/maps?saddr=" + position.coords.latitude + "," + position.coords.longitude + "&daddr=" + locationadd.lat() + "," + locationadd.lng(), '_blank', 'location=no,closebuttoncaption=Main');
+						navigator.notification.activityStop();
+					
+					} else {
+						alert("Geocode was not successful for the following reason: " + status);
+					}
+				});
+				
+
+			}
+
+
+			function geo_error() {
+				//comment
+				alert("Please enable GPS");
+				alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+				navigator.notification.activityStop();
+			}
+
+		</script>
+		<style>
+			.titlePart {
+
+				position: fixed;
+				-webkit-backface-visibility: hidden;
+			}
+
+		</style>
+

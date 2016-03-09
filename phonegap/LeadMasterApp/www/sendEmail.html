@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		 <script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script> 
+		<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/phonegap-1.0.0.js"></script>
+
+		<link rel="stylesheet" media="all and (orientation:portrait)" href="css/sendEmail.css">
+		<link rel="stylesheet" media="all and (orientation:landscape)" href="css/sendEmail_hor.css">
+	</head>
+
+	<body style="background-color: white;height: 100%;">
+
+		<div data-role="header" class="titlePart" style="background-color: #006DD9;width: 100%;">
+
+			<table width="100%" cellspacing="0" style="center;vertical-align: middle;position: fixed;">
+
+				<tr width="100%" style="background-color: #006DD9;height: 40px;" >
+
+					<td width="100%" >
+					<div style="text-align: center;vertical-align: bottom;font-weight: bolder;color: white" class="title">
+						Send Email
+					</div></td>
+
+				</tr>
+
+				<tr width="100%">
+					<td style="background-color: white;" width="100%" ></td>
+				</tr>
+			</table>
+
+		</div>
+
+		<div id="envelope">
+
+			<form action="sendEmail()" method="post">
+				<header>
+
+					<!-- <h2>Send Email</h2> -->
+
+				</header>
+
+				<label>To </label>
+				<input type="text" name="name" placeholder="yourname@gmail.com" width="100px;" id="emailId">
+
+				<label>Subject</label>
+				<input type="text" name="email" placeholder="Write your subject here" id="subject">
+
+				<label> Message </label>
+				<textarea name="message" rows="10" cols="15" placeholder="Type message here" id="message"></textarea>																
+	
+
+
+
+
+				<table width="100%">
+					<tr width="100%">
+						<td ><font style="margin-left: 5px;">Attachment : &nbsp;&nbsp;&nbsp;</font><a id="attach" href="#" ></a></td>
+					</tr>
+					<tr width="100%" align="center">
+						<td width="100%">
+						<input type="submit"  value="Send Email" id="submit" style="margin-top: 15px;color: #FFFFFF;font-weight: bold; width: 100%" onclick="sendEmail()">
+						</td>
+					</tr>
+
+				</table>
+			</form>
+
+		</div>
+		<!-- <div  style="bottom: 0px;position: fixed;  background-color: #F3F3F3; height: 40px;min-width: 100%;border: 2px solid #A6A6A6;">
+
+		</div> -->
+
+	</body>
+</html>
+
+<script>
+	var fileId, fileName;
+	function sendEmail() {
+
+		navigator.notification.activityStart("Please wait", "Sending.....");
+		var emailId = document.getElementById("emailId").value;
+		
+		
+		
+		
+		var subject = document.getElementById("subject").value;
+		var message = document.getElementById("message").value;
+
+		if (!(emailId == "") && !(emailId == null)) {
+			if(IsEmail(emailId)){
+			var logonId = window.localStorage.getItem("logonID");
+			var productServiceUrl = url_main + "/mobile_EmailLibraryFile.asp";
+
+			var soapMessage = "FileID=" + fileId + "&Subject=" + subject + "&Message=" + message + "&ToAddress=" + emailId + "&LogonID=" + logonId;
+
+			$.ajax({
+				type : 'POST',
+				data : soapMessage,
+				url : productServiceUrl,
+				success : function(data) {
+					//console.log(data);
+					sendCompleted();
+
+				},
+				error : function() {
+					console.log(data);
+					alert('There was some error');
+					navigator.notification.activityStop();
+				}
+			});
+
+		
+		
+		}
+		else{
+			
+			alert("Please enter correct email address");
+			navigator.notification.activityStop();
+			return;
+			
+		}
+		
+		} else {
+			alert("Email Id is mandatory*");
+			navigator.notification.activityStop();
+			return;
+
+		}
+		
+		navigator.notification.activityStop();
+
+	}
+
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+		
+		
+		fileId = window.localStorage.getItem("fileId");
+		fileName = window.localStorage.getItem("fileName");
+		document.getElementById("attach").innerHTML = fileName;
+
+		url_main = window.localStorage.getItem("changed_url");
+		navigator.notification.activityStop();
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		//Listen to the User clicking on the back button
+
+	}
+
+	function onBackKeyDown(e) {
+		e.preventDefault();
+		navigator.notification.activityStart("Please wait", "loading......");
+		window.location = "libraryDownloadFile.html";
+
+	}
+
+	function sendCompleted() {
+
+		//window.location("libraryDownloadFile.html");
+		alert('Email has been sent');
+		document.getElementById("emailId").value = "";
+		document.getElementById("subject").value = "";
+		document.getElementById("message").value = "";
+		navigator.notification.activityStop();
+
+	}
+	function IsEmail(email) {
+    var regex = /^[a-zA-Z0-9][a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    return regex.test(email);
+}
+</script>

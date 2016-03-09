@@ -1,0 +1,396 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=no" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=device-dpi, user-scalable=no" />-->
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.js"></script>
+
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+    <!--<script src="http://code.jquery.com/jquery-1.10.2.js"></script>-->
+    <!--<script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script>-->
+    <!--<script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/phonegap-1.0.0.js"></script>-->
+
+
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+</head>
+
+<body onload="geo_success()">
+    <!--  <div id="gmap_canvas"></div> -->
+    <div id="map_content" style="height: 100%; width: 100%;">
+        <!--   <input type="text" id="gmap_where_0" placeholder="Enter Location" />
+               <input type="text" id="gmap_where_1" placeholder="Enter Location" value="1407 Broadway,New York, NY 10018,United States" style="display:none;"/>
+                   <input type="text" id="gmap_where_2" placeholder="Enter Location" value="15 Washington Square N New York, NY 10011,United States" style="display:none;"/>
+                       <input type="text" id="gmap_where_3" placeholder="Enter Location" value="Madison Square Park Madison Ave,New York, NY 10010,United States" style="display:none;"/>
+
+               <input type="submit" id="submit_location" value="Submit" onclick="initialize()"/> -->
+        <input type="text" id="lat" name="lat" value="" style="display:none;" />
+        <input type="text" id="lng" name="lng" value="" style="display:none;" />
+    </div>
+
+    <div id="content" style=""></div>
+    <div id="gmap_load">
+
+        <div id="gmap_canvas" style="height: 100%; position: relative; width: 100%;"></div>
+        <!--    <input id="gmap_where" type="text" name="gmap_where" value="Memnagar,Ahmedbad, Gujarat" /> -->
+
+    </div>
+</body>
+<head>
+    <script>
+        var geocoder;
+        var map;
+        var markers = Array();
+        var infos = Array();
+        var getLatitude, getLongitude, companyId, recdNo, Lati, Longi, Dist;
+
+        function initialize() {
+            // prepare Geocoder
+
+            document.getElementById('map_content').style.display = "none";
+
+            geocoder = new google.maps.Geocoder();
+
+
+            // set initial position (New York)
+            var myLatlng = new google.maps.LatLng(40.7143528, -74.0059731);
+
+
+            var myOptions = { // default map options
+                zoom: 14,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+            // findAddress();
+            //   alert(123);
+            //   map1();
+
+            //   for(var i = 0; i<4; i++){
+            //       findAddress(i);
+            geo_success();
+
+            //   }
+        }
+
+        function myMap() {
+
+            alert(123);
+            // alert(address1);
+            google.load("maps", "3.8", {
+                "callback": map,
+                other_params: "sensor=true&language=en"
+            });
+        }
+
+        function map1() {
+
+            //            navigator.notification.activityStart("Please wait", "loading...");
+            // alert(123);
+
+            navigator.geolocation.getCurrentPosition(geo_success, geo_error, {
+                maximumAge: 5000,
+                timeout: 5000,
+                enableHighAccuracy: true
+            });
+        }
+
+
+
+        function geo_error(error) {
+            //comment
+            //  alert('Error');
+
+            alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+            //            navigator.notification.activityStop();
+        }
+
+        function geo_success(position) {
+
+            document.getElementById('map_content').style.display = "none";
+
+            geocoder = new google.maps.Geocoder();
+
+
+            // set initial position (New York)
+            var myLatlng = new google.maps.LatLng(40.7143528, -74.0059731);
+
+
+            var myOptions = { // default map options
+                zoom: 14,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+
+
+
+
+            //   getLatitude = position.coords.latitude;
+            //   getLongitude = position.coords.longitude;
+            companyId = "7639";
+
+
+            getLatitude = "23.0619267";
+            getLongitude = "72.5529233";
+
+
+            //  alert(getLatitude);
+            //  alert(getLongitude);
+
+            var getUrl = "http://lmki.leadmaster.com/lmservice/LMService_mobilebeta.asmx?op=GetGeoLocation";
+            var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetGeoLocation xmlns="LMServiceNamespace"><longitude>' + getLongitude + '</longitude><latitude>' + getLatitude + '</latitude><Distance>5</Distance><company_id>' + companyId + '</company_id></GetGeoLocation></soap:Body></soap:Envelope>';
+
+
+
+            $.ajax({
+                url: getUrl,
+                type: "POST",
+                async: true,
+                crossDomain: true,
+                dataType: "xml",
+                headers: {
+                    //Access-Control-Request-Headers: X-Requested-With, accept, content-type
+                    //Access-Control-Allow-Methods: GET, POST
+                },
+                data: soapMessage,
+                complete: getResponse,
+                error: MapError,
+                contentType: "text/xml; charset=\"utf-8\""
+            });
+
+            function MapError(data, a, b) {
+                debugger;
+                alert(data);
+            }
+
+
+            function getResponse(xmlHttpRequest, status) {
+				//alert("test")
+                //debugger;
+
+
+                if (!(status == 'success')) {
+
+				//debugger;
+                    alert('An error has occurred. Try again or check your Internet connection.');
+                    //  window.location = "dash2-1.html";
+                    $('#divLoading').hide();
+
+                    return false;
+
+                }
+                var length = xmlHttpRequest.responseXML.getElementsByTagName("GeoLocation").length;
+
+                var cont = 1;
+
+                $(xmlHttpRequest.responseXML).find('GeoLocation').each(function () {
+					//debugger;
+					
+                    recdNo = $(this).find('RECDNO').text();
+                    Lati = $(this).find('Latitude').text();
+                    Longi = $(this).find('Longitude').text();
+                    Dist = $(this).find('Distance').text();
+
+                    //alert(Lati);
+                    //alert(Longi);
+
+                    findAddress(Lati, Longi);
+
+                });
+				
+				findAddress(getLatitude, getLongitude);
+
+            }
+
+
+
+            //  for(var i = 0; i<4; i++){
+            //      findAddress(i);
+
+            //  }
+        }
+
+        // clear overlays function
+        function clearOverlays() {
+            if (markers) {
+                for (i in markers) {
+                    markers[i].setMap(null);
+                }
+                markers = [];
+                infos = [];
+            }
+        }
+
+        // clear infos function
+        function clearInfos() {
+            if (infos) {
+                for (i in infos) {
+                    if (infos[i].getMap()) {
+                        infos[i].close();
+                    }
+                }
+            }
+        }
+
+        // find address function
+        function findAddress(getLati, getLongi) {
+
+			//alert(getLati);
+			//alert(getLongi);
+
+
+            // alert(getLatitude);
+            // alert(getLongitude);
+            var latlng = new google.maps.LatLng(getLati, getLongi);
+
+            //  var address = document.getElementById("gmap_where_"+id).value;
+
+
+            // script uses our 'geocoder' in order to find location by address name
+            geocoder.geocode({ 'latLng': latlng }, function (results, status) {
+
+                if (status == google.maps.GeocoderStatus.OK) { // and, if everything is ok
+
+                    // we will center map
+                    //var addrLocation = results[0].geometry.location;
+                    var addrLocation = results[0].formatted_address;
+                    //  alert(addrLocation);
+                    //  map.setCenter(addrLocation);
+
+                    // store current coordinates into hidden variables
+                    //  document.getElementById('lat').value = results[0].geometry.location.lat();
+                    //  document.getElementById('lng').value = results[0].geometry.location.lng();
+
+                    document.getElementById('lat').value = getLati;
+                    document.getElementById('lng').value = getLongi;
+
+                    //   alert(123);
+                    // and then - add new custom marker
+                    var addrMarker = new google.maps.Marker({
+                        position: latlng,
+                        map: map,
+                        title: results[0].formatted_address
+                    });
+
+                    // alert(345);
+                    var infowindow = new google.maps.InfoWindow({
+                        content: '<font style="color:#000;">' + results[0].formatted_address + '</font>'
+                    });
+                    infowindow.open(map, addrMarker);
+                    infos.push(infowindow);
+
+                    //   findPlaces();
+                } else {
+                    alert('Geocode was not successful for the following reason: ' + status);
+                }
+            });
+        }
+
+        // find custom places function
+        function findPlaces() {
+
+            var radius = 500;
+            var lat = document.getElementById('lat').value;
+            var lng = document.getElementById('lng').value;
+            var cur_location = new google.maps.LatLng(lat, lng);
+
+            // prepare request to Places
+            var request = {
+                location: cur_location,
+                radius: radius
+            };
+
+            // send request
+            service = new google.maps.places.PlacesService(map);
+            service.search(request, createMarkers);
+        }
+
+        // create markers (from 'findPlaces' function)
+        function createMarkers(results, status) {
+
+
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+
+                // if we have found something - clear map (overlays)
+                clearOverlays();
+
+                // and create new markers by search result
+                for (var i = 0; i < results.length; i++) {
+                    createMarker(results[i]);
+                }
+            } else if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+                alert('Sorry, nothing is found');
+            }
+        }
+
+
+
+        document.addEventListener("deviceready", onDeviceReady, false);
+
+        function onDeviceReady() {
+            document.addEventListener("backbutton", onBackKeyDown, false);
+            //Listen to the User clicking on the back button
+
+            //   var initialScreenSize = window.innerHeight;
+            //   window.addEventListener("resize", function() {
+            //                           if (window.innerHeight < initialScreenSize) {
+            //                           $("[data-role=footer]").hide();
+            //                           } else {
+            //                           $("[data-role=footer]").show();
+            //                           }
+            //                           });
+        }
+
+
+
+        // creare single marker function
+        function createMarker(obj) {
+
+            // prepare new Marker object
+            var mark = new google.maps.Marker({
+                position: obj.geometry.location,
+                map: map,
+                title: obj.name
+            });
+            markers.push(mark);
+
+            // prepare info window
+            var infowindow = new google.maps.InfoWindow({
+                content: '<img src="' + obj.icon + '" /><font style="color:#000;">' + obj.name +
+                '<br />Rating: ' + obj.rating + '<br />Vicinity: ' + obj.vicinity + '</font>'
+            });
+
+            // add event handler to current marker
+            google.maps.event.addListener(mark, 'click', function () {
+                clearInfos();
+                infowindow.open(map, mark);
+            });
+            infos.push(infowindow);
+        }
+    </script>
+
+
+
+</head>
+
+<!-- <body>
+     <!--  <div id="gmap_canvas"></div> -->
+<!--    <div id="content"></div>
+    <div id="gmap_load">
+        <div id="map_content" style="">
+            <div id="gmap_canvas" style="height: 700px; position: relative; width: 100%;"></div>
+        <!--    <input id="gmap_where" type="text" name="gmap_where" value="Memnagar,Ahmedbad, Gujarat" /> -->
+<!--    <input type="text" id="gmap_where" placeholder="Enter Location">
+             <input type="submit" id="submit_location" value="Submit" onclick="initialize()">
+            <input type="text" id="lat" name="lat" value="" style="display:none;" />
+            <input type="text" id="lng" name="lng" value="" style="display:none;" />
+        </div>
+
+    </div>
+</body> -->
+</html>
+

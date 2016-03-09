@@ -1,0 +1,1048 @@
+body {
+
+	background-color: #006dd9;
+	height: 100%;
+}
+
+@media only screen and (max-width: 240px) {
+
+	.headerdash {
+
+		width: 80%;
+		top: -10%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+		vertical-align: middle;
+	}
+	td {
+
+		padding: -2px;
+	}
+
+	.upper {
+
+		width: 100%;
+		margin-top: -2%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 180px;
+		height: 36px;
+		background-size: 180px 36px;
+	
+		background: url('../images/header_ldpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+
+		margin-top: 0%;
+	}
+
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 28px;
+	}
+	#new_lead {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/shortcut_ldpi.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/accounts_ldpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/callback_ldpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/my_searches_ldpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/recent_items_ldpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/dashboard_ldpi.png') no-repeat center bottom;
+	}
+	#footer1{
+		font-size: 4pt;
+		position:absolute;
+		margin-bottom: -25px;
+	}
+
+}
+
+@media screen and (min-width: 280px) and (max-width: 320px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 6%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		margin-top: 16%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	td {
+
+		padding: 5px;
+	}
+	
+	#buttonform {
+
+		margin-top: -5%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 30px;
+		margin-top: 5px;
+	}
+
+	#headerImage {
+
+		width: 280px;
+		height: 48px;
+		background-size: 280px 48px;
+		background: url('../images/header_hdpi.png') no-repeat center bottom;
+	}
+	#new_lead {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/shortcut_hdpi.png') no-repeat center bottom;
+			-webkit-box-shadow:1px 2px 2px 3px #ccc;
+		-moz-box-shadow:1px 2px 2px 3px #ccc;
+		box-shadow:1px 2px 5px 5px #ccc;
+	}
+	#accounts {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/accounts_hdpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/callback_hdpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/my_searches_hdpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/recent_items_hdpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/dashboard_hdpi.png') no-repeat center bottom;
+	}
+	#footer1{
+		font-size: 7pt;
+		
+		margin-bottom: -20px;
+	}
+
+}
+@media screen and (min-width: 330px) and (max-width:370px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+	td {
+
+		padding: 6px;
+		border-spacing: 14px;
+	}
+
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 20%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 280px;
+		height: 48px;
+		background-size: 280px 48px;
+		background: url('../images/header_mdpi.png') no-repeat center bottom;
+	}
+
+	#buttonform {
+
+		margin-top: 10%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 34px;
+		margin-top: 7px;
+	}
+	#new_lead {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/shortcut_hdpi.png') no-repeat center bottom;
+		
+			-webkit-box-shadow:1px 2px 2px 3px #ccc;
+		-moz-box-shadow:1px 2px 2px 3px #ccc;
+		box-shadow:1px 2px 5px 5px #ccc;
+	}
+	#accounts {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/accounts_hdpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/callback_hdpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/my_searches_hdpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/recent_items_hdpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/dashboard_hdpi.png') no-repeat center bottom;
+	}
+	
+	#footer1{
+		font-size: 7pt;
+	}
+
+
+}
+
+@media screen and (min-width: 380px) and (max-width: 480px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+	td {
+
+		padding: 6px;
+		border-spacing: 14px;
+	}
+
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 20%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 400px;
+		height: 72px;
+		background-size: 400px 72px;
+		background: url('../images/header_hdpi.png') no-repeat center bottom;
+	}
+
+	#buttonform {
+
+		margin-top: 10%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 38px;
+		margin-top: 7px;
+	}
+	#new_lead {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/shortcut_xdpi.png') no-repeat center bottom;
+		
+			-webkit-box-shadow:1px 2px 2px 3px #ccc;
+		-moz-box-shadow:1px 2px 2px 3px #ccc;
+		box-shadow:1px 2px 5px 5px #ccc;
+	}
+	#accounts {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/accounts_xdpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/callback_xdpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/my_searches_xdpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/recent_items_xdpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/dashboard_xdpi.png') no-repeat center bottom;
+	}
+	#footer1{
+		font-size: small;
+	}
+
+
+}
+@media screen and (min-width: 500px) and (max-width: 600px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 17%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	td {
+
+		padding: 12px;
+		border-spacing: 14px;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 18%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 400px;
+		height: 72px;
+		background-size: 400px 72px;
+		background: url('../images/header_hdpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+
+		left: 10%;
+		margin-top: 14%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 45px;
+		margin-top: 7px;
+	}
+	#new_lead {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/shortcut_hdpi.png') no-repeat center bottom;
+		
+		-webkit-box-shadow:1px 2px 2px 3px #ccc;
+		-moz-box-shadow:1px 2px 2px 3px #ccc;
+		box-shadow:1px 2px 5px 5px #ccc;
+	}
+	#accounts {
+		w width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/accounts_hdpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/callback_hdpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/my_searches_hdpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/recent_items_hdpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/dashboard_hdpi.png') no-repeat center bottom;
+	}
+	
+	#footer1{
+		font-size: 10pt;
+	}
+
+}
+
+@media screen and (min-width: 605px) and (max-width: 640px) {
+
+	.headerdash {
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+
+	td {
+
+		padding: 8px;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 20%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 400px;
+		height: 72px;
+		background-size: 400px 72px;
+		background: url('../images/header_hdpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+		margin-top: 5%;
+		left: 10%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 40px;
+		margin-top: 7px;
+	}
+	#new_lead {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/shortcut_hdpi.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/accounts_hdpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/callback_hdpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/my_searches_hdpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/recent_items_hdpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 72px;
+		height: 72px;
+		background-size: 72px 72px;
+		background: url('../images/dashboard_hdpi.png') no-repeat center bottom;
+	}
+	#footer1{
+		font-size: 10pt;
+	}
+
+
+}
+
+@media screen and (min-width: 650px) and (max-width: 740px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 20%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		background-size: 560px 96px;
+		background: url('../images/header_hdpi.png') no-repeat center bottom;
+	}
+	td {
+
+		padding: 12px;
+	}
+	#buttonform {
+		margin-top: 15%;
+		left: 10%;
+		font-size: 25px;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 22pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 32px;
+		margin-top: 7px;
+		height: 55px;
+	}
+
+	#new_lead {
+		width: 120px;
+		height: 120px;
+		background-size: 120px 120px;
+		background: url('../images/shortcut_xxdpi.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 120px;
+		height: 120px;
+		background-size: 120px 120px;
+		background: url('../images/accounts_xxdpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 120px;
+		height: 120px;
+		background-size: 120px 120px;
+		background: url('../images/callback_xxdpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 120px;
+		height: 120px;
+		background-size: 120px 120px;
+		background: url('../images/my_searches_xxdpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 120px;
+		height: 120px;
+		background-size: 120px 120px;
+		background: url('../images/recent_items_xxdpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 120px;
+		height: 120px;
+		background-size: 120px 120px;
+		background: url('../images/dashboard_xxdpi.png') no-repeat center bottom;
+	}
+		#footer1{
+		font-size: 12pt;
+	}
+}
+
+@media screen and (min-width: 721px) and (max-width: 800px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 15%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	td {
+
+		padding: 10px;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		margin-top: 17%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		background-size: 560px 96px;
+		background: url('../images/header_xdpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+		margin-top: 10%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 7px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 37px;
+	}
+	#new_lead {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/shortcut_xdpi.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/accounts_xdpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/callback_xdpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/my_searches_xdpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/recent_items_xdpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/dashboard_xdpi.png') no-repeat center bottom;
+	}
+		#footer1{
+		font-size: 10pt;
+	}
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1024px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+
+	td {
+
+		padding: 5px;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 18%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#buttonform {
+
+		left: 5%;
+		top: 10%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 35px;
+		margin-top: 7px;
+	}
+	#new_lead {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/shortcut_xdpi.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/accounts_xdpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/callback_xdpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/my_searches_xdpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/recent_items_xdpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/dashboard_xdpi.png') no-repeat center bottom;
+	}
+	
+		#footer1{
+		font-size: 12pt;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		background-size: 560px 96px;
+		background: url('../images/header_xdpi.png') no-repeat center bottom;
+	}
+
+}
+
+@media screen and (min-width: 1030px) and (max-width: 1280px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+	td {
+
+		padding: 12px;
+	}
+
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		margin-top: 25%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		background-size: 560px 96px;
+		background: url('../images/header_xdpi.png') no-repeat center bottom;
+	}	
+	#buttonform {
+
+		left: 5%;
+		top: 10%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 42px;
+		margin-top: 7px;
+	}
+	#new_lead {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/shortcut_xdpi.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/accounts_xdpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/callback_xdpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/my_searches_xdpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/recent_items_xdpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/dashboard_xdpi.png') no-repeat center bottom;
+	}
+		#footer1{
+		font-size: 12pt;
+	}
+
+}
+

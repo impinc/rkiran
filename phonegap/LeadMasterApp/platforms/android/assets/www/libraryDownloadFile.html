@@ -1,0 +1,399 @@
+<html >
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.2, maximum-scale=2.0, target-densitydpi=medium-dpi" />
+		
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		 <script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script> 
+		<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/encryption.js"></script>
+
+		<link rel="stylesheet" media="all and (orientation:portrait)" href="css/account_offline.css">
+		<link rel="stylesheet" media="all and (orientation:landscape)" href="css/account_offline_hor.css">
+	</head>
+
+	<body style="background-color: #FFFFFF;height: 100%">
+
+		<div data-role="header" class="titlePart" style="background-color: #006DD9;width: 100%;margin-left: -8px;position: fixed">
+
+			<table width="100%" cellspacing="0" style="center;vertical-align: middle;">
+
+				<tr width="100%" style="background-color: #006DD9;height: 40px;" >
+
+					<td width="100%" >
+					<div style="text-align: center;vertical-align: bottom;font-weight: bolder;color: white" class="title">
+						Download Library file
+					</div></td>
+
+				</tr>
+
+				<tr width="100%">
+					<td style="background-color: white;" width="100%" > </td>
+				</tr>
+				<tr width="100%" >
+					<!-- 960018 -->
+					<td width="92%" height="50px" >
+					<input  type="text" placeholder="Search..." id="keywords" style="border-radius: 1em; text-align: center;padding: 1em 0;color: grey;border:3px;border-color: #105FC9;"/>
+					</td>
+
+				</tr>
+				<tr width="100%">
+					<td style="background-color: #FFF9DF; color: #000000" width="100%" height="5%" align="center"><!-- <marquee> --> Click on the link to download the file <!-- </marquee>  --></td>
+				</tr>
+
+			</table>
+
+		</div>
+
+		<div data-role="content" style="padding-top: 125px;">
+
+			<ul id="rList" class="ui-listview" onactivate="getEvents()" data-role="listview" style="background-color: #FFFFFF;list-style: none;margin-left: -20px;margin-bottom: -10px;margin-right: -10px;height: 63%;">
+
+				<div style="margin-top: 15%;text-align: center;margin-left: -10px;vertical-align: middle;" id="message1">
+
+					<!-- <h3 id="msgbydef" style="color: grey; text-align: center;text-shadow: 2px;vertical-align: middle">Enter any keyword to search</h3> -->
+
+				</div>
+			</ul>
+		</div>
+
+		<div  style="bottom: 0px;position: fixed;  background-color: #F3F3F3; height: 40px;min-width: 100%;margin-left: -8px;border: 2px solid #A6A6A6;">
+
+		</div>
+
+	</body>
+</html>
+<script>
+	var username, password, companyId, recdNo = 0, wsURL;
+	var fileName, filePath, id;
+
+	function getEvents() {
+
+		companyId = window.localStorage.getItem("company_id");
+		logonID = window.localStorage.getItem("logonID");
+
+		document.getElementById("rList").innerHTML = "";
+
+		var getLibraryDownloadQueueFileListServiceUrl = wsURL + 'GetLibraryDownloadQueueFileList';
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetLibraryDownloadQueueFileList xmlns="LMServiceNamespace"><logon_id>' + logonID + '</logon_id><companyid>' + companyId + '</companyid></GetLibraryDownloadQueueFileList></soap:Body></soap:Envelope>';
+
+		$.ajax({
+			url : getLibraryDownloadQueueFileListServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			timeout : 12000,
+			data : soapMessage,
+			complete : getResponseGetLibraryDownloadQueueFileList,
+			error : function(xhr, status, error) {
+				if (status == 'timeout') {
+					alert("Server is not responding");
+					window.location = "library.html";
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+
+					alert('An error has occurred. Try again or check your Internet connection.');
+					window.location = "library.html";
+
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+	}
+
+	function getResponseGetLibraryDownloadQueueFileList(xmlHttpRequest, status) {
+
+		var fileID, filePATH, fileNAME;
+		var length = xmlHttpRequest.responseXML.getElementsByTagName("TypeLibraryDocument").length;
+
+		var cont = 1;
+
+		if (length > 0) {
+
+			$(xmlHttpRequest.responseXML).find('TypeLibraryDocument').each(function() {
+
+				fileID = $(this).find('FileID').text();
+				fileNAME = $(this).find('FileName').text();
+				filePATH = $(this).find('FilePath').text();
+
+				cont++;
+				
+				var Filepath = "http://files.crmtool.net/LibraryV2/LibraryDownloadQueue" + filePATH;
+				if (!(fileNAME == null) && !(filePATH == null)) {
+
+					var textnode = "";
+
+					// textnode += "<table width='100%'>";
+					// textnode += "<tr width='100%' valign='baseline'>";
+					// textnode += "<td width='70%' style='bottom: 0px;text-align:center;' align='left' >";
+					//
+					// textnode += "<h4 class='ui-li-heading' style='margin-top:-2px;margin-left:-2px;text-align: bottom;vertical-align:middle;' align='left' ><a rel='external' href='#' onclick=\"getLibraryDownloadFile('" + fileID + "','" + filePATH + "','" + fileNAME + "')\">" + fileNAME + "</a></h4>";
+					//
+					// textnode += "</td>";
+					//
+					// textnode += "<td width='30%' style='font-size: 5px;bottom: 0px;margin-right: 5%;' align='right'>";
+					//
+					// textnode += "<input  type='button'  id='openFile' value='Send Email' style='background-color:#2DB200;font-size: 10px;color: white;border: none;font-weight: bold;padding-right: 1em;padding-top:1em;padding-bottom: 1em;margin-right: 5%;-moz-border-radius: 8px;-webkit-border-radius: 4px;border-radius: 6px 6px 6px 6px;'  onclick=\"sendMail('" + fileID + "','" + fileNAME + "')\">";
+					//
+					// textnode += "</td>";
+					//
+					// textnode += "</tr>";
+					//
+					// textnode += "</table>";
+					//
+					// var node = document.createElement("li");
+					// rID = "R" + fileID;
+					//
+					// node.id = rID;
+					//
+					// var textnode1 = document.createTextNode("");
+					//
+					// node.appendChild(textnode1);
+					// document.getElementById("rList").appendChild(node);
+					//
+					// document.getElementById(rID).innerHTML = textnode;
+
+					textnode += "<table width='100%'>";
+					textnode += "<tr width='100%'>";
+					textnode += "<td width='100%' style='text-align: left;'>";
+
+					textnode += "<a href='#' onclick=\"getLibraryDownloadFile('" + Filepath + "','" + fileNAME + "','" + fileID + "')\">" + fileNAME + "</a>";
+
+					textnode += "</td>";
+					textnode += "</tr>";
+
+					textnode += "<tr width='100%'>";
+					textnode += "<td width='100%' style='font-size: 5px;' align='right'>";
+
+					textnode += "<input  type='button'  id='openFile' value='Send Email' style='background-color:#2DB200;font-size: 13px;color: white;border: none;font-weight: bold;padding-left: 1em;;padding-right: 1em;padding-top: 0.7em;padding-bottom: 0.7em;margin-top:8px;-webkit-border-radius: 4px;border-radius: 3px 3px 3px 3px;margin-right:13px;'  onclick=\"sendMail('" + fileID + "','" + fileNAME + "')\">";
+
+					textnode += "</td>";
+
+					textnode += "</tr>";
+
+					textnode += "</table><br/>";
+
+					if ((length + 1) == cont) {
+
+						textnode += "<hr style='color: #CCCCCC; background: #CCCCCC; width: 100%%; height: 0.3px; margin-left: -10px;margin-bottom:51px;margin-top:-10px'>";
+
+						textnode += "<br/>";
+						textnode += "<br/>";
+
+					} else {
+
+						textnode += "<hr style='color: #CCCCCC; background: #CCCCCC; width: 100%%; height: 0.3px; margin-left: -10px;margin-top:-10px'>";
+					}
+
+					var node = document.createElement("li");
+					rID = "R" + fileID;
+
+					node.id = rID;
+
+					var textnode1 = document.createTextNode("");
+
+					node.appendChild(textnode1);
+					document.getElementById("rList").appendChild(node);
+
+					document.getElementById(rID).innerHTML = textnode;
+
+					navigator.notification.activityStop();
+
+				}
+
+			});
+
+		} else {
+			// document.getElementById('footer1').style.display = 'block';
+
+			var new_div = document.createElement('div');
+			new_div.className = "cls1";
+
+			new_div.innerHTML = "<h4  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>The Download Queue is empty, please add to the Queue by clicking on the file you wish to download</h4>";
+			document.getElementById("rList").appendChild(new_div);
+			navigator.notification.activityStop();
+
+		}
+
+	}
+
+
+	document.addEventListener("deviceready", onDeviceReady, false);	
+
+	function onDeviceReady() {
+
+		wsURL = window.localStorage.getItem("wsURL");
+		getEvents();
+
+		navigator.notification.activityStop();
+
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		//Listen to the User clicking on the back button
+
+	}
+
+	function onBackKeyDown(e) {
+		e.preventDefault();
+
+		navigator.notification.activityStart("Please wait....", "loading");
+		window.location = "library.html";
+
+	}
+
+	function getLibraryDownloadFile(uri, filename,fileId) {
+
+		navigator.notification.activityStart("Please wait", "File is downloading....");
+
+		id = fileId;
+
+		filePath = uri;
+		fileName = filename;
+		//alert(uri);
+		window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, onFileSystemSuccess, fail);
+	}
+
+	function fail() {
+
+		console.log("failed to get filesystem");
+
+	}
+
+	function onFileSystemSuccess(fileSystem) {
+
+		var fileTransfer = new FileTransfer();
+
+		// http://files.crmtool.net/LibraryV2/LBupload/userfiles/image5756_xmas.jpg
+		// http://www.w3.org/2011/web-apps-ws/papers/Nitobi.pdf
+
+		var uri1 = encodeURI(filePath);
+		jQuery.ajaxSetup({
+			async : false
+		});
+
+		fileTransfer.download(uri1, fileSystem.root.fullPath + "/" + fileName, function(entry) {
+
+			console.log("download complete: " + entry.fullPath);
+
+			alert('Download Complete');
+
+			updateLibrary(id);
+			//	alert(entry.fullPath);
+
+			jQuery.ajaxSetup({
+				async : true
+			});
+
+			getEvents();
+
+			//showLink(entry.toURL());
+
+		}, function(error) {
+
+			alert('Oops...Downloading error!');
+			console.log("download error source " + error.source);
+
+			console.log("download error target " + error.target);
+
+			console.log("upload error code" + error.code);
+
+		});
+
+	}
+
+	function sendMail(fileId, fileName) {
+		navigator.notification.activityStart("Please wait", "loading..... ");
+		window.localStorage.setItem("fileId", fileId);
+		window.localStorage.setItem("fileName", fileName);
+
+		window.location = "sendEmail.html";
+
+	}
+
+	function fail(evt) {
+
+		console.log(evt.target.error.code);
+
+	}
+
+	function onSuccess(fileEntry) {
+		console.log(fileEntry.name);
+	}
+
+	$(function() {
+
+		$('#keywords').keyup(function() {
+
+			var searchText = $(this).val();
+
+			$('ul > li').each(function() {
+
+				var currentLiText = $(this).text(), showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+
+				$(this).toggle(showCurrentLi);
+
+			});
+		});
+
+	});
+
+	function updateLibrary(fileId) {
+
+		navigator.notification.activityStart("Please wait", "Updating Server....");
+
+		var libraryDownloadQueueStatusChangeServiceUrl = wsURL + 'LibraryDownloadQueueStatusChange';
+
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><LibraryDownloadQueueStatusChange xmlns="LMServiceNamespace"><file_id>' + fileId + '</file_id></LibraryDownloadQueueStatusChange></soap:Body></soap:Envelope>';
+		$.ajax({
+			url : libraryDownloadQueueStatusChangeServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			timeout : 12000,
+			data : soapMessage,
+			complete : getResponseLibraryDownloadQueueStatusChange,
+			error : function(xhr, status, error) {
+				if (status == 'timeout') {
+					alert("Server is not responding");
+					window.location = "library.html";
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+
+					alert('An error has occurred. Try again or check your Internet connection.');
+					window.location = "library.html";
+
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+	}
+
+	function getResponseLibraryDownloadQueueStatusChange(xmlHttpRequest, status) {
+
+		var length = xmlHttpRequest.responseXML.getElementsByTagName("LibraryDownloadQueueStatusChangeResponse").length;
+
+		$(xmlHttpRequest.responseXML).find('LibraryDownloadQueueStatusChangeResponse').each(function() {
+
+			statusResponse = $(this).find('LibraryDownloadQueueStatusChangeResult').text();
+			if (!statusResponse) {
+				alert('Oops...Server not updated');
+			}
+
+		});
+
+	}
+
+	
+
+</script>
+<style>
+	.titlePart {
+
+		position: fixed;
+		-webkit-backface-visibility: hidden;
+	}
+
+</style>
+

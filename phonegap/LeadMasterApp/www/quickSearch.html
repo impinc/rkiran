@@ -1,0 +1,285 @@
+<html >
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, target-densitydpi=medium-dpi" />
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		 <script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script>
+		<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/phonegap-1.0.0.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/encryption.js"></script>
+
+		<link rel="stylesheet" media="all and (orientation:portrait)" href="css/account_offline.css">
+		<link rel="stylesheet" media="all and (orientation:landscape)" href="css/account_offline_hor.css">
+	</head>
+
+	<body style="background-color: #EEEEEE;height: 100%" onload="setFooter()">
+		
+		
+		<div data-role="header" data-tap-toggle="false" class="headerClass"  style="background-color: #006DD9;width: 100%;margin-left: -8px;">
+			
+			<table width="100%" cellspacing="0">
+				
+				<tr width="100%" style="background-color: #006DD9;height: 60px;" >
+					<td width="100%" >
+					<div style="text-align: center;vertical-align: bottom;font-weight: bolder;color: white" class="title">
+						Quick Search
+					</div></td>
+				</tr>
+				
+				
+				<tr width="100%">
+					<td style="background-color: white;" width="100%" colspan="2"> </td>
+				</tr>
+				
+				<tr width="100%" >
+				
+					<td width="92%" height="50px" >
+						
+					<input  type="text" placeholder="Enter Keywords" id="keywords" style="border-radius: 1em; text-align: center;padding: 1em 0;color: grey;border:3px;border-color: #105FC9;" onkeydown="if (event.keyCode == 13) getKeywords();" />
+						
+					</td>
+					
+					<td width="8%" style="padding-top: 4px;padding-bottom: 4px;">
+					<input type="image"  src="images/search3.png"  style="border:none;"  onclick="getKeywords()"/>
+					</td>
+				</tr>
+
+				
+			</table>
+			
+
+		</div>
+
+		<div data-role="content" style="padding-top: 100px;" >
+
+			<ul id="rList" class="ui-listview"  data-role="listview" style="background-color: #EEEEEE;list-style: none;margin-left: -20px;margin-bottom: -10px;margin-right: -10px;height: 63%;" >
+
+				<div style="margin-top: 15%;text-align: center;margin-left: -10px;vertical-align: middle" id="message1">
+
+					<h3 id="msgbydef" style="color: gray; text-align: center;text-shadow: 2px;">Enter any keyword to search</h3>
+
+				
+				</div>
+			</ul>
+		</div>
+
+		<div data-role="footer" id="footer1" style="color: gray;text-align: center;"> </div> 
+
+	<!-- <iframe src="footer.html" frameborder="0" height="500"> </iframe> -->
+	
+	</body>
+</html>
+<script>
+	var keywords, username, password, company_id, logonID = 0, url_main,wsURL;
+
+	function getKeywords() {
+
+	//	navigator.notification.activityStart("Please wait....", "loading");
+		
+
+		// document.getElementById("message1").style.display = "none";
+		// document.getElementById("footer1").style.display = "none";
+	
+		username = window.localStorage.getItem("username");
+		password = window.localStorage.getItem("password");
+		companyId = window.localStorage.getItem("company_id");
+		keywords = document.getElementById("keywords").value;
+		document.getElementById("rList").innerHTML = "";
+		// alert(username + password + companyId + keywords);
+
+		var searchLeadDataServiceUrl = wsURL+'SearchLeadData';
+		
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SearchLeadData xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><keyword>' + keywords + '</keyword></SearchLeadData></soap:Body></soap:Envelope>';
+
+		$.ajax({
+			url : searchLeadDataServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			timeout : 9000,
+			data : soapMessage,
+			complete : getResponseSearchLeadData,
+			error : function(xhr, status, error) {
+				if (status == 'timeout') {
+					alert("Server is not responding");
+					window.location = "dash2.html";
+					// navigator.notification.activityStop();
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+
+					alert('An error has occurred. Try again or check your Internet connection.');
+					window.location = "dash2.html";
+					// navigator.notification.activityStop();
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+		// return false;
+
+		function getResponseSearchLeadData(xmlHttpRequest, status) {
+			// alert(status);
+			// alert(xmlHttpRequest.responseXML);
+			// if (!(status == 'success')) {
+// 
+				// alert('An error has occurred.  Try again or check your Internet connection.');
+				// navigator.notification.activityStop();
+				// return false;
+			// }
+			
+			var length = xmlHttpRequest.responseXML.getElementsByTagName("TypeLeadData").length;
+			
+				if (length > 0) {
+					
+					//document.getElementById("message1").style.display = "none";
+					document.getElementById("footer1").style.display = "none";
+			$(xmlHttpRequest.responseXML).find('TypeLeadData').each(function() {
+				logonID = $(this).find('RecordID').text();
+				firstname = $(this).find('FirstName').text();
+				lastname = $(this).find('LastName').text();
+				company = $(this).find('Company').text();
+				oppname = $(this).find('OppName').text();
+
+				// var node = document.createElement("li");
+				// var node = document.getElementById("rList");
+				
+
+					
+					var textnode = "";
+					// textnode += "<li style='background-color: #EEEEEE;list-style: none;margin-left: -10px;margin: -10 -10 -10 -10;display: block'>";
+
+					textnode += "<table width='100%'>";
+
+					textnode += "<td width='70%'>";
+					textnode += "<div class='ui-btn-inner ui-li'>";
+					textnode += "<div class='ui-btn-text'>";
+					textnode += "<p class='ui-li-aside ui-li-desc'>";
+					textnode += "<h4 class='ui-li-heading'>" + company + "</h4>";
+					textnode += "</p>";
+
+					textnode += "<p class='ui-li-desc'  style='margin-top: -8px;'>";
+					textnode += "<div style='font-size: 10pt; '>";
+					textnode += firstname + " " + lastname;
+					textnode += "<br />";
+					textnode += "Opportunity Name: " + oppname + "";
+					textnode += "</div>";
+					textnode += "</p>";
+
+					textnode += "</div>";
+
+					textnode += "</div></td>";
+					textnode += "<td width='30%' style='font-size: 5px;bottom: 0px;'>";
+					textnode += "<div style='font-size: 5px;'>";
+
+					// textnode += "<input type='submit' value='Email' style='background-color:#888888;font-size: 10px; color: white;border: none;font-weight: bold'/>";
+					var contactPriv = window.localStorage.getItem("contactPriv");
+					if(contactPriv){
+					textnode += "<input  type='button'  id='" + logonID + "' value='Select' style='background-color:#2DB200;font-size: 10px;color: white;border: none;font-weight: bold;padding-left: 1em ;padding-right: 1em;padding-top:.7em; padding-bottom: .7em;-webkit-border-radius: 4px;border-radius: 3px 3px 3px 3px;'  onclick='directToRecord(this.id)'/>";
+					}
+					textnode += "</div></td>";
+					textnode += "</table>";
+					// textnode += "</li>";
+					textnode += "<hr style='color: #CCCCCC; background: #CCCCCC; width: 100%%; height: 1px; margin-left: -10px;margin-top: -10px;'>";
+					
+					var node = document.createElement("li");
+					var rID = "R" + logonID;
+					node.id = rID;
+
+					var textnode1 = document.createTextNode("");
+
+					node.appendChild(textnode1);
+					document.getElementById("rList").appendChild(node);
+
+					document.getElementById(rID).innerHTML = textnode;
+
+					navigator.notification.activityStop();
+				
+
+			});
+			
+			} else {
+
+					
+					document.getElementById('footer1').style.display = 'block';
+
+					var new_div = document.createElement('div');
+					new_div.className = "cls1";
+
+					new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>No data found, Try again...</h3>";
+					document.getElementById("rList").appendChild(new_div);
+					navigator.notification.activityStop();
+
+				}
+
+		}
+
+	}
+
+	function directToRecord(recdno) {
+
+		var encrptVal = getEncrption();
+
+		// http://qa2.leadmaster.com/mobile_accounts_list.asp
+		var url_main = window.localStorage.getItem("changed_url");
+
+		var url = url_main+"/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_RFullEdit.asp&RECDNO=" + recdno;
+
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+		// navigator.app.loadUrl(url, {
+		// openExternal : true
+		// });
+
+	}
+
+	
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+		
+		wsURL=window.localStorage.getItem("wsURL");	
+		navigator.notification.activityStop();
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		//Listen to the User clicking on the back button
+		var initialScreenSize = window.innerHeight;
+		window.addEventListener("resize", function() {
+			if (window.innerHeight < initialScreenSize) {
+				$("[data-role=footer]").hide();
+			} else {
+				$("[data-role=footer]").show();
+			}
+		});
+	}
+
+	//	document.addEventListener("deviceready", function() {
+	//mycode\
+	//	navigator.notification.activityStop();
+
+	//	});
+
+	function onBackKeyDown(e) {
+		e.preventDefault();
+
+		navigator.app.backHistory();
+		// navigator.app.exitApp();
+
+	}
+	function setFooter(){
+		var footerContent = window.localStorage.getItem("footerContent");
+		
+		document.getElementById("footer1").innerHTML = footerContent;
+		
+	}
+
+</script>
+<style>
+	.headerClass {
+
+		position: fixed;
+		-webkit-backface-visibility: hidden;
+		top: 1px;
+	}
+
+</style>
+

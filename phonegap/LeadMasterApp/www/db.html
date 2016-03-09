@@ -1,0 +1,331 @@
+<html xmlns:top="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=2.0, target-densitydpi=medium-dpi" />
+
+		<link rel="stylesheet" href="css/getdatabase.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="css/styleleft.css" type="text/css" media="all" />
+		<link rel="stylesheet" media="all and (orientation:portrait)" href="css/loginnew.css">
+		<link rel="stylesheet" media="all and (orientation:landscape)" href="css/loginHor.css">
+		<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/phonegap-1.0.0.js"></script>
+
+	</head>
+	<body onload="getDataBaseList()">
+		<div class="headernew">
+			<header>
+				<div id="headerImagelogin"> </div>
+			</header>
+		</div>
+		<div style="background-color:#006DD9" class="content">
+			<div class="textsize">
+				<p style="font-family:arial;color:white">
+					<b>Select DataBase</b>
+				</p>
+			</div>
+			<form>
+				<div>
+					<p>
+						<select  name="CompanyID" size="17"  id="MyDropDown"  style=" width:80%; height:40px; font-size:22px ">
+							<option value="0"  selected="">&nbsp;&nbsp;&nbsp;--- Select Database ---&nbsp;</option>
+						</select>
+						<input type="submit" class="button" id="buttonfoint" value="Submit" style=" min-width:60%; margin-top:7px;background-color:#EDEDED; " onclick="return getWorkGroup()"/>
+					</p>
+				</div>
+			</form>
+		</div>
+		<div data-role="footer" id="footer1" style="color: white;text-align: center;position: fixed" class="footerDB"> </div>
+
+	</body>
+</html>
+
+<script type="text/javascript">
+	var optNew;
+	var dd;
+	var optValue;
+	var optText;
+	var logonId = window.localStorage.getItem("logonID");
+	var wsURL=window.localStorage.getItem("wsURL");
+	
+	 /** Call when boady loads. Here getting the list of database.  **/
+	function getDataBaseList() {
+		
+		 wsURL=window.localStorage.getItem("wsURL");	
+
+		var footerContent = window.localStorage.getItem("footerContent");
+
+		document.getElementById("footer1").innerHTML = footerContent;
+
+		var getDBServiceUrl = wsURL+'GetDatabase';
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetDatabase xmlns="LMServiceNamespace"><logon_id>' + logonId + '</logon_id></GetDatabase></soap12:Body></soap12:Envelope>';
+
+		$.ajax({
+			url : getDBServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			data : soapMessage,
+			complete : getResponseDB,
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+	};
+
+	function getResponseDB(xmlHttpRequest, status) {
+		
+		var nextOpt;
+		dd = document.getElementById('MyDropDown');
+		if (!(status == 'success')) {
+
+			alert('An error has occurred.  Try again or check your Internet connection.');
+			window.location = "index.html";
+			navigator.notification.activityStop();
+			return false;
+		}
+
+		$(xmlHttpRequest.responseXML).find('TypeDataBaseData').each(function() {
+
+			var id = $(this).find('DatabaseID').text();
+			var databaseName = $(this).find('DatabaseName').text();
+
+			optValue = id;
+			optText = databaseName;
+			optNew = new Option(optText, optValue);
+
+			nextOpt = dd.length + 1;
+			dd.options[dd.length] = optNew;
+
+		});
+
+/** Checking if there is single database, moves to workgroup page **/
+		if ((nextOpt - 1) == 1) {
+
+			dd.selectedIndex = 1;
+			
+			
+			var databaseId = document.getElementById('MyDropDown')[document.getElementById('MyDropDown').selectedIndex].value;
+			window.location = 'workgrouplist.html?idOfDatabase=' + databaseId + '&logonId=' + logonId;
+			
+
+		} else {
+			document.addEventListener("deviceready", function() {
+				//mycode\
+				navigator.notification.activityStop();
+			});
+		}
+
+	}
+
+	function getParameterByName(name) {
+
+		var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+		var dbID = match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+		return dbID;
+
+	}
+
+/** Method to check the size of workgroup **/
+	function getWorkGroup() {
+	//	navigator.notification.activityStart("Please wait....", "loading");
+		var databaseId = document.getElementById('MyDropDown')[document.getElementById('MyDropDown').selectedIndex].value;
+
+		if (databaseId > 0) {
+			getWorkGroupList(databaseId, logonId);
+			// window.location = 'workgrouplist.html?idOfDatabase=' + databaseId + '&logonId=' + logonId;
+
+			return true;
+
+		} else {
+
+			alert('Please select DataBase');
+			navigator.notification.activityStop();
+			return false;
+		}
+
+	}
+
+
+	function getWorkGroupList(databaseId1, logonID1) {
+
+		databaseIdWG = databaseId1;
+		var logonID = logonID1;
+		window.localStorage.setItem("database_id", databaseIdWG);
+
+		var getWGServiceUrl = wsURL+'GetWorkgroups';
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetWorkgroups xmlns="LMServiceNamespace"><logon_id>' + logonID + '</logon_id><database_id>' + databaseIdWG + '</database_id></GetWorkgroups></soap:Body></soap:Envelope>';
+
+		$.ajax({
+			url : getWGServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			data : soapMessage,
+			complete : getResponseWorkGroup,
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+
+	};
+
+	function getResponseWorkGroup(xmlHttpRequest, status) {
+
+		var nextOpt = 0, workgroupId, workgroupName;
+
+		if (!(status == 'success')) {
+
+			alert('An error has occurred.  Try again or check your Internet connection.');
+			window.location = "index.html";
+			navigator.notification.activityStop();
+			return false;
+		}
+
+		var length = xmlHttpRequest.responseXML.getElementsByTagName("TypeWorkgroupData").length;
+
+		$(xmlHttpRequest.responseXML).find('TypeWorkgroupData').each(function() {
+
+			var id = $(this).find('WorkgroupID').text();
+			var nameWorkGroup = $(this).find('WorkgroupName').text();
+
+			workgroupId = id;
+			workgroupName = nameWorkGroup;
+
+			nextOpt = nextOpt + 1;
+
+		});
+
+		if (length == 1) {
+			window.localStorage.setItem("company_id", workgroupId);
+			window.localStorage.setItem("wgSize1", length);
+
+		//	alert(logonId+" == "+workgroupId);
+			getPrivileges(logonId,workgroupId);
+
+			//window.location = "dash2.html";
+
+		} else {
+
+			document.addEventListener("deviceready", function() {
+
+				window.location = 'workgrouplist.html';
+			});
+
+		}
+
+	}
+
+
+	/** Get privileges for all the module  **/
+	function getPrivileges(logonID,companyID) {
+
+		var logonServiceUrl = wsURL + 'GetLogonPrivileges';
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetLogonPrivileges xmlns="LMServiceNamespace"><LogonID>' + logonID + '</LogonID><CompanyID>' + companyID + '</CompanyID></GetLogonPrivileges></soap:Body></soap:Envelope>';
+
+		$.ajax({
+			url : logonServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			timeout : 9000,
+			data : soapMessage,
+			complete : getResponsePrivileges,
+			error : function(xhr, status, error) {
+				//alert(status)
+				if (status == 'timeout') {
+					alert("Server is not responding");
+					ifUserLoginFails();
+					// navigator.notification.activityStop();
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+					getPrivileges(logonID,companyID);
+					alert('An error has occurred. Try again or check your Internet connection.');
+					ifUserLoginFails();
+
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+
+		function getResponsePrivileges(xmlHttpRequest, status) {
+
+
+			var length = xmlHttpRequest.responseXML.getElementsByTagName("GetLogonPrivilegesResult").length;
+			var cont = 1;
+		//	alert("xmlHttpRequest.responseXML=="+xmlHttpRequest.responseXML);
+			$(xmlHttpRequest.responseXML).find('GetLogonPrivilegesResult').each(function() {
+				// var reveiwAndtake = $(this).find('ReviewAndTakeAct').text();
+				var companyPriv = $(this).find('ViewSalesProgress').text();
+				var contactPriv = $(this).find('FullEdit').text();
+				var callBackEventViewAccess = $(this).find('AssignCallBack').text();
+				var AccountLink = $(this).find('AccountLink').text();
+				var MapPriv = $(this).find('RecordOnMap').text();
+				//alert("MapPriv=="+MapPriv);
+				// window.localStorage.setItem("reveiwAndtake",reveiwAndtake);
+				window.localStorage.setItem("companyPriv", companyPriv);
+				window.localStorage.setItem("contactPriv", contactPriv);
+				window.localStorage.setItem("AssignCallBack", callBackEventViewAccess);
+				window.localStorage.setItem("AccountLink", AccountLink);
+				window.localStorage.setItem("MapPriv", MapPriv);
+				//alert("MapPriv=="+MapPriv);
+			});
+
+			window.location = "dash2.html";
+		}
+
+	}
+
+/** Call when user login fails  **/
+	function ifUserLoginFails() {
+		jQuery.ajaxSetup({
+			async : false
+		});
+		// var user = window.localStorage.getItem("ifUserFails");
+		// document.getElementById('email').innerHTML = user;
+		// document.getElementById("email").value = user;
+		// document.getElementById("password").value = '';
+
+		window.location = "index.html";
+
+
+		jQuery.ajaxSetup({
+			async : true
+		});
+
+	}
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		//Listen to the User clicking on the back button
+
+		var initialScreenSize = window.innerHeight;
+		window.addEventListener("resize", function() {
+			if (window.innerHeight < initialScreenSize) {
+				$("[data-role=footer]").hide();
+			} else {
+				$("[data-role=footer]").show();
+			}
+		});
+	}
+
+	function onBackKeyDown(e) {
+		e.preventDefault();
+		navigator.notification.confirm("Are you sure you want to exit ?", onConfirm, "Confirmation", "Yes,No");
+		// Prompt the user with the choice
+	}
+
+	function onConfirm(button) {
+		if (button == 2) {
+			//If User selected No, then we just do nothing
+			return;
+		} else {
+			navigator.app.exitApp();
+			// Otherwise we quit the app.
+		}
+	}
+
+</script>
+

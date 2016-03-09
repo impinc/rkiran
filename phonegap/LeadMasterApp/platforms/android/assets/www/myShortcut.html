@@ -1,0 +1,522 @@
+<html >
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, target-densitydpi=medium-dpi" />
+
+	<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script>
+	<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+	<script type="text/javascript" charset="utf-8" src="js/encryption.js"></script>
+
+	<link rel="stylesheet" media="all and (orientation:portrait)" href="css/account_offline.css">
+	<link rel="stylesheet" media="all and (orientation:landscape)" href="css/account_offline_hor.css">
+	<!--<link rel="stylesheet" href="css/styleleft.css" type="text/css" media="all" />-->
+</head>
+
+<body style="background-color: #EEEEEE;height: 100%">
+
+<div data-role="header" class="titlePart" id="123"  style="background-color: #006DD9;width: 100%;margin-left: -8px;position: fixed; z-index: 5;">
+
+	<table width="100%" cellspacing="0" style="center;vertical-align: middle;style="z-index="4">
+
+		<tr width="100%" style="top: 50px;background-color: #006DD9;height: 40px;" >
+
+			<td width="100%" >
+				<div style="text-align: center;vertical-align: bottom;font-weight: bolder;color: white" class="title" id="setHeadingShortcut">
+					My Shortcuts
+				</div></td>
+
+		</tr>
+
+		<tr width="100%">
+			<td style="background-color: white;" width="100%" > </td>
+		</tr>
+		<tr width="100%" >
+			<!-- 960018 -->
+			<td width="92%" height="50px" >
+				<input  type="text" placeholder="Search..." id="keywords" style="border-radius: 1em; text-align: center;padding: 1em 0;color: grey;border:3px;border-color: #105FC9;"/>
+			</td>
+
+		</tr>
+
+	</table>
+
+</div>
+
+<div data-role="content" style="padding-top: 100px;z-index: -1" >
+
+	<ul id="rList" class="ui-listview" onactivate="getEvents()" data-role="listview" style="background-color: #EEEEEE;list-style: none;margin-left: -20px;margin-bottom: -10px;margin-right: -10px;height: 63%;" >
+
+		<div style="margin-top: 15%;text-align: center;margin-left: -10px;vertical-align: middle" id="message1">
+
+			<!-- <h3 id="msgbydef" style="color: grey; text-align: center;text-shadow: 2px;vertical-align: middle">Enter any keyword to search</h3> -->
+
+		</div>
+	</ul>
+</div>
+
+<!-- <div data-role="footer" id="footer1" style="color: grey;text-align: center;">
+
+Copyright � 2014 LeadMaster
+<br />
+version 1.1
+</div> -->
+
+</body>
+</html>
+<script>
+	var username, password, companyId, recdNo = 0, wsURL,url_main,encrptVal;
+
+	var pagetype= 'account';
+	function getEvents() {
+
+		// document.getElementById("message1").style.display = "none";
+		document.getElementById("123").style.zIndex = "2";
+		username = window.localStorage.getItem("username");
+		password = window.localStorage.getItem("password");
+		companyId = window.localStorage.getItem("company_id");
+		document.getElementById("rList").innerHTML = "";
+		// alert(username + password + companyId + keywords);
+
+		var myShortcutServiceUrl = wsURL + 'MyShortcut';
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><MyShortcut xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id></MyShortcut></soap:Body></soap:Envelope>';
+
+		$.ajax({
+			url : myShortcutServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			timeout : 9000,
+			data : soapMessage,
+			complete : getResponseMyShortcut,
+			error : function(xhr, status, error) {
+				if (status == 'timeout') {
+					alert("Server is not responding1");
+					window.location = "dash2.html";
+					// navigator.notification.activityStop();
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+
+					alert('An error has occurred. Try again or check your Internet connection.');
+					window.location = "dash2.html";
+					// navigator.notification.activityStop();
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+	}
+
+	// return false;
+
+
+	function getResponseMyShortcut(xmlHttpRequest, status) {
+
+		// alert(xmlHttpRequest.responseXML);
+		// if (!(status == 'success'))
+		// {
+		//
+		// alert('An error has occurred. Try again or check your Internet connection.');
+		// window.location="dash.html";
+		// navigator.notification.activityStop();
+		//
+		// return false;
+		//
+		// }
+		var length = xmlHttpRequest.responseXML.getElementsByTagName("TypeKeyValue").length;
+
+
+		if (length > 0) {
+				//var Fulltextnode = "";
+				//var node = document.createElement("li");
+				//rID = "HeaderLine";
+				//node.id = rID;
+				//var textnode1 = document.createTextNode("");
+				//node.appendChild(textnode1);
+				//document.getElementById("rList").appendChild(node);
+			//	document.getElementById(rID).innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>Saved Searches</h3>";
+
+		var flgShowHeader = true;
+        var raychar = [";", "/","\\",":","?","|","]","}","[","{",")","(","*","^","%","$","#","@","!","<",">",'"',"~","`","+","="];
+
+
+		$(xmlHttpRequest.responseXML).find('TypeKeyValue').each(function() {
+			if(flgShowHeader == true){
+				document.getElementById(rID).innerHTML = "<h3  style='margin-left: -10px;margin-top:15%;color: grey; text-align: center;text-shadow: 2px;'>Shortcut</h3>";
+  				flgShowHeader = false;
+ 			}
+
+				key = $(this).find('Key').text();
+				value = $(this).find('Value').text();
+					if (value.length > 0){
+                        for (i = 0; i < raychar.length; i++) {
+                            if(value.indexOf(raychar[i]) > -1){
+                                value = value.replace(raychar[i],"");
+                            }
+                        }
+                    }
+
+				if (!(key == null) && !(key == "") && !(value == "") && !(value == null)) {
+
+					var textnode = "";
+
+					if (value.search("RFullEdit") != -1) {
+						var rfullEdt = window.localStorage.getItem("contactPriv");
+						if (rfullEdt) {
+
+							textnode += "<h4 class='ui-li-heading' style='margin-top:-2px;margin-left:-2px;z-index:0;'  align='left' ><a href='#' onclick=\"getMyShortcut('" + value + "')\">" + key + "</a></h4>";
+						}
+					} else if (value.search("frmSalesProgress") != -1) {
+						var companyView = window.localStorage.getItem("companyPriv");
+						if (companyView) {
+
+							textnode += "<h4 class='ui-li-heading' style='margin-top:-2px;margin-left:-2px;z-index:0;'  align='left' ><a href='#' onclick=\"getMyShortcut('" + value + "')\">" + key + "</a></h4>";
+						}
+					} else {
+						textnode += "<h4 class='ui-li-heading' style='margin-top:-2px;margin-left:-2px;z-index:0;'  align='left' ><a href='#' onclick=\"getMyShortcut('" + value + "')\">" + key + "</a></h4>";
+					}
+					 //alert(textnode);
+
+					var node = document.createElement("li");
+					rID = "R" + key;
+
+					node.id = rID;
+
+					var textnode1 = document.createTextNode("");
+
+					node.appendChild(textnode1);
+					document.getElementById("rList").appendChild(node);
+					document.getElementById(rID).innerHTML = textnode;
+
+				//	getSearches();
+
+				}
+				 else
+				{
+					// document.getElementById('footer1').style.display = 'block';
+
+					/*var new_div = document.createElement('div');
+					new_div.className = "cls1";
+
+					new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>No data found, Try again...</h3>";
+					document.getElementById("rList").appendChild(new_div);
+					navigator.notification.activityStop();
+					*/
+
+
+				}
+				// return false;
+
+			});
+		} else {
+			// document.getElementById('footer1').style.display = 'block';
+
+			var new_div = document.createElement('div');
+			new_div.className = "cls1";
+
+			new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>No data found, Try again...</h3>";
+			document.getElementById("rList").appendChild(new_div);
+			navigator.notification.activityStop();
+
+			return false;
+
+		}
+
+		navigator.notification.activityStop();
+
+	}
+	function getSearches() {
+		// url_main = window.localStorage.getItem("changed_url");
+		//
+		// if (url_main == null || url_main == "") {
+		// url_main = "http://app.leadmastercrm.com";
+		//
+		// }
+
+		// document.getElementById("message1").style.display = "none";
+		username = window.localStorage.getItem("username");
+		password = window.localStorage.getItem("password");
+		companyId = window.localStorage.getItem("company_id");
+		document.getElementById("rList").innerHTML = "";
+		// alert(username + password + companyId + keywords);
+
+		var mySearchesServiceUrl = wsURL + 'MySearches';
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><MySearches xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id></MySearches></soap:Body></soap:Envelope>';
+
+		$.ajax({
+			url : mySearchesServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			timeout : 9000,
+			data : soapMessage,
+			complete : getResponseMySearches,
+			error : function(xhr, status, error) {
+				if (status == 'timeout') {
+					alert("Server is not responding");
+					window.location = "dash2.html";
+					// navigator.notification.activityStop();
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+
+					alert('An error has occurred. Try again or check your Internet connection.');
+					window.location = "dash2.html";
+					// navigator.notification.activityStop();
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+	}
+
+	function getResponseMySearches(xmlHttpRequest, status) {
+			// if (!(status == 'success')) {
+			//
+			// alert('An error has occurred. Try again or check your Internet connection.');
+			// window.location = "dash.html";
+			// navigator.notification.activityStop();
+			//
+			// return false;
+			//
+			// }
+
+			var length = xmlHttpRequest.responseXML.getElementsByTagName("TypeKeyValue").length;
+
+			if (length > 0) {
+				var Fulltextnode = "";
+
+						var node = document.createElement("li");
+						rID = "HeaderLine";
+
+						node.id = rID;
+
+						var textnode1 = document.createTextNode("");
+
+						node.appendChild(textnode1);
+						document.getElementById("rList").appendChild(node);
+
+						document.getElementById(rID).innerHTML = "<h3  style='margin-left: -10px;color: grey; text-align: center;text-shadow: 2px;'>Saved Searches</h3>";
+
+
+				$(xmlHttpRequest.responseXML).find('TypeKeyValue').each(function() {
+
+					key = $(this).find('Key').text();
+					value = $(this).find('Value').text();
+					if (!(key == null) && !(value == null))
+					{
+
+						var textnode = "";
+
+						if (value.search("RFullEdit") != -1) {
+							var rfullEdt = window.localStorage.getItem("contactPriv");
+							if (rfullEdt) {
+
+								textnode += "<h4 class='ui-li-heading' style='margin-top:-2px;margin-left:-2px' align='left' ><a href='#' onclick=\"getMySearches('" + key + "')\">" + value + "</a></h4>";
+							}
+						} else if (value.search("frmSalesProgress") != -1) {
+							var companyView = window.localStorage.getItem("companyPriv");
+							if (companyView) {
+
+								textnode += "<h4 class='ui-li-heading' style='margin-top:-2px;margin-left:-2px' align='left' ><a href='#' onclick=\"getMySearches('" + key + "')\">" + value + "</a></h4>";
+							}
+						} else {
+
+						var maping ="";
+						var mapPriv= window.localStorage.getItem("MapPriv");
+									//alert(mapPriv);
+									if(mapPriv == "true"){
+							            mapimg = "<img  style='margin-left:7px;' id='img" + key + "' src='images/gmap1.png' onclick=\"goToMap('"+ key +"')\">"
+						            }
+						            							            //mapimg = "<img  style='margin-left:7px;' id='img" + key + "' src='images/gmap1.png' onclick=\"goToMap('"+ key +"')\">"
+
+							textnode += "<h4 class='ui-li-heading' style='margin-top:-2px;margin-left:-2px' align='left' ><a href='#' onclick=\"getMySearches('" + key + "')\">" + value + "</a>&nbsp;&nbsp;"+ mapimg +"</h4>";
+						}
+
+
+						var node = document.createElement("li");
+						rID = "R" + key;
+
+						node.id = rID;
+
+						var textnode1 = document.createTextNode("");
+
+						node.appendChild(textnode1);
+						document.getElementById("rList").appendChild(node);
+
+						document.getElementById(rID).innerHTML = textnode;
+						//Fulltextnode = Fulltextnode + textnode;
+
+						//navigator.notification.activityStop();
+
+					;
+					} else {
+						// document.getElementById('footer1').style.display = 'block';
+
+						var new_div = document.createElement('div');
+						new_div.className = "cls1";
+
+						new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>No data found, Try again...</h3>";
+						document.getElementById("rList").appendChild(new_div);
+
+				}
+				//return Fulltextnode;
+
+				});
+			} else
+			{
+				// document.getElementById('footer1').style.display = 'block';
+
+				//var new_div = document.createElement('div');
+				//new_div.className = "cls1";
+
+				//new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>No data found, Try again...</h3>";
+				//document.getElementById("rList").appendChild(new_div);
+
+			}
+
+		}
+
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady()
+	 {
+		wsURL = window.localStorage.getItem("wsURL");
+		url_main = window.localStorage.getItem("changed_url");
+		var myShortcutsLabelName = window.localStorage.getItem("Shortcuts");
+		encrptVal = getEncrption();
+		if (myShortcutsLabelName != null && myShortcutsLabelName != "")
+		{
+			document.getElementById('setHeadingShortcut').innerHTML = myShortcutsLabelName;
+		}
+
+		getEvents();
+		getSearches();
+
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		//Listen to the User clicking on the back button
+		var initialScreenSize = window.innerHeight;
+		window.addEventListener("resize", function() {
+			if (window.innerHeight < initialScreenSize) {
+				$("[data-role=footer]").hide();
+			} else {
+				$("[data-role=footer]").show();
+			}
+		});
+	}
+
+	//	document.addEventListener("deviceready", function() {
+	//mycode\
+	//	navigator.notification.activityStop();
+
+	//	});
+
+	function onBackKeyDown(e) {
+		e.preventDefault();
+
+		navigator.app.backHistory();
+		// navigator.app.exitApp();
+
+	}
+
+	function getMyShortcut(value) {
+
+
+		if (value.search("FP=dash_Chart.asp") != -1) {
+			var rayValue = value.split("?");
+			if (rayValue.length > 0) {
+				value = "mobile_dash_Chart.asp&" + rayValue[1];
+			}
+		} else {
+
+			value = value.replace("?", "&");
+
+		}
+
+		if (value.search("opportunity_EditForm") != -1) {
+			if (value.search("mobile_") == -1) {
+				value = value.replace("opportunity_EditForm", "mobile_opportunity_EditForm");
+			}
+		} else if (value.search("dlgContact") != -1) {
+			if (value.search("mobile_") == -1) {
+				value = value.replace("dlgContact", "mobile_dlgContact");
+			}
+		} else if (value.search("RFullEdit") != -1) {
+			if (value.search("mobile_") == -1) {
+
+				value = value.replace("RFullEdit", "mobile_RFullEdit");
+			}
+		} else if (value.search("frmSalesProgress") != -1) {
+			if (value.search("mobile_") == -1) {
+
+				value = value.replace("frmSalesProgress", "mobile_frmSalesProgress");
+			}
+		} else if (value.search("frmReviewAndAct") != -1) {
+			if (value.search("mobile_") == -1) {
+				value = value.replace("frmReviewAndAct", "mobile_frmReviewAndAct");
+			}
+		} else if (value.search("search_form") != -1) {
+			if (value.search("mobile_") == -1) {
+				value = value.replace("search_form", "mobile_searchform");
+			}
+		}
+
+		var encrptVal = getEncrption();
+		var url_main = window.localStorage.getItem("changed_url");
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=" + value;
+
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+	}
+
+	$(function() {
+
+		$('#keywords').keyup(function() {
+
+			var searchText = $(this).val();
+
+			$('ul > li').each(function() {
+
+				var currentLiText = $(this).text(), showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+
+				$(this).toggle(showCurrentLi);
+
+			});
+		});
+
+	});
+
+	function getMySearches(key) {
+		var contactPriv = window.localStorage.getItem("contactPriv");
+		// if (contactPriv) {
+			value = value.replace("?", "&");
+
+			var encrptVal = getEncrption();
+			var url_main = window.localStorage.getItem("changed_url");
+			var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=search_Engine.asp&savedsearch=T&mobile_search=T&SearchID=" + key;
+		//	console.log("URL=" + url);
+			window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+		// } else {
+			// alert('You do not have to Edit Record');
+		// }
+	}
+
+	function goToMap(searchID){
+	var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_searchmap.asp&searchid="+searchID + "&pagetype=" + pagetype;
+					//		console.log("URLLL:" + url);
+					window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+		//if(searchID > 0)
+		//console.log("AAAA"+url);
+		//	window.location = "map2.html?searchID=" + searchID;
+	}
+</script>
+<style>
+	.titlePart {
+
+	position: fixed;
+	-webkit-backface-visibility: hidden;
+	}
+
+</style>
+

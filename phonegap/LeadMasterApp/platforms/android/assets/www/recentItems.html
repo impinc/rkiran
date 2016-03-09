@@ -1,0 +1,313 @@
+<html >
+	<head>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1.2, maximum-scale=2.0, target-densitydpi=medium-dpi" />
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		 <script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script> 
+		<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/encryption.js"></script>
+
+		<link rel="stylesheet" media="all and (orientation:portrait)" href="css/account_offline.css">
+		<link rel="stylesheet" media="all and (orientation:landscape)" href="css/account_offline_hor.css">
+		
+	</head>
+
+	<body style="background-color: #EEEEEE;height: 100%">
+
+		<div data-role="header" class="titlePart"  style="background-color: #006DD9;width: 100%;margin-left: -8px;position: fixed">
+
+			<table width="100%" cellspacing="0" style="vertical-align: middle;">
+				<!-- <tr width="100%" style="background-color: #006DD9;height: 50px">
+				<td>
+				<header width="100%">
+				<div width="100%" id="headerImage" class="headerQS"></div>
+				</header></td>
+				</tr> -->
+				<tr width="100%" style="top: 50px;background-color: #006DD9;height: 40px;" >
+
+					<td width="100%" >
+					<div style="text-align: center;vertical-align: bottom;font-weight: bolder;color: white" class="title" id="setHeadingRecentItem">
+						Recent Items
+					</div></td>
+
+				</tr>
+
+				<tr width="100%">
+					<td style="background-color: white;" width="100%" > </td>
+				</tr>
+				<tr width="100%" >
+					<!-- 960018 -->
+					<td width="92%" height="50px" >
+					<input  type="text" placeholder="Search..." id="keywords" style="border-radius: 1em; text-align: center;padding: 1em 0;color: grey;border:3px;border-color: #105FC9;"/>
+					</td>
+
+				</tr>
+
+				<!-- <tr width="100%" style="top: 50px;background-color: #6FA7D1;height: 40px;">
+				<td width="100%" >
+				<input  type="text" placeholder="Search..." id="keywords" style="border-radius: 1em; text-align: center;padding: 0.7em 0;color: grey;border:2px;"/>
+				</td>
+
+				</tr> -->
+			</table>
+
+		</div>
+
+		<div data-role="content" style="padding-top: 100px;" >
+
+			<ul id="rList" class="ui-listview" onactivate="getEvents()" data-role="listview" style="background-color: #EEEEEE;list-style: none;margin-left: -20px;margin-bottom: -10px;margin-right: -10px;height: 63%;" >
+
+				<div style="margin-top: 15%;text-align: center;margin-left: -10px;vertical-align: middle" id="message1">
+
+					<!-- <h3 id="msgbydef" style="color: grey; text-align: center;text-shadow: 2px;vertical-align: middle">Enter any keyword to search</h3> -->
+
+				</div>
+			</ul>
+		</div>
+
+		<!-- <div data-role="footer" id="footer1" style="color: grey;text-align: center;">
+
+		Copyright � 2014 LeadMaster
+		<br />
+		version 1.1
+		</div> -->
+
+	</body>
+</html>
+<script>
+	var username, password, companyId, recdNo = 0,wsURL;
+
+	function getEvents() {
+
+		// document.getElementById("message1").style.display = "none";
+		username = window.localStorage.getItem("username");
+		password = window.localStorage.getItem("password");
+		companyId = window.localStorage.getItem("company_id");
+		document.getElementById("rList").innerHTML = "";
+
+		// alert(username +"<-username  paswrod->"+ password+" companyId->"+companyId);
+
+		var recentItemsServiceUrl = wsURL+'RecentItems';
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><RecentItems xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id></RecentItems></soap:Body></soap:Envelope>';
+
+		$.ajax({
+			url : recentItemsServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			timeout : 9000,
+			data : soapMessage,
+			complete : getResponseRecentItems,
+
+			error : function(xhr, status, error) {
+				if (status == 'timeout') {
+					alert("Server is not responding");
+					window.location = "dash2.html";
+					// navigator.notification.activityStop();
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+
+					alert('An error has occurred. Try again or check your Internet connection.');
+					window.location = "dash2.html";
+					// navigator.notification.activityStop();
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+	}
+
+	// return false;
+
+	function getResponseRecentItems(xmlHttpRequest, status) {
+		// alert(xmlHttpRequest.responseXML);
+		// if (!(status == 'success')) {
+		//
+		// alert('An error has occurred. Try again or check your Internet connection.');
+		// window.location = "dash.html";
+		// navigator.notification.activityStop();
+		//
+		// return false;
+		//
+		// }
+		var length = xmlHttpRequest.responseXML.getElementsByTagName("TypeKeyValue").length;
+
+		if (length > 0) {
+
+			$(xmlHttpRequest.responseXML).find('TypeKeyValue').each(function() {
+				key = $(this).find('Key').text();
+				value = $(this).find('Value').text();
+
+				if(value.length > 0){
+					var textnode = "";
+
+					if (value.search("RFullEdit") != -1) {
+						var rfullEdt = window.localStorage.getItem("contactPriv");
+						if (rfullEdt) {
+
+							textnode += "<h4 class='ui-li-heading' style='margin-top:-2px;margin-left:-2px' align='left' ><a href='#' onclick=\"getRecentItem('" + key + "')\">" + value + "</a>";
+						}
+					} else if (value.search("frmSalesProgress") != -1) {
+						var companyView = window.localStorage.getItem("companyPriv");
+						if (companyView) {
+
+							textnode += "<h4 class='ui-li-heading' style='margin-top:-2px;margin-left:-2px' align='left' ><a href='#' onclick=\"getRecentItem('" + key + "')\">" + value + "</a>";
+						}
+					} else {
+						textnode += "<h4 class='ui-li-heading' style='margin-top:-2px;margin-left:-2px' align='left' ><a href='#' onclick=\"getRecentItem('" + key + "')\">" + value + "</a>";
+					}
+
+					var mapPriv= window.localStorage.getItem("MapPriv");
+				//	alert(mapPriv);
+					if(mapPriv == "true")
+					{
+						if (key.indexOf("RECDNO=")>0)
+						{
+							var strRECDNO=key.substring(key.indexOf("RECDNO="));
+							//        alert("first " + strRECDNO)
+							if(strRECDNO.indexOf("&")>0){
+								strRECDNO= strRECDNO.substr(0,(strRECDNO.indexOf("&")));
+								//alert("zzz " + strRECDNO);
+								strRECDNO= strRECDNO.replace("RECDNO=", "");
+								//alert("rrr " + strRECDNO);
+							} else {
+								strRECDNO= strRECDNO.replace("RECDNO=", "");
+							}
+						}
+						if(value.length > 0){
+							textnode += "<img  style='margin-left:7px;' id='img" + key + "' src='images/gmap1.png' onclick=\"javGoToMap('"+ strRECDNO +"')\">";
+						}
+					}
+					textnode += "</h4>"
+					// alert(textnode);
+
+					var node = document.createElement("li");
+					rID = "R" + key;
+
+					node.id = rID;
+
+					var textnode1 = document.createTextNode("");
+
+					node.appendChild(textnode1);
+					document.getElementById("rList").appendChild(node);
+
+					document.getElementById(rID).innerHTML = textnode;
+
+					navigator.notification.activityStop();
+				}
+
+			});
+		} else {
+			// document.getElementById('footer1').style.display = 'block';
+
+			var new_div = document.createElement('div');
+			new_div.className = "cls1";
+
+			new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>No data found, Try again...</h3>";
+			document.getElementById("rList").appendChild(new_div);
+
+		}
+
+	}
+
+	function javGoToMap(recdNo)
+	{
+		var encrptVal = getEncrption();
+		var url_main = window.localStorage.getItem("changed_url");
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_RecordMap.asp&RECDNO=" + recdNo;
+	//	console.log("URLLL:" + url);
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main')
+	}
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+		
+		wsURL=window.localStorage.getItem("wsURL");	
+		
+		var recentItemsName = window.localStorage.getItem("Recent Items");
+		
+		if(recentItemsName != null && recentItemsName != ""){
+		document.getElementById("setHeadingRecentItem").innerHTML = recentItemsName;
+		}
+		
+		getEvents();
+
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		//Listen to the User clicking on the back button
+		var initialScreenSize = window.innerHeight;
+		window.addEventListener("resize", function() {
+			if (window.innerHeight < initialScreenSize) {
+				$("[data-role=footer]").hide();
+			} else {
+				$("[data-role=footer]").show();
+			}
+		});
+	}
+
+	//	document.addEventListener("deviceready", function() {
+	//mycode\
+	//	navigator.notification.activityStop();
+
+	//	});
+
+	function onBackKeyDown(e) {
+		e.preventDefault();
+
+		navigator.app.backHistory();
+		// navigator.app.exitApp();
+
+	}
+
+	function getRecentItem(key) {
+		var contactPriv = window.localStorage.getItem("contactPriv");
+		if (contactPriv) {
+
+			var key1 = key.search("mobile_");
+
+			if (key1 == -1) {
+				key = "mobile_" + key;
+			}
+
+			key = key.replace("?", "&");
+			key=key + "&recentitem=T";
+
+			var encrptVal = getEncrption();
+			var url_main = window.localStorage.getItem("changed_url");
+			var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=" + key;
+			//alert(url);
+			 console.log("RecentItemURL=" + url);
+			window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+		} else {
+			alert('You do not have access to Edit Record');
+		}
+	}
+
+	$(function() {
+
+		$('#keywords').keyup(function() {
+
+			var searchText = $(this).val();
+
+			$('ul > li').each(function() {
+
+				var currentLiText = $(this).text(), showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+
+				$(this).toggle(showCurrentLi);
+
+			});
+		});
+
+	});
+
+</script>
+<style>
+	.titlePart {
+
+		position: fixed;
+		-webkit-backface-visibility: hidden;
+	}
+
+</style>
+

@@ -1,0 +1,1673 @@
+
+html{
+	
+	 box-shadow: inset 0 0 15px black;
+}
+body {
+
+	background-color: #006dd9;
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	
+	
+}
+
+
+@media only screen and (max-width: 240px) {
+
+	.headerdash {
+
+		width: 80%;
+		top: 2%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+		vertical-align: middle;
+	}
+	td {
+
+		padding: -2px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+
+	.upper {
+
+		width: 100%;
+		margin-top: -2%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: absolute;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 180px;
+		height: 36px;
+		background-size: 180px 36px;
+	
+		background: url('../images/header_ldpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+
+		margin-top: 0%;
+	}
+
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 28px;
+	}
+	#new_lead {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/shortcut_ldpi.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/accounts_ldpi.png') no-repeat center bottom;
+	}
+	#contacts {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/contacts_ldpi.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/callback_ldpi.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/my_searches_ldpi.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/recent_items_ldpi.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 36px;
+		height: 36px;
+		background-size: 36px 36px;
+		background: url('../images/dashboard_ldpi.png') no-repeat center bottom;
+	}
+	.footer1{
+		font-size: 4pt;
+		position:absolute;
+		margin-bottom: -25px;
+		 box-shadow: inset 0 0 4px black;
+	}
+
+}
+
+@media screen and (min-width: 280px) and (max-width: 320px) {
+
+	.headerdash {
+    		width: 100%;
+    		height: 100%;
+    		left: 11%;
+    		text-align: center;
+    		background-size: contain;
+    		position: fixed;
+    	}
+
+    	td {
+    		padding: 6px;
+    		border-spacing: 10px;
+    		transform:scale(1.0,1.0) translate(0px,-1px);
+    		font-family: "Times New Roman", Times, serif;
+    		font-weight:bolder;
+    	}
+
+    	.label_tr{
+    		font-size: 10px;
+    		color: white ;
+    		top: 0px;
+    		font-weight:bolder;
+    	}
+
+    	.upper {
+    		width: 80%;
+    		height: 100%;
+    		top: 10%;
+    		left: 10%;
+    		right: 10%;
+    		text-align: center;
+    		background-size: contain;
+    		position: fixed;
+    		vertical-align: middle;
+    	}
+
+    	#headerImage {
+
+    		width: 180;
+    		margin-left: 25px;
+    		height: 36px;
+    		background-size: 180px 36px;
+    		background: url('../images/header_ldpi.png') no-repeat center bottom;
+    	}
+
+    	#buttonform {
+
+    		margin-top: 5%;
+    	}
+    	.button {
+    		background: #fff;
+    		color: white;
+    		font-family: calibri;
+    		font-size: 13pt;
+    		margin-left: auto;
+    		margin-right: auto;
+    		margin-top: -2px;
+    		margin-bottom: 1px;
+    		padding: 3px;
+    		border-top: 0px solid #CCCCCC;
+    		border-left: 0px solid #CCCCCC;
+    		border-right: 0px solid #999999;
+    		border-bottom: 0px solid #999999;
+    		-moz-border-radius: 8px;
+    		-webkit-border-radius: 4px;
+    		border-radius: 6px 6px 6px 6px;
+    		height: 30px;
+    		margin-top: 5px;
+    	}
+
+    	.label_fixed_width{
+
+    		width:80px;
+
+    	}
+    	#new_lead {
+    		width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/shortcuts32n.png') no-repeat center bottom;
+    	}
+    	#accounts {
+    	width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/accounts32n.png') no-repeat center bottom;
+    	}
+    	#contacts {
+    		width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/contacts32n.png') no-repeat center bottom;
+    	}
+    	#callback {
+    		width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/callbacks32n.png') no-repeat center bottom;
+    	}
+    	#my_searches {
+    		width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/mysearches32n.png') no-repeat center bottom;
+    	}
+    	#recent_items {
+    			width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/recent-items32n.png') no-repeat center bottom;
+    	}
+    	#dashboard {
+    	width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    						background: url('../images/dashboard32n.png') no-repeat center bottom;
+    	}
+    	#new_lead1 {
+    		width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/06(32).png') no-repeat center bottom;
+    	}
+    	#accounts1 {
+    		width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/02(32).png') no-repeat center bottom;
+    	}
+    	#contacts1 {
+    		width: 32px;
+    		height: 32px;
+          	background-size: 32px 32px;
+    		background: url('../images/contacts02(32).png') no-repeat center bottom;
+    	}
+    	#callback1 {
+    		width: 32px;
+    		height: 32px;
+          	background-size: 32px 32px;
+    		background: url('../images/01(32).png') no-repeat center bottom;
+    	}
+    	#my_searches1 {
+    		width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/05(32).png') no-repeat center bottom;
+    	}
+    	#recent_items1 {
+    		width: 32px;
+    		height: 32px;
+          	background-size: 32px 32px;
+    		background: url('../images/03(32).png') no-repeat center bottom;
+    	}
+    	#dashboard1 {
+    		width: 32px;
+    		height: 32px;
+          	background-size: 32px 32px;
+    		background: url('../images/04(32).png') no-repeat center bottom;
+    	}
+
+    	.footer1{
+    		height: 40px;
+    		box-shadow: inset 0 0 8px black;
+    	}
+
+
+    }
+
+@media screen and (min-width: 321px) and (max-width: 360px) {
+
+	.headerdash {
+    		width: 100%;
+    		height: 100%;
+    		left: 11%;
+    		text-align: center;
+    		background-size: contain;
+    		position: fixed;
+    	}
+
+    	td {
+    		padding: 6px;
+    		border-spacing: 10px;
+    		transform:scale(1.0,1.0) translate(0px,-1px);
+    		font-family: "Times New Roman", Times, serif;
+    		font-weight:bolder;
+    	}
+
+    	.label_tr{
+    		font-size: 13px;
+    		color: white ;
+    		top: 0px;
+    		font-weight:bolder;
+    	}
+
+    	.upper {
+    		width: 80%;
+    		height: 100%;
+    		top: 10%;
+    		left: 10%;
+    		right: 10%;
+    		text-align: center;
+    		background-size: contain;
+    		position: fixed;
+    		vertical-align: middle;
+    	}
+
+    	#headerImage {
+
+			margin-top:5px;
+    		width: 280;
+    		height: 48px;
+    		background-size: 280px 48px;
+    		background: url('../images/header_mdpi.png') no-repeat center bottom;
+    	}
+
+    	#buttonform {
+
+    		margin-top: 5%;
+    	}
+    	.button {
+    		background: #fff;
+    		color: white;
+    		font-family: calibri;
+    		font-size: 13pt;
+    		margin-left: auto;
+    		margin-right: auto;
+    		margin-top: -2px;
+    		margin-bottom: 1px;
+    		padding: 3px;
+    		border-top: 0px solid #CCCCCC;
+    		border-left: 0px solid #CCCCCC;
+    		border-right: 0px solid #999999;
+    		border-bottom: 0px solid #999999;
+    		-moz-border-radius: 8px;
+    		-webkit-border-radius: 4px;
+    		border-radius: 6px 6px 6px 6px;
+    		height: 30px;
+    		margin-top: 5px;
+    	}
+
+    	.label_fixed_width{
+
+    		width:80px;
+
+    	}
+    	#new_lead {
+    		width: 48px;
+    		height: 48px;
+
+    		background-size: 48px 48px;
+    		background: url('../images/shortcuts48n.png') no-repeat center bottom;
+    	}
+    	#accounts {
+    	width: 48px;
+    		height: 48px;
+
+    		background-size: 48px 48px;
+    		background: url('../images/accounts48n.png') no-repeat center bottom;
+    	}
+    	#contacts {
+    		width: 48px;
+    		height: 48px;
+
+    		background-size: 48px 48px;
+    		background: url('../images/contacts48n.png') no-repeat center bottom;
+    	}
+    	#callback {
+    		width: 48px;
+    		height: 48px;
+
+    		background-size: 48px 48px;
+    		background: url('../images/callbacks48n.png') no-repeat center bottom;
+    	}
+    	#my_searches {
+    		width: 48px;
+    		height: 48px;
+
+    		background-size: 48px 48px;
+    		background: url('../images/mysearches48n.png') no-repeat center bottom;
+    	}
+    	#recent_items {
+    			width: 48px;
+    		height: 48px;
+
+    		background-size: 48px 48px;
+    		background: url('../images/recent-items48n.png') no-repeat center bottom;
+    	}
+    	#dashboard {
+    	width: 48px;
+    		height: 48px;
+
+    		background-size: 48px 48px;
+    						background: url('../images/dashboard48n.png') no-repeat center bottom;
+    	}
+    	#new_lead1 {
+    		width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/06(32).png') no-repeat center bottom;
+    	}
+    	#accounts1 {
+    		width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/02(32).png') no-repeat center bottom;
+    	}
+    	#contacts1 {
+    		width: 32px;
+    		height: 32px;
+          	background-size: 32px 32px;
+    		background: url('../images/contacts02(32).png') no-repeat center bottom;
+    	}
+    	#callback1 {
+    		width: 32px;
+    		height: 32px;
+          	background-size: 32px 32px;
+    		background: url('../images/01(32).png') no-repeat center bottom;
+    	}
+    	#my_searches1 {
+    		width: 32px;
+    		height: 32px;
+
+    		background-size: 32px 32px;
+    		background: url('../images/05(32).png') no-repeat center bottom;
+    	}
+    	#recent_items1 {
+    		width: 32px;
+    		height: 32px;
+          	background-size: 32px 32px;
+    		background: url('../images/03(32).png') no-repeat center bottom;
+    	}
+    	#dashboard1 {
+    		width: 32px;
+    		height: 32px;
+          	background-size: 32px 32px;
+    		background: url('../images/04(32).png') no-repeat center bottom;
+    	}
+
+    	.footer1{
+    		height: 40px;
+    		box-shadow: inset 0 0 8px black;
+    	}
+
+
+    }
+
+@media screen and (min-width: 361px) and (max-width:480px) {
+
+	.headerdash {
+		width: 100%;
+		height: 100%;
+		left: 11%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+
+	td {
+		padding: 6px;
+		border-spacing: 10px;
+		transform:scale(1.0,1.0) translate(0px,-1px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+
+	.label_tr{
+		font-size: 13px;
+		color: white ;
+		top: 0px;
+		font-weight:bolder;
+	}
+
+	.upper {
+		width: 80%;
+		height: 100%;
+		top: 10%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	#headerImage {
+		margin-left: 45px;
+		width: 280;
+		height: 48px;
+		background-size: 280px 48px;
+		background: url('../images/header_mdpi.png') no-repeat center bottom;
+	}
+
+	#buttonform {
+
+		margin-top: 5%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 13pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 30px;
+		margin-top: 5px;
+	}
+	
+	.label_fixed_width{
+		
+		width:80px;
+                
+	}
+	#new_lead {
+		width: 48px;
+		height: 48px;
+      
+		background-size: 48px 32px;
+		background: url('../images/shortcuts48n.png') no-repeat center bottom;
+	}
+	#accounts {
+	width: 48px;
+		height: 48px;
+      
+		background-size: 48px 48px;
+		background: url('../images/accounts48n.png') no-repeat center bottom;
+	}
+	#contacts {
+		width: 48px;
+		height: 48px;
+      
+		background-size: 48px 48px;
+		background: url('../images/contacts48n.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 48px;
+		height: 48px;
+      
+		background-size: 48px 48px;
+		background: url('../images/callbacks48n.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 48px;
+		height: 48px;
+      
+		background-size: 48px 48px;
+		background: url('../images/mysearches48n.png') no-repeat center bottom;
+	}
+	#recent_items {
+			width: 48px;
+		height: 48px;
+      
+		background-size: 48px 48px;
+		background: url('../images/recent-items48n.png') no-repeat center bottom;
+	}
+	#dashboard {
+	width: 48px;
+		height: 48px;
+      
+		background-size: 48px 48px;
+						background: url('../images/dashboard48n.png') no-repeat center bottom;
+	}
+	#new_lead1 {
+		width: 32px;
+		height: 32px;
+      
+		background-size: 32px 32px;
+		background: url('../images/06(32).png') no-repeat center bottom;
+	}
+	#accounts1 {
+		width: 32px;
+		height: 32px;
+      
+		background-size: 32px 32px;
+		background: url('../images/02(32).png') no-repeat center bottom;
+	}
+	#contacts1 {
+		width: 32px;
+		height: 32px;
+      	background-size: 32px 32px;
+		background: url('../images/contacts02(32).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 32px;
+		height: 32px;
+      	background-size: 32px 32px;
+		background: url('../images/01(32).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 32px;
+		height: 32px;
+      
+		background-size: 32px 32px;
+		background: url('../images/05(32).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 32px;
+		height: 32px;
+      	background-size: 32px 32px;
+		background: url('../images/03(32).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 32px;
+		height: 32px;
+      	background-size: 32px 32px;
+		background: url('../images/04(32).png') no-repeat center bottom;
+	}
+		
+	.footer1{
+		height: 40px;
+		box-shadow: inset 0 0 8px black;
+	}
+
+
+}
+
+
+@media screen and (min-width: 500px) and (max-width: 600px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 17%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	td {
+
+		padding: 10px;
+		border-spacing: 14px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+	.label_tr{
+		
+		font-size: 15px;
+		color: white ;
+		margin-top: -25px;
+		font-weight:bolder;
+		
+	}
+	.label_fixed_width{
+		
+		width:100px;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 18%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 400px;
+		height: 72px;
+		background-size: 400px 72px;
+		background: url('../images/header_hdpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+
+		left: 10%;
+		margin-top: 14%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 45px;
+		margin-top: 7px;
+	}
+	#new_lead {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/shortcuts64n.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/accounts64n.png') no-repeat center bottom;
+	}
+	#contacts {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/contacts64n.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/callbacks64n.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/mysearches64n.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/recent-items64n.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/dashboard64n.png') no-repeat center bottom;
+	}
+	#new_lead1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/06(48).png') no-repeat center bottom;
+	}
+	#accounts1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/02(48).png') no-repeat center bottom;
+	}
+	#contacts1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/contacts02(48).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/01(48).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/05(48).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/03(48).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/04(48).png') no-repeat center bottom;
+	}
+	
+	
+	.footer1{
+	height: 65px;
+	box-shadow: inset 0 0 10px black;
+	margin-right: -5px;
+	}
+}
+
+@media screen and (min-width: 605px) and (max-width: 640px) {
+
+	.headerdash {
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+
+	td {
+
+		padding: 15px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+	
+	.label_tr{
+		
+		font-size: 15px;
+		color: white ;
+		margin-top: -25px;
+		font-weight:bolder;
+		
+	}
+	.label_fixed_width{
+		
+		width:85px;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 18%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 400px;
+		height: 72px;
+		background-size: 400px 72px;
+		background: url('../images/header_hdpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+		margin-top: 5%;
+		left: 10%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 40px;
+		margin-top: 7px;
+	}
+	#new_lead {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/shortcuts64n.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/accounts64n.png') no-repeat center bottom;
+	}
+	#contacts {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/contacts64n.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/callbacks64n.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/mysearches64n.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/recent-items64n.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/dashboard64n.png') no-repeat center bottom;
+	}
+	#new_lead1 {
+		width: 48px;
+		height:48px;
+		background-size: 48px 48px;
+		background: url('../images/06(48).png') no-repeat center bottom;
+	}
+	#accounts1 {
+		width: 48px;
+		height:48px;
+		background-size: 48px 48px;
+		background: url('../images/02(48).png') no-repeat center bottom;
+	}
+	#contacts1 {
+		width: 48px;
+		height:48px;
+		background-size: 48px 48px;
+		background: url('../images/contacts02(48).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/01(48).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/05(48).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/03(48).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/04(48).png') no-repeat center bottom;
+	}
+	
+	
+	.footer1{
+	height: 65px;
+	box-shadow: inset 0 0 10px black;
+	margin-right: -5px;
+	}
+
+
+}
+
+@media screen and (min-width: 641px) and (max-width: 720px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 18%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		background-size: 560px 96px;
+		background: url('../images/header_xdpi.png') no-repeat center bottom;
+	}
+	td {
+
+		padding: 18px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+	.label_tr{
+		
+		font-size: 18px;
+		color: white ;
+		margin-top: -25px;
+		font-weight:bolder;
+		
+	}
+	.label_fixed_width{
+		
+		width:95px;
+	}
+	#buttonform {
+		margin-top: 15%;
+		left: 10%;
+		font-size: 25px;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 22pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 32px;
+		margin-top: 7px;
+		height: 55px;
+	}
+
+	#new_lead {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/shortcuts64n.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/accounts64n.png') no-repeat center bottom;
+	}
+	#contacts {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/contacts64n.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/callbacks64n.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/mysearches64n.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/recent-items64n.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 64px;
+		height:64px;
+		background-size: 64px 64px;
+		background: url('../images/dashboard64n.png') no-repeat center bottom;
+	}
+	#new_lead1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/06(48).png') no-repeat center bottom;
+	}
+	#accounts1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/02(48).png') no-repeat center bottom;
+	}
+	#contacts1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/contacts02(48).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/01(48).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/05(48).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/03(48).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 48px;
+		height: 48px;
+		background-size: 48px 48px;
+		background: url('../images/04(48).png') no-repeat center bottom;
+	}
+	
+	
+	.footer1{
+	height: 65px;
+	box-shadow: inset 0 0 10px black;
+	margin-right: -5px;
+	}
+}
+
+@media screen and (min-width: 721px) and (max-width: 800px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 15%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+
+	td {
+
+		padding: 18px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+	
+	.label_tr{
+		
+		font-size: 18px;
+		color: white ;
+		margin-top: -25px;
+		font-weight:bolder;
+		
+	}
+	.label_fixed_width{
+		
+		width:110px;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		margin-top: 15%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		background-size: 560px 96px;
+		background: url('../images/header_xdpi.png') no-repeat center bottom;
+	}
+	#buttonform {
+		margin-top: 10%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 7px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 37px;
+	}
+	#new_lead {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/shortcuts64n.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/accounts64n.png') no-repeat center bottom;
+	}
+	#contacts {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/contacts64n.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/callbacks64n.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/mysearches64n.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/recent-items64n.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/dashboard64n.png') no-repeat center bottom;
+	}
+	
+	#new_lead1 {
+		width: 80px;
+		height: 80px;
+		background-size: 80px 80px;
+		background: url('../images/06(64).png') no-repeat center bottom;
+	}
+	#accounts1 {
+		width: 80px;
+		height: 80px;
+		background-size: 80px 80px;
+		background: url('../images/02(64).png') no-repeat center bottom;
+	}
+	#contacts1 {
+		width: 80px;
+		height: 80px;
+		background-size: 80px 80px;
+		background: url('../images/contacts02(64).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 80px;
+		height: 80px;
+		background-size: 80px 80px;
+		background: url('../images/01(64).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 80px;
+		height: 80px;
+		background-size: 80px 80px;
+		background: url('../images/05(64).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 80px;
+		height: 80px;
+		background-size: 80px 80px;
+		background: url('../images/03(64).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 80px;
+		height: 80px;
+		background-size: 80px 80px;
+		background: url('../images/04(64).png') no-repeat center bottom;
+	}
+	
+		.footer1{
+		font-size: 10pt;
+		 box-shadow: inset 0 0 10px black;
+	}
+}
+
+@media screen and (min-width: 810px) and (max-width: 1024px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+
+	td {
+
+		padding: 18px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+	.label_tr{
+		
+		font-size: 15px;
+		color: white ;
+		margin-top: -25px;
+		font-weight:bolder;
+		
+	}
+	.label_fixed_width{
+		
+		width:95px;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		top: 15%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#buttonform {
+
+		left: 5%;
+		top: 10%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 35px;
+		margin-top: 7px;
+	}
+	#new_lead {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/shortcuts64n.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/accounts64n.png') no-repeat center bottom;
+	}
+	#contacts {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/contacts64n.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/callbacks64n.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/mysearches64n.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/recent-items64n.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/dashboard64n.png') no-repeat center bottom;
+	}
+	#new_lead1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/06(64).png') no-repeat center bottom;
+	}
+	#accounts1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/02(64).png') no-repeat center bottom;
+	}
+	#contacts1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/contacts02(64).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/01(64).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/05(64).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/03(64).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/04(64).png') no-repeat center bottom;
+	}
+		.footer1{
+		font-size: 12pt;
+		 box-shadow: inset 0 0 10px black;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		background-size: 560px 96px;
+		background: url('../images/header_xdpi.png') no-repeat center bottom;
+	}
+
+}
+
+@media screen and (min-width: 1030px) and (max-width: 1280px) {
+
+	.headerdash {
+
+		width: 80%;
+		height: 100%;
+		left: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+	}
+	td {
+
+		padding: 18px;
+		transform:scale(1.0,2.0) translate(0px,-2px);
+		font-family: "Times New Roman", Times, serif;
+		font-weight:bolder;
+	}
+.label_tr{
+		
+		font-size: 18px;
+		color: white ;
+		margin-top: -25px;
+		font-weight:bolder;
+		
+	}
+	.label_fixed_width{
+		
+		width:95px;
+	}
+	.upper {
+
+		width: 80%;
+		height: 100%;
+		margin-top: 22%;
+		left: 10%;
+		right: 10%;
+		text-align: center;
+		background-size: contain;
+		position: fixed;
+		vertical-align: middle;
+	}
+	#headerImage {
+
+		width: 560px;
+		height: 96px;
+		background-size: 560px 96px;
+		background: url('../images/header_xdpi.png') no-repeat center bottom;
+	}	
+	#buttonform {
+
+		left: 5%;
+		top: 10%;
+	}
+	.button {
+		background: #fff;
+		color: white;
+		font-family: calibri;
+		font-size: 15pt;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: -2px;
+		margin-bottom: 1px;
+		padding: 3px;
+		border-top: 0px solid #CCCCCC;
+		border-left: 0px solid #CCCCCC;
+		border-right: 0px solid #999999;
+		border-bottom: 0px solid #999999;
+		-moz-border-radius: 8px;
+		-webkit-border-radius: 4px;
+		border-radius: 6px 6px 6px 6px;
+		height: 42px;
+		margin-top: 7px;
+	}
+	#new_lead {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/shortcuts64n.png') no-repeat center bottom;
+	}
+	#accounts {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/accounts64n.png') no-repeat center bottom;
+	}
+	#contacts {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/contacts64n.png') no-repeat center bottom;
+	}
+	#callback {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/callbacks64n.png') no-repeat center bottom;
+	}
+	#my_searches {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/mysearches64n.png') no-repeat center bottom;
+	}
+	#recent_items {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/recent-items64n.png') no-repeat center bottom;
+	}
+	#dashboard {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/dashboard64n.png') no-repeat center bottom;
+	}
+	#new_lead1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/06(64).png') no-repeat center bottom;
+	}
+	#accounts1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/02(64).png') no-repeat center bottom;
+	}
+	#contacts1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/contacts02(64).png') no-repeat center bottom;
+	}
+	#callback1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/01(64).png') no-repeat center bottom;
+	}
+	#my_searches1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/05(64).png') no-repeat center bottom;
+	}
+	#recent_items1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/03(64).png') no-repeat center bottom;
+	}
+	#dashboard1 {
+		width: 96px;
+		height: 96px;
+		background-size: 96px 96px;
+		background: url('../images/04(64).png') no-repeat center bottom;
+	}
+		.footer1{
+		font-size: 12pt;
+	}
+
+}
+

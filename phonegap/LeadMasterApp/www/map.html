@@ -1,0 +1,541 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.2, maximum-scale=1.0, target-densitydpi=medium-dpi, user-scalable=no" />
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, target-densitydpi=device-dpi, user-scalable=no" />-->
+
+    <style type="text/css">
+        body
+        {
+        margin: 0;
+        }
+    </style>
+
+    <script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+
+
+    <script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script>
+    <script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/phonegap-1.0.0.js"></script>
+
+    <script type="text/javascript" charset="utf-8" src="js/encryption.js"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA2450Nsv5MZ0K-lVjHul0qhI7C1aLiTnU&sensor=false">
+    </script>
+</head>
+
+<body onload="initialize()">
+<!--  <div id="gmap_canvas"></div> -->
+<!--    <div data-role="header" class="titlePart"  style="background-color: #006DD9;width: 100%;margin-left: -8px;position: fixed;overflow: hidden;" id="AccHeaderId">
+
+        <table width="100%" cellspacing="0" style="center;vertical-align: middle;" class="tableForIpad">
+            <tr width="100%" style="background-color: #006DD9;height: 60px;display: block;">
+
+    <td width="100%" style="padding-top: 30px;" ><div style="float:left;"><input type="submit"  onclick="back()" value="Back" class="" id="" /></div>
+    </td></tr>
+    </table>
+
+    </div> -->
+
+<div id="map_content" style="width: 100%;">
+    <!--   <input type="text" id="gmap_where_0" placeholder="Enter Location" />
+           <input type="text" id="gmap_where_1" placeholder="Enter Location" value="1407 Broadway,New York, NY 10018,United States" style="display:none;"/>
+               <input type="text" id="gmap_where_2" placeholder="Enter Location" value="15 Washington Square N New York, NY 10011,United States" style="display:none;"/>
+                   <input type="text" id="gmap_where_3" placeholder="Enter Location" value="Madison Square Park Madison Ave,New York, NY 10010,United States" style="display:none;"/>
+
+           <input type="submit" id="submit_location" value="Submit" onclick="initialize()"/> -->
+    <table width="100%" cellspacing="0" style="center;vertical-align: middle;" class="tableForIpad">
+        <tr width="100%" style="background-color: #006DD9;height: 60px;display: block;">
+            <td width = "50%">
+                <div style="float:left; position: fixed; width: 100%;">
+                    <td width="5%" style="padding-top: 17px;"><input type="submit"  onclick="back()" value="Back" class="" id="" /></td>
+                    <td width="5%" style="padding-top: 17px;"><input type="text" id="location" size="12" placeholder="Address(Optional)" /> </td>
+                    <td width="5%" style="padding-top: 17px;"><input type="text" id="km" size="7" placeholder="Distance" value="5"/> </td>
+                    <td width="5%" style="padding-top: 17px;"><input type="submit" value="search" id="searchAdd" onclick="findAddress1()"/>	</td>
+                </div></td>
+
+            <td width= "50%">
+            </td>
+        </tr>
+    </table>
+
+
+
+    <input type="text" id="lat" name="lat" value="" style="display:none;" />
+    <input type="text" id="lng" name="lng" value="" style="display:none;" />
+
+    <input type="text" id="getLat" name="lat" value="" style="display:none;" />
+    <input type="text" id="getLng" name="lng" value="" style="display:none;" />
+</div>
+
+<div id="content" style=""></div>
+<div id="gmap_load">
+
+    <div id="gmap_canvas" style="height: 95%; position: relative; width: 100%;"></div>
+    <!--    <input id="gmap_where" type="text" name="gmap_where" value="Memnagar,Ahmedbad, Gujarat" /> -->
+
+</div>
+
+</body>
+<head>
+    <script>
+        var geocoder;
+        var map;
+        var markers = Array();
+        var infos = Array();
+        var getLatitude,getLongitude,companyId,recdNo,Lati,Longi,Dist,recdNo1,Lati1,Longi1,Dist1,EnteredLati,EnteredLongi,wsURL;
+
+        function initialize() {
+            // prepare Geocoder
+              geocoder = new google.maps.Geocoder();
+           //  var options = { timeout: 100 };
+        //watchID = navigator.geolocation.watchPosition(onSuccess, geo_error, options);
+            var myLatlng = new google.maps.LatLng(40.7143528,-74.0059731);
+            var myOptions = { // default map options
+                zoom: 12,
+                center: myLatlng,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+
+            map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+          // findAddress();
+          map1();
+       //   geo_success();
+       //   for(var i = 0; i<4; i++){
+       //       findAddress(i);
+
+
+
+       //   }
+        }
+
+
+    	function findAddress1()
+    	{
+    		var
+    		geocoder = new google.maps.Geocoder();
+
+    	//	var lat,lng;
+
+    	//	var geocoder1 = new google.maps.Geocoder();
+    		var enteredlocation = document.getElementById('location').value;
+    		var EnteredDistance = document.getElementById('km').value;
+    		var companyId1 = window.localStorage.getItem("company_id");
+    		geocoder.geocode({ 'address': enteredlocation }, function (results, status)
+    		{
+                if (status == google.maps.GeocoderStatus.OK)
+                 {
+                     EnteredLati = results[0].geometry.location.lat();
+                     EnteredLongi = results[0].geometry.location.lng();
+
+                 //   document.getElementById('getLat').value = results[0].geometry.location.lat();
+                 //   document.getElementById('getLng').value = results[0].geometry.location.lng();
+                //    alert("Latitude: " + EnteredLati + "\nLongitude: " + EnteredLongi);
+                    Redirect(EnteredLati,EnteredLongi);
+                }
+    		});
+
+    	//	lati =  document.getElementById('getLat').value
+    	//	longi = document.getElementById('getLng').value
+    	}
+
+    function Redirect(getEnteredLati,getEnteredLongi)
+    {
+    	var EnteredDistance = document.getElementById('km').value;
+    	var companyId1 = window.localStorage.getItem("company_id");
+   		var getUrl1 = wsURL + 'GetGeoLocation';
+        var soapMessage1 = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetGeoLocation xmlns="LMServiceNamespace"><longitude>' + getEnteredLongi + '</longitude><latitude>' + getEnteredLati + '</latitude><Distance>' + EnteredDistance + '</Distance><company_id>' + companyId1 + '</company_id></GetGeoLocation></soap:Body></soap:Envelope>';
+    		$.ajax({
+               url : getUrl1,
+               type : "POST",
+               dataType : "xml",
+               data : soapMessage1,
+               complete : getResponse1,
+               contentType : "text/xml; charset=\"utf-8\""
+               });
+
+      function getResponse1(xmlHttpRequest, status)
+       {
+          if (!(status == 'success'))
+           {
+              alert('An error has occurred. Try again or check your Internet connection.');
+            //  window.location = "dash2-1.html";
+              $('#divLoading').hide();
+              return false;
+           }
+          var length = xmlHttpRequest.responseXML.getElementsByTagName("GeoLocation").length;
+          var cont = 1;
+          $(xmlHttpRequest.responseXML).find('GeoLocation').each(function()
+           {
+                recdNo1 = $(this).find('RECDNO').text();
+                Lati1  =  $(this).find('Latitude').text();
+                Longi1 =  $(this).find('Longitude').text();
+                Dist1 =   $(this).find('Distance').text();
+                findAddress(Lati1,Longi1);
+           });
+
+       }
+
+    }
+
+    function myMap()
+    {
+        google.load("maps", "3.8", {
+                    "callback" : map,
+                    other_params : "sensor=true&language=en"
+                    });
+    }
+ function map1()
+  {
+      navigator.geolocation.getCurrentPosition(geo_success, geo_error, {
+					maximumAge : 5000,
+					timeout : 10000,
+					enableHighAccuracy : true
+				});
+
+       }
+
+
+    function back()
+    {
+        window.location="search.html";
+    }
+
+    function geo_success(position)
+    {
+     //   document.getElementById('map_content').style.display = "none";
+     //   geocoder = new google.maps.Geocoder();
+     // set initial position (New York)
+     //   var myLatlng = new google.maps.LatLng(40.7143528,-74.0059731);
+     //   var myOptions = { // default map options
+     //       zoom: 14,
+     //       center: myLatlng,
+     //       mapTypeId: google.maps.MapTypeId.ROADMAP
+     //   };
+     //   map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);
+
+        getLatitude = position.coords.latitude;
+        getLongitude = position.coords.longitude;
+        companyId = window.localStorage.getItem("company_id");
+        var decimal = 5;
+        var getUrl = wsURL + 'GetGeoLocation';
+     //  alert(getUrl);
+        var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetGeoLocation xmlns="LMServiceNamespace"><longitude>' + getLongitude + '</longitude><latitude>' + getLatitude + '</latitude><Distance>' + decimal + '</Distance><company_id>' + companyId + '</company_id></GetGeoLocation></soap:Body></soap:Envelope>';
+        $.ajax({
+               url : getUrl,
+               type : "POST",
+               dataType : "xml",
+               data : soapMessage,
+               complete : getResponse,
+               contentType : "text/xml; charset=\"utf-8\""
+               });
+
+
+      function getResponse(xmlHttpRequest, status)
+        {
+        //    alert(status);
+         if (!(status == 'success'))
+           {
+
+
+              alert('An error has occurred. Try again or check your Internet connection.');
+            //  window.location = "dash2-1.html";
+              $('#divLoading').hide();
+
+              return false;
+
+            }
+          var length = xmlHttpRequest.responseXML.getElementsByTagName("GeoLocation").length;
+      //    alert(length);
+          var cont = 1;
+
+          $(xmlHttpRequest.responseXML).find('GeoLocation').each(function()
+           {
+
+                recdNo = $(this).find('RECDNO').text();
+                Lati  =  $(this).find('Latitude').text();
+                Longi =  $(this).find('Longitude').text();
+                Dist =   $(this).find('Distance').text();
+
+              //  alert("recdNo"+recdNo);
+             //   alert(Longi);
+
+                findAddress(Lati,Longi,recdNo);
+             //    timeout : 1000
+
+             });
+
+          }
+
+      //      findAddress(i);
+
+       }
+
+
+ function geo_error() {
+				alert("Please enable GPS");
+		//		alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+				navigator.notification.activityStop();
+			}
+
+    // clear overlays function
+    function clearOverlays() {
+        if (markers) {
+            for (i in markers) {
+                markers[i].setMap(null);
+            }
+            markers = [];
+            infos = [];
+        }
+    }
+
+    // clear infos function
+    function clearInfos() {
+        if (infos) {
+            for (i in infos) {
+                if (infos[i].getMap()) {
+                    infos[i].close();
+                }
+            }
+        }
+    }
+    function findAddress(getLati,getLongi,recdNo) {
+
+    //    alert(getLati);
+    //    alert(getLongi);
+
+
+       // alert(getLatitude);
+       // alert(getLongitude);
+        var latlng = new google.maps.LatLng(getLati, getLongi);
+
+      //  alert("Object latlng :" + latlng);
+
+      //  var address = document.getElementById("gmap_where_"+id).value;
+
+
+        // script uses our 'geocoder' in order to find location by address name
+        geocoder.geocode( { 'latLng': latlng}, function(results, status) {
+
+                   //     alert("Results : " + results + "\n\n\nStatus :"+status);
+                         if (status == google.maps.GeocoderStatus.OK)
+                         { // and, if everything is ok
+                      //  time.sleep(2)
+
+                         // we will center map
+                         //var addrLocation = results[0].geometry.location;
+                         var addrLocation = results[0].formatted_address;
+                    //     alert(addrLocation);
+                       //  map.setCenter(addrLocation);
+
+                         // store current coordinates into hidden variables
+                       //  document.getElementById('lat').value = results[0].geometry.location.lat();
+                       //  document.getElementById('lng').value = results[0].geometry.location.lng();
+
+                         document.getElementById('lat').value = getLati;
+                         document.getElementById('lng').value = getLongi;
+
+                      //   alert(123);
+                         // and then - add new custom marker
+                         var addrMarker = new google.maps.Marker({
+                             position: latlng,
+                             map: map,
+                             title: results[0].formatted_address
+                             });
+
+                         google.maps.event.addListener(addrMarker, 'click', function() {
+                           //    map.setCenter(new google.maps.LatLng(addrMarker.position.lat(), addrMarker.position.lng()));
+                           //    map.setZoom(18);
+                           //    onItemClick(event, addrMarker);
+                             //  alert(345);
+                               var infowindow = new google.maps.InfoWindow({
+                                    content: '<a href="javascript:javOpenRecord('+ recdNo +')"><font style="color:#000;">' + results[0].formatted_address + '</font></a>'
+                               });
+
+                               infowindow.open(map,addrMarker);
+                               infos.push(infowindow);
+
+                               });
+
+
+                         // alert(345);
+                         var infowindow = new google.maps.InfoWindow({
+                         content: '<font style="color:#000;">' + results[0].formatted_address + '</font>'
+                           });
+
+                         infowindow.open(map,addrMarker);
+                         infos.push(infowindow);
+                         setTimeout(function () { infowindow.close(); }, 1000);
+                     //   findPlaces();
+                         }
+                          else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+            setTimeout(function() {
+                Geocode(getLati,getLongi,recdNo);
+            }, 2000);
+        } else {
+            alert("Geocode was not successful for the following reason:"
+                  + status);
+        }
+                         });
+    }
+
+    function javOpenRecord(RECDNO){
+        url_main = window.localStorage.getItem("changed_url");
+
+        if (url_main == null || url_main == "") {
+            url_main = "http://app.leadmastercrm.com";
+        }
+        var encrptVal = getEncrption();
+     //   var appkeyword= document.getElementById("keywords").value;
+		var pagetype= 'account';
+        var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_frmSalesProgress.asp&RECDNO=" + recdNo + "&pagetype=" + pagetype;
+      //  console.log("url"+url);
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+    }
+
+    function onItemClick(event, pin) {
+        // Create content
+        //alert(123);
+
+        var contentString = pin.title.text + "<br /><br /><hr />Coordinate: " + pin.title.lng +"," + pin.title.lat;
+
+        // Replace our Info Window's content and position
+        infowindow.setContent(contentString);
+      //  infowindow.setPosition(pin.position);
+      //  infowindow.open(map);
+        infos.push(infowindow);
+    }
+
+    // find custom places function
+    function findPlaces() {
+
+        var radius = 500;
+        var lat = document.getElementById('lat').value;
+        var lng = document.getElementById('lng').value;
+        var cur_location = new google.maps.LatLng(lat, lng);
+
+        // prepare request to Places
+        var request = {
+            location: cur_location,
+            radius: radius
+        };
+
+        // send request
+        service = new google.maps.places.PlacesService(map);
+        service.search(request, createMarkers);
+    }
+
+    // create markers (from 'findPlaces' function)
+    function createMarkers(results, status) {
+
+
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+
+            // if we have found something - clear map (overlays)
+            clearOverlays();
+
+            // and create new markers by search result
+            for (var i = 0; i < results.length; i++) {
+                createMarker(results[i]);
+            }
+        } else if (status == google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+            alert('Sorry, nothing is found');
+        }
+    }
+  document.addEventListener("deviceready", onDeviceReady, false);
+
+    function onDeviceReady() {
+    wsURL = window.localStorage.getItem("wsURL");
+        document.addEventListener("backbutton", onBackKeyDown, false);
+        //Listen to the User clicking on the back button
+
+        //   var initialScreenSize = window.innerHeight;
+        //   window.addEventListener("resize", function() {
+        //                           if (window.innerHeight < initialScreenSize) {
+        //                           $("[data-role=footer]").hide();
+        //                           } else {
+        //                           $("[data-role=footer]").show();
+        //                           }
+        //                           });
+    }
+
+    function onBackKeyDown(e) {
+		e.preventDefault();
+		navigator.app.backHistory();
+
+	}
+
+
+    // creare single marker function
+    function createMarker(LatiTude,LongiTude) {
+
+        // prepare new Marker object
+
+     //   alert(123);
+
+         var latlng1 = new google.maps.LatLng(LatiTude, LongiTude);
+
+         geocoder.geocode( { 'latLng': latlng1}, function(results, status) {
+
+                          if (status == google.maps.GeocoderStatus.OK) { // and, if everything is ok
+
+                          // we will center map
+                          //var addrLocation = results[0].geometry.location;
+                          var addrLocation1 = results[0].formatted_address;
+                         // alert(addrLocation1);
+                          //  map.setCenter(addrLocation);
+
+                          // store current coordinates into hidden variables
+                          //  document.getElementById('lat').value = results[0].geometry.location.lat();
+                          //  document.getElementById('lng').value = results[0].geometry.location.lng();
+
+                          document.getElementById('lat').value = LatiTude;
+                          document.getElementById('lng').value = LongiTude;
+
+                          //   alert(123);
+                          // and then - add new custom marker
+                          var addrMarker1 = new google.maps.Marker({
+                                                                  position: latlng1,
+                                                                  map: map,
+                                                                  title: results[0].formatted_address
+                                                                  });
+                          //alert(123);
+                          var infowindow = new google.maps.InfoWindow({
+                                                                      content: '<font style="color:#000;">' + results[0].formatted_address + '</font>'
+                                                                      });
+                          infowindow.open(map,addrMarker1);
+                          infos.push(infowindow);
+
+                          //   findPlaces();
+                          }
+                          });
+
+    //    var mark = new google.maps.Marker({
+    //                                      position: obj.geometry.location,
+    //                                      map: map,
+    //                                      title: obj.name
+    //                                      });
+                                        //  markers.push(mark);
+
+
+
+
+                                          // prepare info window
+                                         // var infowindow = new google.maps.InfoWindow({
+                                         //                                             content: '<img src="' + obj.icon + '" /><font style="color:#000;">' + obj.name +
+                                          //                                            '<br />Rating: ' + obj.rating + '<br />Vicinity: ' + obj.vicinity + '</font>'
+                                          //                                            });
+
+                                                                                      // add event handler to current marker
+                                                                                   //   google.maps.event.addListener(mark, 'click', function() {
+                                                                                   //                                 clearInfos();
+                                                                                   //                                 infowindow.open(map,mark);
+                                                                                   //                                 });
+                                                                                                               //     infos.push(infowindow);
+    }
+    </script>
+
+
+
+</head>
+</html>

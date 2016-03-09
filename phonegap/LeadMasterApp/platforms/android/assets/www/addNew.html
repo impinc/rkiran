@@ -1,0 +1,177 @@
+<html>
+	<head>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- <link rel="stylesheet" href="css/dashbo.css" type="text/css" media="all" /> -->
+		<link rel="stylesheet" href="css/styleleft.css" type="text/css" media="all" />
+		<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		 <script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script>
+		<!-- <script type="text/javascript" charset="utf-8" src="js/phonegap-1.0.0.js"></script> -->
+		<script type="text/javascript" charset="utf-8" src="js/encryption.js"></script>
+
+		<link rel="stylesheet" media="all and (orientation:portrait)" href="css/addNew_ver.css">
+		<link rel="stylesheet" media="all and (orientation:landscape)" href="css/addNew_hor.css">
+
+	</head>
+
+	<body onload="getUrl()">
+		<div class="headerdash">
+			<header>
+				<div id="headerImage"> </div>
+			</header>
+		</div>
+	<!--	<div align="center">
+		<iframe src="header.html" frameborder="0" style="position:absolute;Left:-8"></iframe>
+	</div> -->
+		<!-- <div> -->
+			<div  class="upper"   style="overflow:auto;  height: 100%;">
+				<form>
+					<div id="buttonform">
+						<p>
+							<div>
+								<input type="submit" class="button" id="button1" onclick="addNote()" value="Add Note" style="width: 90%;background-color:#003366"/>
+								<input type="submit" class="button" id="button2" onclick="addRecord()" value="Add Record" style="width: 90%; background-color:#003366; "/>
+								<input type="submit" class="button" id="button3" onclick="addContact()" value="Add Contact" style="width: 90%;background-color:#003366;"/>
+								<input type="submit" class="button" id="button4" onclick="addOpp()" value="Add Opportunity/Quotes" style="width: 90%;background-color:#003366;"; />
+								<input type="submit" class="button" id="button5" onclick="addTask()" value="Add Event/Task" style="width: 90%;background-color:#003366;"; />
+								<input type="submit" class="button" id="label_case" onclick="addCase()" value="Add Cases" style="width: 90%;background-color:#003366;"; />
+								<input type="submit" class="button" id="button6" onclick="back()" value="Cancel" style="width: 90%;background-color:#003366;"; />
+
+							</div>
+						</p>
+
+						<div data-role="footer" id="footer1" style="color: white;"> </div>
+					</div>
+
+				</form>
+
+			</div>
+
+<!--	<iframe src="footer.html" frameborder="0" height="500"> </iframe> -->
+
+	</body>
+</html>
+
+<script type="text/javascript">
+	// var url_main;
+	var encrptVal,url_main;
+
+	function getUrl()
+	{
+		var footerContent = window.localStorage.getItem("footerContent");
+		document.getElementById("footer1").innerHTML = footerContent;
+		encrptVal = getEncrption();
+		url_main = window.localStorage.getItem("changed_url");
+
+
+	//	var lblRecord = window.localStorage.getItem("Record");
+	//	if(lblRecord!="" && lblRecord!=null){
+	//	document.getElementById("label_record").value = "Add " + lblRecord;
+
+	//	var lblContact = window.localStorage.getItem("Contact");
+	//	if(lblContact!="" && lblContact!=null){
+	//	document.getElementById("label_contact").value = "Add " + lblContact;
+
+	//	var lblOpportunity = window.localStorage.getItem("Opportunity");
+	//	if(lblOpportunity!="" && lblOpportunity!=null){
+	//	document.getElementById("label_opportunity").value = "Add " + lblOpportunity;
+
+//		var lblEvents = window.localStorage.getItem("Events");
+//		if(lblEvents!="" && lblEvents!=null){
+//		document.getElementById("label_events").value = "Add " + lblEvents;
+
+
+
+		var lblCase = window.localStorage.getItem("Case");
+		if(lblCase!="" && lblCase!=null){
+			document.getElementById("label_case").value = "Add " + lblCase;
+		}
+
+
+	}
+
+	function addNote()
+	 {
+		var companyId = window.localStorage.getItem("company_id");
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_AddNote.asp&add_notes=T&CompanyID=" + companyId;
+		console.log(url);
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+	 }
+
+	function addRecord()
+	 {
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_frmlead.asp";
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+     }
+
+	function addContact()
+	 {
+		var companyId = window.localStorage.getItem("company_id");
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_dlgcontact.asp&fromPage=mobile_dlgcontact.asp&add_contact=T&RECDNO=0&contactid=0&CompanyID=" + companyId;
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+	 }
+
+	function addOpp()
+	 {
+		window.location = "addOpp.html";
+     }
+
+	function back()
+	{
+	//	navigator.notification.activityStart("Please wait....", "loading");
+		window.location = "dash2.html";
+	}
+
+	function addCase()
+	 {
+		var companyId = window.localStorage.getItem("company_id");
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_dlgAddcase.asp&RECDNO=0&id=0&add_Case=T";
+		console.log("AddcaseURL="+url);
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+	 }
+	document.addEventListener("deviceready", function()
+	{
+		navigator.notification.activityStop();
+	});
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady()
+	{
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		//Listen to the User clicking on the back button
+
+		var initialScreenSize = window.innerHeight;
+		window.addEventListener("resize", function() {
+			if (window.innerHeight < initialScreenSize) {
+				$("[data-role=footer]").hide();
+			} else {
+				$("[data-role=footer]").show();
+			}
+		});
+	}
+
+	function onBackKeyDown(e)
+	{
+		e.preventDefault();
+		navigator.app.backHistory();
+
+	}
+
+	function addTask()
+	{
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_cbEditEvent.asp"+"&add_CallBack=T";
+		console.log("URL Add Task:" + url);
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+	}
+
+	document.addEventListener("deviceready", function()
+	{
+		navigator.notification.activityStop();
+
+	});
+
+
+</script>
+

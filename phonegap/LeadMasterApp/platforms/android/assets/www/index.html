@@ -1,0 +1,478 @@
+<html >
+	<head>
+
+		
+		<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=2.0, target-densitydpi=medium-dpi" />
+
+		<link rel="stylesheet" href="css/styleleft.css" type="text/css" media="all" />
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		<script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script>
+		<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/encryption.js"></script>
+		<link rel="stylesheet" media="all and (orientation:portrait)" href="css/loginnew.css">
+		<link rel="stylesheet" media="all and (orientation:landscape)" href="css/loginHor.css">
+
+		<script>
+		
+		/** Checking user is if already login **/
+			var checkin = window.localStorage.getItem("dashboard");
+			//alert(checkin);
+			if (checkin == 'logged in') {
+
+				window.location = "dash2.html";
+			}
+
+		</script>
+
+	</head>
+	<body onload="setUserDetail()">
+
+		<div class="headernew">
+
+			<header>
+
+				<div id="headerImagelogin"> </div>
+			</header>
+		</div>
+		<div  class="content"   >
+
+			<div class="textsize">
+				<p style="font-family:arial;color:white">
+					<b>Login To LeadMaster</b>
+				</p>
+			</div>
+			<form  name="loginForm">
+				<div>
+					<p>
+						<input type="text" class="tbox" placeholder="User Name" id="email" />
+						<input type="password" class="tbox1" placeholder="Password" id="password"/>
+						<input type="submit" class="button"  id="buttonfoint" value="Log In" style="width: 60%; background-color:#EDEDED"  onclick="return beginSaveProduct()"/>
+						<!-- <input type="submit" class="button"  id="buttonfoint1" value="Create An Account" style="width: 90%; margin-top:120px;background-color:FF9326;color:whitesmoke"/> -->
+
+					</p>
+
+				</div>
+				<div data-role="footer" id="footer1" style="color: white;text-transform: none;">
+				
+				</div>
+
+			</form>
+
+		</div>
+	</body>
+</html>
+
+<script type="text/javascript">
+	var username, password, logonID, databaseIdWG;
+	var wsURL;
+	
+	/** function called when login button is clicked **/
+	function beginSaveProduct() { 
+
+		var checkNet = CheckConnection();
+		if (checkNet) {
+
+		//	navigator.notification.activityStart("Please wait....", "loading");
+
+			username = document.getElementById("email").value;
+			password = document.getElementById("password").value;
+			window.localStorage.setItem("ifUserFails", username);
+			
+
+			if (username == null || username == "") {
+
+				alert('please enter username');
+				navigator.notification.activityStop();
+				return false;
+			}
+
+			if (password == null || password == "") {
+
+				alert('please enter password');
+				navigator.notification.activityStop();
+				return false;
+
+			}
+			
+			
+			/**Authentiacting username and password by calling webservice using ajax **/
+			
+			var validLogonServiceUrl = wsURL + 'APIValidateLogon';
+			// Preferably write this out from server side
+			var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><APIValidateLogon xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd></APIValidateLogon></soap12:Body></soap12:Envelope>';
+
+			$.ajax({
+				url : validLogonServiceUrl,
+				type : "POST",
+				dataType : "xml",
+				timeout : 9000,
+				data : soapMessage,
+				error : function(xhr, status, error) {
+					if (status == 'timeout') {
+						alert("Server is not responding");
+
+			
+				/** Method call when login fails **/
+				
+						ifUserLoginFails();
+						return false;
+					} else if (status != 'success' && status != 'timeout') {
+
+						alert('An error has occurred. Try again or check your Internet connection.');
+						ifUserLoginFails();
+						return false;
+					}
+				},
+				complete : getResponseValidateLogon,
+				contentType : "text/xml; charset=\"utf-8\""
+			});
+
+
+			function getResponseValidateLogon(xmlHttpRequest, status) {
+
+				$(xmlHttpRequest.responseXML).find('APIValidateLogonResponse').each(function() {
+					logonID = $(this).find('APIValidateLogonResult').text();
+
+					if (logonID > 0) {
+
+						window.localStorage.setItem("username", username);
+						window.localStorage.setItem("password", password);
+
+						// window.location = 'db.html?logonId=' + logonID;
+
+						window.localStorage.setItem("logonID", logonID);
+						//window.localStorage.setItem("dashboard", "logged in");
+						getDataBaseList(logonID);
+
+					} else {
+
+						alert('Your UserName or Password is incorrect ');
+
+						window.location = "index.html";
+						navigator.notification.activityStop();
+
+						return false;
+					};
+
+				});
+
+			}
+
+		} else {
+
+			alert('No internet connection');
+		}
+
+	};
+
+
+/** function called for checking number of database **/
+	function getDataBaseList(logonid) { 
+
+		var logonId = logonid;
+
+		//getPrivileges(logonId);
+		
+		var getDBServiceUrl = wsURL + 'GetDatabase';
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetDatabase xmlns="LMServiceNamespace"><logon_id>' + logonId + '</logon_id></GetDatabase></soap12:Body></soap12:Envelope>';
+
+		$.ajax({
+			url : getDBServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			timeout : 9000,
+			data : soapMessage,
+			complete : getResponseDB,
+			error : function(xhr, status, error) {
+				if (status == 'timeout') {
+					alert("Server is not responding");
+					ifUserLoginFails();
+
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+
+					alert('An error has occurred. Try again or check your Internet connection.');
+					ifUserLoginFails();
+					
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+		
+
+	};
+
+	function getResponseDB(xmlHttpRequest, status) {
+		
+		var nextOpt = 0, databaseIdWS, databaseNameWS;
+
+		$(xmlHttpRequest.responseXML).find('TypeDataBaseData').each(function() {
+
+			var id = $(this).find('DatabaseID').text();
+			var databaseName = $(this).find('DatabaseName').text();
+
+			databaseIdWS = id;
+			databaseNameWS = databaseName;
+
+			nextOpt = nextOpt + 1;
+
+		});
+
+		if (nextOpt == 1) {
+
+			var databaseId = databaseIdWS;
+
+			window.localStorage.setItem("database_id", databaseId);
+
+			getWorkGroupList(databaseId, logonID);
+			// window.location = 'workgrouplist.html?idOfDatabase=' + databaseId + '&logonId=' + logonID;
+
+		} else {
+			/**	sending logonId to db.html page **/
+			window.location = 'db.html?logonId=' + logonID;
+		}
+
+	}
+
+
+/**Function call for checking number of work group **/
+
+	function getWorkGroupList(databaseId1, logonID1) {
+
+		databaseIdWG = databaseId1;
+		var logonID = logonID1;
+
+		// alert(databaseIdWG+" WG "+logonID);
+
+		var getWGServiceUrl = wsURL + 'GetWorkgroups';
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetWorkgroups xmlns="LMServiceNamespace"><logon_id>' + logonID + '</logon_id><database_id>' + databaseIdWG + '</database_id></GetWorkgroups></soap:Body></soap:Envelope>';
+
+		$.ajax({
+			url : getWGServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			timeout : 9000,
+			data : soapMessage,
+			complete : getResponseWorkGroup,
+			error : function(xhr, status, error) {
+				if (status == 'timeout') {
+					alert("Server is not responding");
+					ifUserLoginFails();
+
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+
+					alert('An error has occurred. Try again or check your Internet connection.');
+					ifUserLoginFails();
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+
+	};
+
+	function getResponseWorkGroup(xmlHttpRequest, status) {
+
+		var nextOpt = 0, workgroupId, workgroupName;
+
+		$(xmlHttpRequest.responseXML).find('TypeWorkgroupData').each(function() {
+
+			var id = $(this).find('WorkgroupID').text();
+			var nameWorkGroup = $(this).find('WorkgroupName').text();
+
+			workgroupId = id;
+			workgroupName = nameWorkGroup;
+
+			nextOpt = nextOpt + 1;
+
+		});
+
+		if (nextOpt == 1) {
+
+			window.localStorage.setItem("company_id", workgroupId);
+			window.localStorage.setItem("wgSize1", nextOpt);
+
+			window.location = "dash2.html";
+
+		} else {
+			document.addEventListener("deviceready", function() {
+
+				window.location = 'workgrouplist.html?idOfDatabase=' + databaseIdWG + '&logonId=' + logonID;
+			});
+
+		}
+
+	}
+
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+ /**Function call when page loading is completed  **/
+	function onDeviceReady() {
+//	alert(screenwidth);
+//alert(window.innerWidth);
+		navigator.notification.activityStop();
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		//Listen to the User clicking on the back button
+
+		var initialScreenSize = window.innerHeight;
+		window.addEventListener("resize", function() {
+			if (window.innerHeight < initialScreenSize) {
+				$("[data-role=footer]").hide();
+			} else {
+				$("[data-role=footer]").show();
+			}
+		});
+	}
+
+
+ /** Function calls when back button of device is clicked  **/
+	function onBackKeyDown(e) {
+		e.preventDefault();
+		navigator.notification.confirm("Are you sure you want to exit ?", onConfirm, "Confirmation", "Yes,No");
+		// Prompt the user with the choice
+	}
+
+	function onConfirm(button) {
+		if (button == 2) {//If User selected No, then we just do nothing
+			return;
+		} else {
+			navigator.app.exitApp();
+			// Otherwise we quit the app.
+		}
+	}
+
+
+ /** Fuction called when body is loaded  **/
+	function setUserDetail() {
+		  url_main = window.localStorage.getItem("changed_url");
+
+		   if (url_main == null || url_main == "") {
+		   url_main = "http://app.leadmastercrm.com";
+			window.localStorage.setItem("changed_url", url_main);
+		   }
+
+		wsURL = "http://api.leadmaster.com/lmservice/lmservice_mobile.asmx?op=";
+	//	wsURL = "http://lmki.leadmaster.com/lmservice/lmservice_mobile.asmx?op=";
+		window.localStorage.setItem("wsURL", wsURL);
+
+		var footerContent = "Copyright @ 2016 LeadMaster<br/>version 2.9";
+		window.localStorage.setItem("footerContent", footerContent);
+		document.getElementById("footer1").innerHTML = footerContent;
+
+		var username = window.localStorage.getItem("username");
+		var password = window.localStorage.getItem("password");
+		document.getElementById("email").value = username;
+		document.getElementById("password").value = password;
+
+	}
+
+
+ /**Check whether internet connection is available  **/
+	function CheckConnection() { 
+		if (!navigator.network) {
+			// set the parent windows navigator network object to the child window
+			navigator.network = window.top.navigator.network;
+		}
+
+		// return the type of connection found
+		return ((navigator.network.connection.type === "none" || navigator.network.connection.type === null || navigator.network.connection.type === "unknown" ) ? false : true );
+	}
+
+
+
+ /** Get privileges for all the module  **/
+	function getPrivileges(logonID) {
+
+		var logonServiceUrl = wsURL + 'GetLogonPrivileges';
+		// Preferably write this out from server side
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetLogonPrivileges xmlns="LMServiceNamespace"><LogonID>' + logonID + '</LogonID></GetLogonPrivileges></soap:Body></soap:Envelope>';
+
+		$.ajax({
+			url : logonServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			timeout : 9000,
+			data : soapMessage,
+			complete : getResponsePrivileges,
+			error : function(xhr, status, error) {
+				if (status == 'timeout') {
+					alert("Server is not responding");
+					ifUserLoginFails();
+					// navigator.notification.activityStop();
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+
+					alert('An error has occurred. Try again or check your Internet connection.');
+					ifUserLoginFails();
+					
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+
+		function getResponsePrivileges(xmlHttpRequest, status) {
+
+			
+			var length = xmlHttpRequest.responseXML.getElementsByTagName("GetLogonPrivilegesResult").length;
+			var cont = 1;
+		//	alert("xmlHttpRequest.responseXML=="+xmlHttpRequest.responseXML);
+			$(xmlHttpRequest.responseXML).find('GetLogonPrivilegesResult').each(function() {
+				// var reveiwAndtake = $(this).find('ReviewAndTakeAct').text();
+				var companyPriv = $(this).find('ViewSalesProgress').text();
+				var contactPriv = $(this).find('FullEdit').text();
+				var callBackEventViewAccess = $(this).find('AssignCallBack').text();
+				var AccountLink = $(this).find('AccountLink').text();
+				var MapPriv = $(this).find('RecordOnMap').text();
+			//	alert("MapPriv=="+MapPriv);
+				// window.localStorage.setItem("reveiwAndtake",reveiwAndtake);
+				window.localStorage.setItem("companyPriv", companyPriv);
+				window.localStorage.setItem("contactPriv", contactPriv);
+				window.localStorage.setItem("AssignCallBack", callBackEventViewAccess);
+				window.localStorage.setItem("AccountLink", AccountLink);
+				window.localStorage.setItem("MapPriv", MapPriv);
+				//alert("MapPriv=="+AccountLink);
+			});
+		}
+
+	}
+
+ /** Call when user login fails  **/
+	function ifUserLoginFails() {
+		jQuery.ajaxSetup({
+			async : false
+		});
+		// var user = window.localStorage.getItem("ifUserFails");
+		// document.getElementById('email').innerHTML = user;
+		// document.getElementById("email").value = user;
+		// document.getElementById("password").value = '';
+
+		window.location = "index.html";
+		
+		
+		jQuery.ajaxSetup({
+			async : true
+		});
+
+	}
+	
+	
+
+	function getParameterByName(name) {
+
+		var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+		var dbID = match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+		return dbID;
+
+	}
+
+	
+</script>

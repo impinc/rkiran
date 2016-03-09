@@ -1,0 +1,901 @@
+<html >
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.2, maximum-scale=2.0, target-densitydpi=medium-dpi" />
+
+		<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+		 <script type="text/javascript" src="js/jquery.mobile-1.3.2.js"></script> 
+		<script type="text/javascript"  charset="utf-8" src="cordova.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/phonegap-1.0.0.js"></script>
+		<script type="text/javascript" charset="utf-8" src="js/encryption.js"></script>
+		<script type="text/javascript" src="js/Calendar.js"></script>
+		<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+
+		<link rel="stylesheet" media="all and (orientation:portrait)" href="css/account_offline.css">
+		<link rel="stylesheet" media="all and (orientation:landscape)" href="css/account_offline_hor.css">
+
+	</head>
+
+	<body style="background-color: white;height: 100%;">
+
+		<div data-role="header" class="titlePart"  style="background-color: #006DD9;width: 100%;margin-left: -8px;position: fixed; float: left;" id="headerId">
+
+			<table width="100%" cellspacing="0" style="center;vertical-align: middle;">
+				<tr style="background-color: #006DD9;height: 45px;" width="100%">
+
+					<td class="title"  style="color: white; font-weight: bold;" width="100%" ><span id="heading" style="padding-left: 35px;">CallBackTask</span>
+					<input type="image"  src="images/datepicker.png" style="vertical-align: middle;"onclick="getCalendar()"/>
+					</td>
+				 <!-- <td align="right" >
+					
+					<input type="submit" style="background-color:#81B2EC;color: white;border: none;font-weight: bold;margin-right: 10px; -webkit-border-radius: 4px;border-radius: 3px 3px 3px 3px;" class="button_font" value="Add Task" onclick="addTask()">
+					</td>  -->
+
+				</tr>
+				<tr width="100%">
+					<td width="100%" colspan="2" style="background-color: white;"> </td>
+				</tr>
+			</table>
+			<table width="100%" cellspacing="0" style="center;vertical-align: middle;">
+				<tr width="100%">
+
+					<td width="92%" class="callBackTextBoxSize">
+					<div class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-a">
+						<input type="text" onkeydown="if (event.keyCode == 13) getEvents(null,null,true);" style="border-radius: 1em; text-align: center;color: gray;border:3px;border-color: #105FC9;" id="keywords" placeholder="Search by Event Name" class="ui-input-text ui-body-a">
+					</div></td>
+					<td width="8%" rowspan="2"><!-- <table width="100%" cellspacing="0">
+					<tbody>
+					<tr>
+					<td>
+					<input type="image" onclick="getEvents(null,null,true)" style="border:none;" src="images/search3.png">
+					</td>
+					</tr>
+					</tbody>
+					</table> -->
+					<input type="image" onclick="getEvents(null,null,true)" style="border:none;" src="images/search3.png">
+					</td>
+
+				</tr>
+
+				<!-- <tr style="margin-top: 2px;" width="100%">
+
+				<td width="92%" class="callBackTextBoxSize">
+				<div class="ui-input-text ui-shadow-inset ui-corner-all ui-btn-shadow ui-body-a">
+				<input type="text" onkeydown="if (event.keyCode == 13) getEvents(null,null,true);" style="border-radius: 1em; text-align: center;color: gray;border:3px;border-color: #105FC9;" id="datepicker" placeholder="mm/dd/yy" class="ui-input-text ui-body-a">
+				</div>
+				</td>
+
+				<td width="8%" style="padding-top: 4px;padding-bottom: 4px; "></td>
+				</tr> -->
+
+			</table>
+
+		</div>
+
+		<div style="bottom: 51px" class="ulTopPading" id="upperId">
+
+			<ul id="rList" class="ui-listview" onactivate="getEvents(null,null,false)" data-role="listview" style="background-color: white;list-style: none;margin-left: -20px;margin-bottom: -10px;margin-right: -10px;height: 63%;margin-bottom: 10.2%">
+
+				<div style="margin-top: 15%;text-align: center;margin-left: -10px;vertical-align: middle" id="message1">
+
+					<!-- <h3 id="msgbydef" style="color: grey; text-align: center;text-shadow: 2px;vertical-align: middle">Enter any keyword to search</h3> -->
+
+				</div>
+			</ul>
+		</div>
+
+		<div  style="bottom: 0px;position: fixed;  background-color: #006dd9;min-width: 100%;margin-left: -8px;height: 50px" >
+			<table style="text-align: center;width:100%;vertical-align: middle">
+				<tr style="text-align: center;width: 100%;">
+					<td  align= "left" style="text-align:left;width:35%;margin-right: -8px">
+					<button class="button" id="join" onclick="getPrev()">
+						Previous
+					</button></td>
+					<td  align="center" style="width:30%;text-align:center;" ><h5 id="recordss" style="color: white;vertical-align: middle;text-align: center;height: 0px;font-size: 14px;margin-top: 10px"></h5></td>
+					<td  align="right" style="width:35%;text-align:right;margin-left: -8px">
+					<button class="button" id="join1" onclick="getNext()">
+						Next
+					</button></td>
+
+				</tr>
+			</table>
+
+		</div>
+	</body>
+</html>
+
+<script>
+	var username, password, company_id, recdNo = 0, eventName, url_main, date, conTact, eventStatus, eventType, address, address2, address3, city, state, zip, country;
+	var address1, wsURL,appkeyword,pagetype;
+	var encrptVal;
+	appkeyword= document.getElementById("keywords").value;
+			var pagetype= 'opportunity';
+
+	function getEvents(first, last, boolPregress) {
+
+		// var windowHeight = window.innerHeight;
+		// var windowWidth = window.innerWidth;
+		// alert(windowWidth+"width  Height"+windowHeight);
+
+		var heading = window.localStorage.getItem("Events");
+
+		// alert(heading);
+
+		if (heading != null && heading != "") {
+			document.getElementById("heading").innerHTML = heading;
+		}
+
+		var eventNamelabel = window.localStorage.getItem("Event Name");
+
+		if (eventNamelabel != null && eventNamelabel != "") {
+			// document.getElementsByName('keywords')[0].placeholder='Search by '+eventNamelabel;
+			$('#keywords').attr('placeholder', 'Search by ' + eventNamelabel);
+		}
+
+		if (boolPregress) {
+
+			navigator.notification.activityStart("Please wait....", "loading");
+
+		}
+
+		if (first == null && last == null) {
+
+			getCount();
+
+			var count = window.localStorage.getItem("countCallBack");
+			if (count >= 15) {
+				first = 1;
+				last = 15;
+			} else {
+				first = 1;
+				last = count;
+			}
+			url_main = window.localStorage.getItem("changed_url");
+
+			if (url_main == null || url_main == "") {
+				url_main = "http://app.leadmastercrm.com";
+
+			}
+
+		}
+
+		var count = window.localStorage.getItem("countCallBack");
+
+		if (count > 0) {
+
+			document.getElementById("recordss").innerHTML = first + " to " + last + " of " + count;
+		} else {
+			document.getElementById("recordss").innerHTML = "0" + " to " + "0" + " of " + count;
+		}
+
+		window.localStorage.setItem("first", first);
+		window.localStorage.setItem("last", last);
+
+		// document.getElementById("message1").style.display = "none";
+		username = window.localStorage.getItem("username");
+		password = window.localStorage.getItem("password");
+		companyId = window.localStorage.getItem("company_id");
+		console.log("CompanyId: " + companyId);
+		document.getElementById("rList").innerHTML = "";
+		eventName = document.getElementById("keywords").value;
+
+		// date = document.getElementById("datepicker").value;
+		date = "";
+
+		console.log("Company ID:" + companyId);
+		
+
+		var callBackServiceUrl = wsURL + 'SearchCallBackEvent';
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SearchCallBackEvent xmlns="LMServiceNamespace"> <username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><eventname>' + eventName + '</eventname><startindex>' + first + '</startindex><endindex>' + last + '</endindex><eventdate>' + date + '</eventdate></SearchCallBackEvent></soap:Body></soap:Envelope>';
+
+		$.ajax({
+			url : callBackServiceUrl,
+			type : "POST",
+			dataType : "xml",
+			timeout : 9000,
+			data : soapMessage,
+			complete : getResponseCallBack,
+			error : function(xhr, status, error) {
+				if (status == 'timeout') {
+					alert("Server is not responding");
+					//window.location = "dash2.html";
+					// navigator.notification.activityStop();
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+
+					alert('An error has occurred. Try again or check your Internet connection.');
+
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+		function getResponseCallBack(xmlHttpRequest, status) {
+
+		
+			//alert(xmlHttpRequest.responseText);
+			var length = xmlHttpRequest.responseXML.getElementsByTagName("TypeEventData").length;
+			var cont = 1;
+
+			var height = document.getElementById("headerId").clientHeight;
+
+			document.getElementById('upperId').style.paddingTop = height;
+
+			if (length > 0) {
+				$(xmlHttpRequest.responseXML).find('TypeEventData').each(function() {
+					var completeAdd = "";
+
+					recdNo = $(this).find('RECDNO').text();
+					callBackId = $(this).find('CallBackID').text();
+					company = $(this).find('Company').text();
+					eventName = $(this).find('EventName').text();
+					startTime = $(this).find('StartTime').text();
+					endTime = $(this).find('EndTime').text();
+					eventType = $(this).find('EventType').text();
+					conTact = $(this).find('Contact').text();
+					eventStatus = $(this).find('EventStatus').text();
+					address = $(this).find('Address').text();
+					address2 = $(this).find('Address2').text();
+					address3 = $(this).find('Address3').text();
+					city = $(this).find('City').text();
+					state = $(this).find('State').text();
+					zip = $(this).find('Zip').text();
+					country = $(this).find('Country').text();
+
+
+					cont++;
+
+					if (address != "" && !address != null) {
+
+						completeAdd += address + " ";
+					}
+					if (address2 != "" && address2 != null) {
+
+						completeAdd += address2 + " ";
+
+					}
+					if (address3 != "" && address3 != null) {
+						completeAdd += address3 + " ";
+
+					}
+					if (city != "" && city != null) {
+						completeAdd += city + " ";
+
+					}
+					if (state != "" && state != null) {
+						completeAdd += state + " ";
+
+					}
+					if (zip != "" && zip != null) {
+						completeAdd += zip + " ";
+
+					}
+					if (country != "" && country != null) {
+						completeAdd += country;
+					}
+
+					// alert(completeAdd);
+					var lastChar = completeAdd.substr(completeAdd.length - 1);
+
+					if (lastChar == "+") {
+
+						completeAdd = completeAdd.substr(0, completeAdd.length - 1);
+
+					}
+
+					//console.log("Address: " + completeAdd);
+
+					if (recdNo > 0) {
+
+						// document.getElementById("footer1").style.display = "none";
+						var textnode = "";
+
+						textnode += "<div class='ui-btn-inner ui-li' align='left'>";
+						textnode += "<div class='ui-btn-text'>";
+						//textnode += "<p class='ui-li-aside ui-li-desc'>";
+
+						var companylabel = window.localStorage.getItem("Company");
+						var companyAccess = window.localStorage.getItem("companyPriv");
+						
+						if(companylabel != null && companylabel != ""){
+						if (companyAccess == "true" ) {
+
+							if (company != null && company != "") {
+								textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ":</font><a href='#' onclick='direct_To_frmSalesProgress(" + recdNo + ")'>" + company + "</a>";
+							} else {
+								textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ":</font><a href='#' onclick='direct_To_frmSalesProgress(" + recdNo + ")'>(None)</a>";
+							}
+						} else {
+							if (company != null && company != "") {
+								textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font>" + company;
+							} else {
+								textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font>(None)";
+							}
+						}
+						}
+						
+						textnode += "<p class='ui-li-desc'  style='margin-top: -12px;'>";
+						textnode += "<div>";
+
+						var eventNamelabel = window.localStorage.getItem("Event Name");
+						var cbViewEvent = window.localStorage.getItem("AssignCallBack");
+
+						if (cbViewEvent == "true") {
+							//alert(3);
+							if (eventName != null && eventName != "") {
+								textnode += "<font color='#767676' size='3px'>" + eventNamelabel + ": </font><a href='#' onclick='direct_To_cbViewEvent(" + recdNo + "," + callBackId + ")'>" + eventName + "</a>";
+								//	textnode += "<font color='#767676' size='3px'>" + eventNamelabel + ":</font><a href='#' onclick='direct_To_cbViewEvent(" + recdNo + "," + callBackId + ")'>" + eventName + "</a>";
+								//	textnode += "<font color='#767676' size='3px'>" + eventNamelabel + ":</font><a href='#' onclick='direct_To_cbViewEvent(" + recdNo + "," + callBackId + ")'>" + eventName + "</a>";
+							} else {
+								textnode += "<font color='#767676' size='3px'>" + eventNamelabel + ": </font><a href='#' onclick='direct_To_cbViewEvent(" + recdNo + "," + callBackId + ")'>" + conTact + ",<br/>" + eventType + "</a>";
+								//textnode += "<font color='#767676' size='3px'>" + eventNamelabel + ":</font><a href='#' onclick='direct_To_cbViewEvent(" + recdNo + "," + callBackId + ")'>"+ eventType + "," + contact +"</a>";
+								//	textnode += "<font color='#767676' size='3px'>" + eventNamelabel + ":</font><a href='#' onclick='direct_To_cbViewEvent(" + recdNo + "," + callBackId + ")'>"+ eventType + "," + contact +"</a>";
+							}
+						} else {
+
+							if (eventName != null && eventName != "") {
+								textnode += "<font color='#767676' size='3px'>" + eventNamelabel + ": </font>" + eventName;
+							} else {
+								textnode += "<font color='#767676' size='3px'>" + eventNamelabel + ": </font>(None)";
+							}
+						}
+						textnode += "<br />";
+
+						textnode += "<font color='#767676' size='3px' style='margin-top:2px'>StartTime: </font>" + startTime + "";
+						textnode += "<br />";
+						textnode += "<font color='#767676' size='3px' style='margin-top:2px'>EndTime:</font> " + endTime + "";
+
+						textnode += "<br/>";
+
+						textnode += "<table width='100%'>";
+
+						textnode += "<tr width='100%'>";
+						textnode += "<td width='70%' style='bottom: 0px;text-align: bottom'>";
+
+						//alert(4);
+						var eventStatusName = window.localStorage.getItem("Event");
+
+						if (eventStatusName == null || eventStatusName == "") {
+							eventStatusName = "";
+						}
+
+						if (eventStatus == 1) {
+							textnode += eventStatusName + " Status: <select onclick='selectfocus()' id='select" + callBackId + "' onchange='selectOnChange(" + callBackId + ")' name='select" + callBackId + "' size='7'  id='MyDropDown'><option value='0'>open</option><option value='1' selected='selected'>closed</option></select>";
+
+						} else {
+
+							textnode += eventStatusName + " Status: <select onclick='selectfocus()' id='select" + callBackId + "' onchange='selectOnChange(" + callBackId + ")'name='select" + callBackId + "' size='7'  id='MyDropDown'><option selected='selected' value='0'>open</option><option	value='1' >closed</option></select>";
+						}
+
+						textnode += "</td>";
+						textnode += "</tr>";
+
+						textnode += "<tr width='100%'>";
+						//                                                                            textnode += "<td width='50%' style='bottom: 0px;text-align: bottom'>";
+						//
+						//                                                                            textnode += "</td>";
+
+						textnode += "<td width='100%' style='font-size: 5px;bottom: 0px;' align='right' >";
+
+						if (cbViewEvent == "true") {
+
+							textnode += "<input  type='button'   id=green'" + callBackId + "' value='Select' style='background-color:#2DB200;font-size: 10px;color: white;border: none;font-weight: bold;margin-left: 10px ;padding-left: .8em;;padding-right: .8em;padding-top: 0.7em; padding-bottom: 0.7em; -webkit-border-radius: 4px;border-radius: 3px 3px 3px 3px;width: 23%;'  onclick='direct_To_cbViewEvent(" + recdNo + "," + callBackId + ")'/>";
+
+						}
+
+						textnode += "<input  type='button' class='callback_icon_dist' id=greenCal'" + callBackId + "' value='Add' style='background-color:#777777;font-size: 10px;color: white;border: none;font-weight: bold;padding-left: .8em;; padding-right: .8em;padding-top:0.7em;padding-bottom: 0.7em;margin-left:7px;-webkit-border-radius: 4px;border-radius: 3px 3px 3px 3px;width: 23%;'  onclick='addTask()' \>";
+
+						var contactPriv = window.localStorage.getItem("contactPriv");
+						if (cbViewEvent == "true") {
+
+							textnode += "<img id=img'" + callBackId + "' class='callback_icon_dist'  src='images/edit.png' style='vertical-align: bottom;' onclick='editCallBack(" + recdNo + "," + callBackId + ")'   id='" + recdNo + "' align='bottom'>";
+
+							textnode += "<img  style='vertical-align: bottom;' id='img" + recdNo + "' class='callback_icon_dist' src='images/calendar_icon.png' onclick='getCalendar()'\>";
+
+							var mapPriv= window.localStorage.getItem("MapPriv");
+									//alert(mapPriv);
+							if(mapPriv == "true")
+							{
+							if (completeAdd != null && completeAdd != "") {
+
+								textnode += "<img  style='vertical-align: bottom;' id='img" + recdNo + "' class='callback_icon_dist' src='images/gmap1.png' onclick=\"getGoogleMap('" + completeAdd + "')\">";
+							} else {
+
+								textnode += "<img  style='vertical-align: bottom;' id='img" + recdNo + "' class='callback_icon_dist'  src='images/gmap_light.png' >";
+							}
+						}
+						}
+
+						textnode += "</td>";
+						textnode += "</tr>";
+						textnode += "</table>";
+
+						textnode += "</div>";
+						textnode += "</p>";
+						textnode += "</div></div>";
+
+						if ((length + 1) == cont) {
+
+							textnode += "<hr style='color: #CCCCCC; background: #CCCCCC; width: 100%%; height: 0.5px; margin-left: -10px;margin-bottom:51px;margin-top:-5px'>";
+
+							textnode += "<br/>";
+							textnode += "<br/>";
+
+						} else {
+							textnode += "<hr style='color: #CCCCCC; background: #CCCCCC; width: 100%%; height: 0.5px; margin-left: -10px;margin-top:-5px'>";
+						}
+
+						var node = document.createElement("li");
+						var rID = "R" + callBackId;
+						node.id = rID;
+
+						var textnode1 = document.createTextNode("");
+
+						node.appendChild(textnode1);
+						document.getElementById("rList").appendChild(node);
+
+						document.getElementById(rID).innerHTML = textnode;
+
+
+					} else {
+						// document.getElementById('footer1').style.display = 'block';
+
+						var new_div = document.createElement('div');
+						new_div.className = "cls1";
+
+						new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>Sorry...No data found</h3>";
+						document.getElementById("rList").appendChild(new_div);
+
+					}
+					navigator.notification.activityStop();
+
+				});
+			} else {
+				// document.getElementById('footer1').style.display = 'block';
+
+				var new_div = document.createElement('div');
+				new_div.className = "cls1";
+
+				new_div.innerHTML = "<h3  style='margin-left: -10px;margin-top:35%;color: grey; text-align: center;text-shadow: 2px;'>Sorry...No data found</h3>";
+				document.getElementById("rList").appendChild(new_div);
+				navigator.notification.activityStop();
+
+			}
+
+		}
+
+	}
+
+	function direct_To_frmSalesProgress(recdNo) {
+
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_frmSalesProgress.asp?RECDNO=" + recdNo + "&appkeyword=" + appkeyword + "&pagetype=" + pagetype;
+		console.log("URL=" + url);
+
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+	}
+
+	function direct_To_cbViewEvent(recdNo, callBack) {
+
+		var companyId = window.localStorage.getItem("company_id");
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_cbViewEvent.asp&RECDNO=" + recdNo + "&CompanyID=" + companyId + "&CallBackID=" + callBack + "&appkeyword=" + appkeyword + "&pagetype=" + pagetype;
+		console.log("ULRCALLBACK :" + url);
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+	}
+
+
+	document.addEventListener("deviceready", onDeviceReady, false);
+
+	function onDeviceReady() {
+
+		wsURL = window.localStorage.getItem("wsURL");
+		encrptVal = getEncrption();
+		url_main = window.localStorage.getItem("changed_url");
+		getEvents(null, null, false);
+
+		document.addEventListener("backbutton", onBackKeyDown, false);
+		//Listen to the User clicking on the back button
+		var initialScreenSize = window.innerHeight;
+		window.addEventListener("resize", function() {
+			if (window.innerHeight < initialScreenSize) {
+				$("[data-role=footer]").hide();
+			} else {
+				$("[data-role=footer]").show();
+			}
+		});
+	}
+
+
+
+	function onBackKeyDown(e) {
+		e.preventDefault();
+
+		navigator.app.backHistory();
+		localStorage.removeItem("first");
+		localStorage.removeItem("last");
+		localStorage.removeItem("countCallBack");
+		localStorage.removeItem("diff");
+
+
+	}
+
+	function selectOnChange(callBackId) {
+
+		navigator.notification.activityStart("Please wait....", "Uploading");
+
+		var cbEditEvent = window.localStorage.getItem("AssignCallBack");
+		if (cbEditEvent) {
+
+			var username = window.localStorage.getItem("username");
+			var password = window.localStorage.getItem("password");
+			var companyId = window.localStorage.getItem("company_id");
+			var selectId = 'select' + callBackId;
+			var chkValue = document.getElementById(selectId);
+			var selectedValue = chkValue.options[chkValue.selectedIndex].value;
+
+			var LMUpdateCallBackEventsServiceUrl = wsURL + 'LMUpdateCallBackEvents';
+			// Preferably write this out from server side
+			var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><LMUpdateCallBackEvents xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><isdone>' + selectedValue + '</isdone><callbackid>' + callBackId + '</callbackid></LMUpdateCallBackEvents></soap:Body></soap:Envelope>';
+
+			$.ajax({
+				url : LMUpdateCallBackEventsServiceUrl,
+				type : "POST",
+				dataType : "xml",
+				data : soapMessage,
+				complete : getResponseLMUpdateCallBackEvents,
+				contentType : "text/xml; charset=\"utf-8\""
+			});
+		} else {
+			alert('You do not have access to Edit Record');
+			navigator.notification.activityStop();
+			return false;
+		}
+
+
+	}
+
+	function getResponseLMUpdateCallBackEvents(xmlHttpRequest, status) {
+		
+		if (!(status == 'success')) {
+
+			alert('An error has occurred.  Try again or check your Internet connection.');
+			navigator.notification.activityStop();
+			return false;
+		}
+		$(xmlHttpRequest.responseXML).find('LMUpdateCallBackEventsResponse ').each(function() {
+			logonID = $(this).find('LMUpdateCallBackEventsResult').text();
+
+
+		});
+		navigator.notification.activityStop();
+
+	}
+
+	function editCallBack(recdNo, callBackId) {
+		var companyId = window.localStorage.getItem("company_id");
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_cbEditEvent.asp&frompage=mobile_RFullEdit.asp&RECDNO=" + recdNo + "&CompanyID=7639" + companyId + "&CallBackId=" + callBackId + "&appkeyword=" + appkeyword + "&pagetype=" + pagetype;
+		console.log("editCallBack:" + url);
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+	}
+
+	//  ----------------  Filter-------------------
+
+	// $(function() {
+	//
+	// $('#keywords').keyup(function() {
+	//
+	// var searchText = $(this).val();
+	//
+	// $('ul > li').each(function() {
+	//
+	// var currentLiText = $(this).text(), showCurrentLi = currentLiText.indexOf(searchText) !== -1;
+	//
+	// $(this).toggle(showCurrentLi);
+	//
+	// });
+	// });
+	//
+	// });
+
+	function getNext() {
+
+		var count = window.localStorage.getItem("countCallBack");
+
+		// document.getElementById("prev").style.color = "white";
+		var first = window.localStorage.getItem("first");
+		var last = window.localStorage.getItem("last");
+
+		if (!(last == count)) {
+			navigator.notification.activityStart("Please wait....", "loading");
+
+			var getDiff = count - last;
+			window.localStorage.setItem("diff", getDiff);
+
+			if (getDiff >= 15) {
+				first = parseInt(first) + 15;
+				last = parseInt(last) + 15;
+
+				getEvents(first, last, false);
+
+			} else {
+
+				var spec = parseInt(last) + parseInt(1);
+
+				window.localStorage.setItem("last", count);
+				// document.getElementById("next").style.color = "gray";
+				getEvents(spec, count, false);
+				// document.getElementById("next").style.display = "none";
+
+			}
+
+			//document.getElementById("recordss").innerHTML = first+"to"+ last+" out of "+count +"records";
+		} else {
+
+			// alert("No more data available Next");
+			// navigator.notification.activityStop();
+			// document.getElementById("next").style.color = "gray";
+		}
+
+	}
+
+	function getPrev() {
+
+		var diff = window.localStorage.getItem("diff");
+
+		var first = window.localStorage.getItem("first");
+		var last = window.localStorage.getItem("last");
+
+		if (!(first < 15)) {
+			navigator.notification.activityStart("Please wait....", "loading");
+			// document.getElementById("next").style.color = "white";
+			if (diff >= 15) {
+
+				first = first - 15;
+				last = last - 15;
+
+				if (first == 1) {
+					// document.getElementById("prev").style.color = "gray";
+
+				}
+				getEvents(first, last, false);
+			} else {
+				first = first - 15;
+				last = last - diff;
+				getEvents(first, last, false);
+				window.localStorage.setItem("diff", last);
+
+			}
+
+			//document.getElementById("recordss").innerHTML = first+"to"+ last+" out of "+count +"records";
+
+		} else {
+
+		}
+
+	}
+
+	function getCount() {
+
+		jQuery.ajaxSetup({
+			async : false
+		});
+
+		var username = window.localStorage.getItem("username");
+		var password = window.localStorage.getItem("password");
+		var companyId = window.localStorage.getItem("company_id");
+
+		var eventName = document.getElementById("keywords").value;
+		// var eventDate = document.getElementById("datepicker").value;
+
+		var eventDate = "";
+
+		var SearchCallBackCountServiceUrl = wsURL + '=SearchCallBackCount';
+		// Preferably write this out from server side
+		//var soapMessage = '<soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SearchCallBackCount xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><eventname>' + eventName + '</eventname><eventdate>' + eventDate + '</eventdate></SearchCallBackCount></soap:Body></soap:Envelope>';
+
+		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SearchCallBackCount xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><eventname>' + eventName + '</eventname><eventdate>' + eventDate + '</eventdate></SearchCallBackCount></soap:Body></soap:Envelope>';
+
+		$.ajax({
+			url : SearchCallBackCountServiceUrl,
+			type : "POST",
+			timeout : 9000,
+			dataType : "xml",
+			data : soapMessage,
+			complete : getResponseSearchCallBackCount,
+			error : function(xhr, status, error) {
+				if (status == 'timeout') {
+					alert("Server is not responding");
+					//window.location = "dash2.html";
+					// navigator.notification.activityStop();
+					return false;
+				} else if (status != 'success' && status != 'timeout') {
+
+					alert('An error has occurred. Try again or check your Internet connection.');
+					//window.location = "dash2.html";
+					// navigator.notification.activityStop();
+					return false;
+				}
+			},
+			contentType : "text/xml; charset=\"utf-8\""
+		});
+
+		jQuery.ajaxSetup({
+			async : true
+		});
+
+	}
+
+	function getResponseSearchCallBackCount(xmlHttpRequest, status) {
+	
+		$(xmlHttpRequest.responseXML).find('SearchCallBackCountResponse').each(function() {
+			var count = $(this).find('SearchCallBackCountResult').text();
+
+			window.localStorage.setItem("countCallBack", count);
+
+		});
+
+	}
+
+	function getCalendar() {
+
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_calWeek.asp";
+		console.log("URLLL:" + url);
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+	}
+
+	function addTask() {
+
+		// var startDate = new Date("July 19, 2014 8:00:00");
+		// var endDate = new Date("July 19, 2014 18:00:00");
+		// var notes = "Arrive on time, don't want to miss out (from Android)";
+		// var title = "PhoneGap Day";
+		// var location = "Portland, OR";
+		// var notes = "Arrive on time, don't want to miss out!";
+		// var success = function() { alert("Success"); };
+		// var error = function(message) { alert("Oopsie! " + message); };
+		// calendarPlugin.createEvent(title, location, notes, startDate, endDate, success, error);
+
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_cbEditEvent.asp&add_CallBack=T" + "&appkeyword=" + appkeyword + "&pagetype=" + pagetype;
+		console.log("URL Add Task:" + url);
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+	}
+
+	function addEventToDevice(startdate, enddate, eventname) {
+
+
+		var startDate = new Date(startdate);
+		var endDate = new Date(enddate);
+		var title = eventname;
+		var location = "Home";
+		var notes = "Some notes about this event.";
+		var success = function(message) {
+			alert("Success: Added Event to the Device Calendar");
+		};
+		var error = function(message) {
+			alert("Error: " + message);
+		};
+
+		window.plugins.calendar.createEvent(title, location, notes, startDate, endDate, success, error);
+
+	}
+
+	function callBackGreenButton(recdNo, callBackId) {
+		var companyId = window.localStorage.getItem("company_id");
+		var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_cbEditEvent.asp?frompage=mobile_cbViewEvent.asp&RECDNO=" + recdNo + "&CompanyID=" + companyId + "&callbackid=" + callBackId + "&appkeyword=" + appkeyword + "&pagetype=" + pagetype;
+		console.log("URL Add Task:" + url);
+		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
+
+	}
+
+	function getGoogleMap(address) {
+		address1 = address;
+		// alert(address1);
+		google.load("maps", "3.8", {
+			"callback" : map,
+			other_params : "sensor=true&language=en"
+		});
+	}
+
+	function map() {
+
+		navigator.notification.activityStart("Please wait", "loading...");
+
+		navigator.geolocation.getCurrentPosition(geo_success, geo_error, {
+			maximumAge : 5000,
+			timeout : 5000,
+			enableHighAccuracy : true
+		});
+	}
+
+	function geo_error(error) {
+		//comment
+		alert('code: ' + error.code + '\n' + 'message: ' + error.message + '\n');
+		navigator.notification.activityStop();
+	}
+
+	function geo_success(position) {
+
+		var geocoder = new google.maps.Geocoder();
+
+		// alert(geocoder.geocode);
+		geocoder.geocode({
+			'address' : address1
+		}, function(results, status) {
+
+			// alert(results);
+			if (status == google.maps.GeocoderStatus.OK) {
+				locationadd = results[0].geometry.location;
+
+				// alert(locationadd.lat());
+
+				window.open("https://maps.google.com/maps?saddr=" + position.coords.latitude + "," + position.coords.longitude + "&daddr=" + locationadd.lat() + "," + locationadd.lng(), '_blank', 'location=no,closebuttoncaption=Main');
+				navigator.notification.activityStop();
+
+			} else {
+				//alert("Geocode was not successful for the following reason: " + status);
+				alert("Google cannot find requested Address. Please enter correct Address.");
+				navigator.notification.activityStop();
+			}
+		});
+
+	}
+
+	var initialScreenSize = window.innerHeight;
+	window.addEventListener("resize", function() {
+		if (window.innerHeight < initialScreenSize) {
+			$("footer").hide();
+		} else {
+			$("footer").show();
+		}
+	});
+
+	// $('input[data-type=search]').live("focus", function() {
+	// $("[data-role=header]").css('position','fixed');
+	// $("[data-role=footer]").css('position','fixed');
+	// });
+
+	// $(document).ready(function() {
+	// var options = {
+	// date : new Date(),
+	// mode : 'date'
+	// };
+	// // calling show() function with options and a result handler
+	//
+	// // var  datePicker = document.getElementById("datePicker");
+	//
+	// window.plugins.datePicker.show(options, function(date) {
+	// console.log("date result " + date);
+	// });
+
+	function addtoCal(StartCaltime, EndCaltime, NameOfEvent) {
+
+		var startDate = new Date(StartCaltime);
+		var endDate = new Date(EndCaltime);
+		var evtName = NameOfEvent;
+
+		var location = "Home";
+		var notes = "This is Sample Event.";
+		var success = function(message) {
+			alert("Added To Device Calendar");
+		};
+		var error = function(message) {
+			alert("Error: " + message);
+		};
+
+		window.plugins.calendar.createEvent(evtName, location, notes, startDate, endDate, success, error);
+
+	}
+
+</script>
+<style>
+	.titlePart {
+
+		position: fixed;
+		-webkit-backface-visibility: hidden;
+	}
+
+</style>
+
