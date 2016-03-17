@@ -171,7 +171,7 @@
 
 		var logonId = logonid;
 
-		//getPrivileges(logonId);
+		getPrivileges(logonId);
 		
 		var getDBServiceUrl = wsURL + 'GetDatabase';
 		// Preferably write this out from server side
@@ -297,6 +297,8 @@
 
 			window.localStorage.setItem("company_id", workgroupId);
 			window.localStorage.setItem("wgSize1", nextOpt);
+
+			getPrivileges(logonID);
 
 			window.location = "dash2.html";
 
@@ -432,7 +434,7 @@
 				var callBackEventViewAccess = $(this).find('AssignCallBack').text();
 				var AccountLink = $(this).find('AccountLink').text();
 				var MapPriv = $(this).find('RecordOnMap').text();
-			//	alert("MapPriv=="+MapPriv);
+				//alert(companyPriv + " - "+ contactPriv);
 				// window.localStorage.setItem("reveiwAndtake",reveiwAndtake);
 				window.localStorage.setItem("companyPriv", companyPriv);
 				window.localStorage.setItem("contactPriv", contactPriv);

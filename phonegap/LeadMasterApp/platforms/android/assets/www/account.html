@@ -438,10 +438,10 @@
 								textnode += "</td>";
 								textnode += "<td width='30%'>";
 								var contactPriv = window.localStorage.getItem("contactPriv");
-								if (contactPriv == "true") {
-
+								var companyPriv = window.localStorage.getItem("companyPriv");
+								//alert(companyPriv + " - " + contactPriv)
+								if (contactPriv == "true" || companyPriv == "true") {
 									textnode += "<input  type='button'  id=green'" + recdNo + "' value='Select' style='background-color:#2DB200;font-size: 10px;color: white;border: none;font-weight: bold;padding-left: 1em ;padding-right: 1em;padding-top:1em; padding-bottom: 1em; -webkit-border-radius: 4px;border-radius: 3px 3px 3px 3px;'  onclick='callBackGreen(" + recdNo + ")'/>";
-
 								}
 
 								textnode += "</td>";
