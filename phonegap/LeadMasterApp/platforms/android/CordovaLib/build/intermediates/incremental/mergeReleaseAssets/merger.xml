@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/Jatin/LMAppNew/phonegap/LeadMasterApp/platforms/android/CordovaLib/assets"/></dataSet><dataSet config="release"><source path="/Users/Jatin/LMAppNew/phonegap/LeadMasterApp/platforms/android/CordovaLib/src/release/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/Jatin/LMApp_Android_New/phonegap/LeadMasterApp/platforms/android/CordovaLib/assets"/></dataSet><dataSet config="release"><source path="/Users/Jatin/LMApp_Android_New/phonegap/LeadMasterApp/platforms/android/CordovaLib/src/release/assets"/></dataSet></merger>
