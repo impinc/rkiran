@@ -1,0 +1,54 @@
+[
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/abc_btn_colored_material.xml",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/drawable-v21/abc_btn_colored_material.xml"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/ic_menu_send.xml",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/src/main/res/drawable-v21/ic_menu_send.xml"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/ic_menu_gallery.xml",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/src/main/res/drawable-v21/ic_menu_gallery.xml"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/icon_town_feedback.png",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/src/main/res/drawable-v21/icon_town_feedback.png"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/ic_menu_camera.xml",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/src/main/res/drawable-v21/ic_menu_camera.xml"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/icon_logout.png",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/src/main/res/drawable-v21/icon_logout.png"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/ic_menu_manage.xml",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/src/main/res/drawable-v21/ic_menu_manage.xml"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/abc_action_bar_item_background_material.xml",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/drawable-v21/abc_action_bar_item_background_material.xml"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/ic_menu_share.xml",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/src/main/res/drawable-v21/ic_menu_share.xml"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/sym_app_icon.png",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/src/main/res/drawable-v21/sym_app_icon.png"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/icon_appointment.png",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/src/main/res/drawable-v21/icon_appointment.png"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/ic_menu_slideshow.xml",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/src/main/res/drawable-v21/ic_menu_slideshow.xml"
+    },
+    {
+        "merged": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/build/intermediates/res/merged/debug/drawable-v21/icon_town_report.png",
+        "source": "/Users/Jatin/LMApp_Android_New/Sub_Jungle/app/src/main/res/drawable-v21/icon_town_report.png"
+    }
+]
