@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_app"
+            android:icon="@drawable/icon_appointment"
+            android:title="Appointment" />
+        <item
+            android:id="@+id/nav_strategist"
+            android:icon="@drawable/icon_town_report"
+            android:title="Strategist" />
+
+        <item
+            android:id="@+id/nav_client"
+
+            android:title="Client" />
+
+        <item
+            android:id="@+id/nav_deals"
+
+            android:title="Deals" />
+
+        <item
+            android:id="@+id/nav_follow"
+
+            android:title="Follow Up Date" />
+        <item
+            android:id="@+id/nav_mail"
+
+            android:title="Mail Manager" />
+
+    </group>
+
+
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/icon_logout"
+            android:title="Logout" />
+
+
+
+</menu>
