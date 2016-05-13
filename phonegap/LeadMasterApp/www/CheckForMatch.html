@@ -198,7 +198,6 @@
 		// var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><CheckForMatch xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><LastName>' + lastname + '</LastName><Company>' + companyname + '</Company><Email>' + email + '</Email><Address>' + address + '</Address><Phone>' + phone + '</Phone></CheckForMatch></soap:Body></soap:Envelope>';
 			
 			var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><CheckForMatch xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><LastName>' + lastname + '</LastName><Company>' + companyname + '</Company><Email>' + email + '</Email><Address>' + address + '</Address><Phone>' + phone + '</Phone><startindex>' + first + '</startindex><endindex>' + last + '</endindex></CheckForMatch></soap:Body></soap:Envelope>';
-		console.log(soapMessage);
 		$.ajax({
 			url : checkForMatchServiceUrl,
 			type : "POST",

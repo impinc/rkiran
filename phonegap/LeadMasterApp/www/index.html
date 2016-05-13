@@ -98,7 +98,7 @@
 			
 			/**Authentiacting username and password by calling webservice using ajax **/
 			
-				var validLogonServiceUrl = wsURL + 'APIValidateLogon';
+			var validLogonServiceUrl = wsURL + 'APIValidateLogon';
 			// Preferably write this out from server side
 			var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><APIValidateLogon xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd></APIValidateLogon></soap12:Body></soap12:Envelope>';
 
@@ -302,7 +302,7 @@
 			window.location = "dash2.html";
 
 		} else {
-				document.addEventListener("deviceready", function() {
+			document.addEventListener("deviceready", function() {
 
 				window.location = 'workgrouplist.html?idOfDatabase=' + databaseIdWG + '&logonId=' + logonID;
 			});
