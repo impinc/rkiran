@@ -40,7 +40,7 @@
 <div data-role="header" class="titlePart"  style="background-color: #006DD9;width: 100%;margin-left: -8px;position: fixed">
 
 	<table width="100%" cellspacing="0" style="center;vertical-align: middle;">
-		<tr width="100%" style="background-color: #006DD9;height: 60px;" >
+		<tr width="100%" style="background-color: #006DD9;height: 55px;" >
 			<td width="100%" >
 				<div style="text-align: center;vertical-align: bottom;font-weight: bolder;color: white" class="title" id="heading">
 					Contacts
@@ -60,21 +60,19 @@
 				</div>
 			</td>
 		</tr>
-</div>
-</tr>
-<tr>
-	<td style="background-color: white;" colspan="2"></td>
-</tr>
-<tr width="100%" >
-	<td width="92%" height="50px" >
-		<input  type="text" placeholder="Search by Contact" id="keywords" style="border-radius: 1em; text-align: center;padding: 1em 0;color: grey;border:3px;border-color: #105FC9;" onkeydown="if (event.keyCode == 13) getEvents(null,null,true);"/>
-	</td>
-	<td width="8%" style="padding-top: 4px;padding-bottom: 4px;">
-		<input type="image"  src="images/search3.png" style="border:none;"  onclick="getEvents(null,null,true)"/>
-	</td>
-</tr>
-</table>
 
+		<tr>
+			<td style="background-color: white;" colspan="2"></td>
+		</tr>
+		<tr width="100%" >
+			<td width="92%" height="50px" >
+				<input  type="text" placeholder="Search by Contact" id="keywords" style="border-radius: 1em; text-align: center;padding: 1em 0;color: grey;border:3px;border-color: #105FC9;" onkeydown="if (event.keyCode == 13) getEvents(null,null,true);"/>
+			</td>
+			<td width="8%" style="padding-top: 4px;padding-bottom: 4px;">
+				<input type="image"  src="images/search3.png" style="border:none;"  onclick="getEvents(null,null,true)"/>
+			</td>
+		</tr>
+	</table>
 </div>
 
 <div data-role="content" style="padding-top: 100px;bottom: 51px" >
@@ -242,7 +240,7 @@
 							country = $(this).find('Country').text();
 
 							phone = $(this).find('Phone').text();
-							campaign = $(this).find('Mkt_Program_ID').text();
+							// campaign = $(this).find('Mkt_Program_ID').text();
 							lead_Status = $(this).find('Lead_Status').text();
 							dateEntered = $(this).find('Entered').text();
 							acctMgr = $(this).find('AcctMgr').text();
@@ -278,9 +276,9 @@
 								completeAdd = completeAdd.substr(0, completeAdd.length - 1);
 
 							}
-					//		console.log("completeAdd: " + completeAdd);
+						//	console.log("completeAdd: " + completeAdd);
 
-							if (contactId > 0) {
+							if (contactId > 0 || recdNo > 0) {
 
 								// document.getElementById("footer1").style.display = "none";
 								var textnode = "";
@@ -332,29 +330,29 @@
 
 								if(companylabel != null && companylabel != "")
 								{
-								if (companyAccess == "true")
-								{
-									if (company != null && company != "")
+									if (companyAccess == "true")
 									{
-										textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font><a href='#' onclick='direct_To_frmSalesProgress(" + recdNo + ")'>" + company + "</a>";
-									} else {
-										textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font><a href='#' onclick='direct_To_frmSalesProgress(" + recdNo + ")'>(None)</a>";
-									}
-								}
-								else
-								{
-
-									if (company != null && company != "")
-									 {
-										textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font>" + company;
+										if (company != null && company != "")
+										{
+											textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font><a href='#' onclick='direct_To_frmSalesProgress(" + recdNo + ")'>" + company + "</a>";
+										} else {
+											textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font><a href='#' onclick='direct_To_frmSalesProgress(" + recdNo + ")'>(None)</a>";
+										}
 									}
 									else
 									{
-										textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font>(None)";
+
+										if (company != null && company != "")
+										 {
+											textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font>" + company;
+										}
+										else
+										{
+											textnode += "" + "<font color='#767676' size='3px'>" + companylabel + ": </font>(None)";
+
+										}
 
 									}
-
-								}
 								}
 								textnode += "</p>";
 
@@ -366,9 +364,9 @@
 								var lead_statuslabel = window.localStorage.getItem("Lead_Status");
 								textnode += "<font color='#767676' size='3px' style='margin-top:2px'>" + lead_statuslabel + ": </font>" + lead_Status + "";
 								textnode += "<br />";
-								var campaignlabel = window.localStorage.getItem("Mkt_Program_ID");
-								textnode += "<font color='#767676' size='3px' style='margin-top:2px'>" + campaignlabel + ":</font> " + campaign + "";
-								textnode += "<br />";
+								// var campaignlabel = window.localStorage.getItem("Mkt_Program_ID");
+								// textnode += "<font color='#767676' size='3px' style='margin-top:2px'>" + campaignlabel + ":</font> " + campaign + "";
+								// textnode += "<br />";
 								var acctMngrLabel = window.localStorage.getItem("EE_REP");
 								if ((acctMngrLabel != "" && acctMngrLabel != null) || (acctMgr != "" && acctMgr != null)){
 							//	if (acctMngrLabel != "" && acctMngrLabel != null && acctMgr != "" && acctMgr != null) {
@@ -437,16 +435,16 @@
 									var mapPriv= window.localStorage.getItem("MapPriv");
 									//alert(mapPriv);
 									if(mapPriv == "true")
-								{
+									{
 
-									if (completeAdd != null && completeAdd != "") {
+										if (completeAdd != null && completeAdd != "") {
 
-										textnode += "<img  style='margin-left:7px;' id='img" + recdNo + "' src='images/gmap1.png' onclick=\"myMap('" + completeAdd + "')\">";
-									} else {
+											textnode += "<img  style='margin-left:7px;' id='img" + recdNo + "' src='images/gmap1.png' onclick=\"myMap('" + completeAdd + "')\">";
+										} else {
 
-										textnode += "<img  style='margin-left:7px;' id='img" + recdNo + "' src='images/gmap_light.png' >";
-									}
-								  }
+											textnode += "<img  style='margin-left:7px;' id='img" + recdNo + "' src='images/gmap_light.png' >";
+										}
+								  	}
 
 								} else {
 									textnode += "<img id=img'" + recdNo + "' src='images/phone_light.png'  alt='call'><img id='imgSearchforCompany" + recdNo + "' src='images/latest earth_light.png' style='margin-left:7px;'><img  style='margin-left:5px;' id='img" + recdNo + "' src='images/gmap_light.png'>";
@@ -498,7 +496,6 @@
 
 							}
 							navigator.notification.activityStop();
-
 						});
 
 					} else {
@@ -1032,3 +1029,4 @@ function back() {
 
 </style>
 
+</body>
