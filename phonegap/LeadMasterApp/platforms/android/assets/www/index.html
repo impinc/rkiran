@@ -118,7 +118,7 @@
 						return false;
 					} else if (status != 'success' && status != 'timeout') {
 
-						alert('An error has occurred. Try again or check your Internet connection.');
+						//alert('An error has occurred. Try again or check your Internet connection.');
 						ifUserLoginFails();
 						return false;
 					}
@@ -360,8 +360,8 @@
 			window.localStorage.setItem("changed_url", url_main);
 		   }
 
-		wsURL = "http://api.leadmaster.com/lmservice/lmservice_mobile.asmx?op=";
-	//	wsURL = "http://lmki.leadmaster.com/lmservice/lmservice_mobile.asmx?op=";
+	//	wsURL = "http://api.leadmaster.com/lmservice/lmservice_mobile.asmx?op=";
+		wsURL = "http://lmki.leadmaster.com/lmservice/lmservice_mobile.asmx?op=";
 		window.localStorage.setItem("wsURL", wsURL);
 
 		var footerContent = "Copyright @ 2016 LeadMaster<br/>version 2.9";
