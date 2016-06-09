@@ -82,7 +82,7 @@
         var map;
         var markers = Array();
         var infos = Array();
-        var getLatitude,getLongitude,companyId,recdNo,Lati,Longi,Dist,recdNo1,Lati1,Longi1,Dist1,EnteredLati,EnteredLongi,wsURL;
+        var getLatitude,getLongitude,companyId,recdNo,Lati,Longi,Dist,recdNo1,Lati1,Longi1,Dist1,EnteredLati,EnteredLongi,wsURL,RECDNO,url_main;
 
         function initialize() {
             // prepare Geocoder
@@ -170,7 +170,7 @@
                 Lati1  =  $(this).find('Latitude').text();
                 Longi1 =  $(this).find('Longitude').text();
                 Dist1 =   $(this).find('Distance').text();
-                findAddress(Lati1,Longi1);
+                findAddress(Lati1,Longi1,recdNo1);
            });
 
        }
@@ -303,7 +303,7 @@
 
     //    alert(getLati);
     //    alert(getLongi);
-
+    //      alert(recdNo);
 
        // alert(getLatitude);
        // alert(getLongitude);
@@ -335,7 +335,6 @@
                          document.getElementById('lat').value = getLati;
                          document.getElementById('lng').value = getLongi;
 
-                      //   alert(123);
                          // and then - add new custom marker
                          var addrMarker = new google.maps.Marker({
                              position: latlng,
@@ -347,7 +346,7 @@
                            //    map.setCenter(new google.maps.LatLng(addrMarker.position.lat(), addrMarker.position.lng()));
                            //    map.setZoom(18);
                            //    onItemClick(event, addrMarker);
-                             //  alert(345);
+
                                var infowindow = new google.maps.InfoWindow({
                                     content: '<a href="javascript:javOpenRecord('+ recdNo +')"><font style="color:#000;">' + results[0].formatted_address + '</font></a>'
                                });
@@ -386,10 +385,12 @@
             url_main = "http://app.leadmastercrm.com";
         }
         var encrptVal = getEncrption();
-     //   var appkeyword= document.getElementById("keywords").value;
+        //   var appkeyword= document.getElementById("keywords").value;
 		var pagetype= 'account';
-        var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_frmSalesProgress.asp&RECDNO=" + recdNo + "&pagetype=" + pagetype;
-      //  console.log("url"+url);
+		//alert(RECDNO);
+        var url = url_main + "/mobile_auth.asp?key=" + encrptVal + "&topage=mobile_frmSalesProgress.asp&RECDNO=" + RECDNO + "&pagetype=" + pagetype;
+        //  console.log("url"+url);
+        //alert(url);
 		window.open(url, '_blank', 'location=no,closebuttoncaption=Main');
     }
 
