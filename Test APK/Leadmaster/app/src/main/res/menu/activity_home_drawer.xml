@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_callbacktask"
+            android:icon="@drawable/callbacktask"
+            android:title="Callback Task" />
+        <item
+            android:id="@+id/nav_contact"
+            android:icon="@drawable/contacts"
+            android:title="Contacts" />
+        <item
+            android:id="@+id/nav_acoount"
+            android:icon="@drawable/accounts"
+            android:title="Accounts" />
+        <item
+            android:id="@+id/nav_shortcuts"
+            android:icon="@drawable/shortcuts"
+            android:title="My Shortcuts" />
+
+        <item
+            android:id="@+id/nav_recent"
+            android:icon="@drawable/recents"
+            android:title="Recent Items" />
+
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/dashboard"
+            android:title="Dashboard" />
+
+    </group>
+
+    <item android:title="Dashboard">
+        <menu>
+            <group android:checkableBehavior="single">
+                    <item
+                        android:id="@+id/nav_calendar"
+                        android:icon="@drawable/cal"
+                        android:title="Calendar" />
+
+                    <item
+                        android:id="@+id/nav_addnew"
+                        android:icon="@drawable/addnew"
+                        android:title="Add New" />
+
+                    <item
+                        android:id="@+id/nav_opp"
+                        android:icon="@drawable/opp"
+                        android:title="Opportunities" />
+
+                    <item
+                        android:id="@+id/nav_cases"
+                        android:icon="@drawable/caseicon"
+                        android:title="Cases" />
+
+                    <item
+                        android:id="@+id/nav_search"
+                        android:icon="@drawable/search_toolbar"
+                        android:title="Search" />
+
+                    <item
+                        android:id="@+id/nav_library"
+                        android:icon="@drawable/library"
+                        android:title="Library" />
+
+            </group>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/nav_logout"
+        android:icon="@drawable/icon_logout"
+        android:title="Logout" />
+
+</menu>

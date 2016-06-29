@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/one"
+        android:icon="@drawable/select"
+        android:title="Select" />
+
+    <item
+        android:id="@+id/two"
+        android:icon="@drawable/edit"
+        android:title="Edit" />
+
+    <item
+        android:id="@+id/three"
+        android:icon="@drawable/cal"
+        android:title="Calendar" />
+
+    <item
+        android:id="@+id/four"
+        android:icon="@android:drawable/ic_delete"
+        android:title="Delete" />
+
+    <item
+        android:id="@+id/five"
+        android:icon="@drawable/map"
+        android:title="Map" />
+
+</menu>

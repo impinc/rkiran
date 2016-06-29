@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.akshay.leadmaster.Callbacktask"
+    tools:showIn="@layout/activity_callbacktask">
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:background="@drawable/shapelight"
+            android:layout_margin="10dp"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/etsearch"
+                android:layout_weight="0.02" />
+
+            <Button
+                android:layout_width="39dp"
+                android:layout_height="39dp"
+                android:background="@drawable/search_toolbar"
+                android:id="@+id/btnsearch" />
+
+
+
+        </LinearLayout>
+
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="523dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/lvshortcuts" />
+    </LinearLayout>
+</ScrollView>
