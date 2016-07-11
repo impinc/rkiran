@@ -112,7 +112,7 @@
 				data : soapMessage,
 				error : function(xhr, status, error) {
 					if (status == 'timeout') {
-						alert("Server is not responding");
+						//alert("Server is not responding");
 
 			
 				/** Method call when login fails **/
@@ -132,7 +132,11 @@
 
 
 			function getResponseValidateLogon(xmlHttpRequest, status) {
-
+				console.log("api.leadmaster response " + status);
+				if (status == 'timeout') {
+					console.log(xmlHttpRequest.responseXML + " complete ");
+					//return beginSaveProduct();
+				}
 				$(xmlHttpRequest.responseXML).find('APIValidateLogonResponse').each(function() {
 					logonID = $(this).find('APIValidateLogonResult').text();
 
@@ -179,7 +183,7 @@
 		var getDBServiceUrl = wsURL + 'GetDatabase';
 		// Preferably write this out from server side
 		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope"><soap12:Body><GetDatabase xmlns="LMServiceNamespace"><logon_id>' + logonId + '</logon_id></GetDatabase></soap12:Body></soap12:Envelope>';
-
+		console.log("api get database" + getDBServiceUrl);
 		$.ajax({
 			url : getDBServiceUrl,
 			type : "POST",
@@ -189,7 +193,7 @@
 			complete : getResponseDB,
 			error : function(xhr, status, error) {
 				if (status == 'timeout') {
-					alert("Server is not responding");
+					//alert("Server is not responding");
 					ifUserLoginFails();
 
 					return false;
@@ -209,7 +213,7 @@
 	};
 
 	function getResponseDB(xmlHttpRequest, status) {
-		
+		console.log("api get database done " + status);
 		var nextOpt = 0, databaseIdWS, databaseNameWS;
 
 		$(xmlHttpRequest.responseXML).find('TypeDataBaseData').each(function() {
@@ -253,7 +257,7 @@
 		var getWGServiceUrl = wsURL + 'GetWorkgroups';
 		// Preferably write this out from server side
 		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><GetWorkgroups xmlns="LMServiceNamespace"><logon_id>' + logonID + '</logon_id><database_id>' + databaseIdWG + '</database_id></GetWorkgroups></soap:Body></soap:Envelope>';
-
+		console.log("api get GetWorkgroups " + getWGServiceUrl);
 		$.ajax({
 			url : getWGServiceUrl,
 			type : "POST",
@@ -263,7 +267,7 @@
 			complete : getResponseWorkGroup,
 			error : function(xhr, status, error) {
 				if (status == 'timeout') {
-					alert("Server is not responding");
+					//alert("Server is not responding");
 					ifUserLoginFails();
 
 					return false;
@@ -281,7 +285,7 @@
 	};
 
 	function getResponseWorkGroup(xmlHttpRequest, status) {
-
+		console.log("api get GetWorkgroups done" + status);
 		var nextOpt = 0, workgroupId, workgroupName;
 
 		$(xmlHttpRequest.responseXML).find('TypeWorkgroupData').each(function() {
@@ -408,7 +412,7 @@
 			complete : getResponsePrivileges,
 			error : function(xhr, status, error) {
 				if (status == 'timeout') {
-					alert("Server is not responding");
+					//alert("Server is not responding");
 					ifUserLoginFails();
 					// navigator.notification.activityStop();
 					return false;

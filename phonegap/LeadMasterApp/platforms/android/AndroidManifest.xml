@@ -1,15 +1,15 @@
 <?xml version='1.0' encoding='utf-8'?>
 <manifest
     android:hardwareAccelerated="true"
-    android:versionCode="36"
-    android:versionName="2.33"
+    android:versionCode="37"
+    android:versionName="2.34"
     package="com.leadmaster.phonegap"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
 
     <uses-sdk
         android:minSdkVersion="14"
-        android:targetSdkVersion="22" />
+        android:targetSdkVersion="23" />
 
     <supports-screens
         android:anyDensity="true"

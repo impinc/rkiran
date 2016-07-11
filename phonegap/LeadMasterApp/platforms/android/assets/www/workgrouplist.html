@@ -84,7 +84,7 @@
 		arrayDataBaseName = new Array();
 		if (!(status == 'success')) {
 
-			alert('An error has occurred.  Try again or check your Internet connection.');
+			//alert('An error has occurred.  Try again or check your Internet connection.');
 			window.location = "index.html";
 			navigator.notification.activityStop();
 			return false;
@@ -158,7 +158,7 @@
 					return false;
 				} else if (status != 'success' && status != 'timeout') {
 
-					alert('An error has occurred. Try again or check your Internet connection.');
+					//alert('An error has occurred. Try again or check your Internet connection.');
 					ifUserLoginFails();
 
 					return false;
