@@ -748,7 +748,7 @@
 		var SearchCasesCountServiceUrl = wsURL + 'SearchCasesCount';
 		// Preferably write this out from server side
 		var soapMessage = '<?xml version="1.0" encoding="utf-8"?><soap:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/"><soap:Body><SearchCasesCount xmlns="LMServiceNamespace"><username>' + username + '</username><pwd>' + password + '</pwd><company_id>' + companyId + '</company_id><subject>' + subject + '</subject></SearchCasesCount></soap:Body></soap:Envelope>';
-	//	console.log("soapMessage3"+soapMessage);
+		console.log("soapMessage3"+soapMessage);
 		$.ajax({
 			url : SearchCasesCountServiceUrl,
 			type : "POST",
